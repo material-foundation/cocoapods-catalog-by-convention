@@ -16,24 +16,21 @@ unit tests involves some non-trivial overhead:
 
 One solution to this problem is to create what's called a "Catalog" app. A Catalog's purpose is to
 demonstrate the usage of a collection of components in one app. A Catalog application reduces the
-number of distinct Xcode targets your team has to interact with.
-
-Your team still has to manually manage your Catalog's Xcode project, adding and updating files as
-necessary. What if this could be even further optimized?
+number of distinct Xcode targets your team has to interact with. Your team manages your Catalog's
+Xcode project, adding and updating files as necessary. But what if even that was automated?
 
 Catalog by Convention minimizes the engineering overhead of creating **examples** and **unit tests**
-via a combination of conventions and CocoaPods. Simply run `pod install` and your Catalog will
+using a combination of conventions and CocoaPods. Simply run `pod install` and your Catalog will
 include all examples and unit tests in two easy to access targets.
 
-The only remaining engineering burden is to actually write the example and test.
+The only remaining engineering burden is to actually write the examples and tests.
 
 ### An example
 
 An example Catalog is located within the `example/` directory. Run pod install to set it up:
 
-    pod install --project-directory=example/catalog/
-
-    open example/catalog/Catalog.xcworkspace
+    pod install --project-directory=example/
+    open example/Catalog.xcworkspace
 
 Open the project and you'll find two targets: Catalog and UnitTests. Run the Catalog.
 
@@ -46,12 +43,17 @@ Now try running the unit tests. You'll see the one Resistor test appear in the u
 
 ![Tests](docs/assets/tests.png)
 
-Try adding a new example to the Resistor component.
+**Adding new examples**
+
+Open the following directory:
 
     open example/components/Resistor/examples/
 
-Create a new .m file and give the view controller a unique name. Run `pod install` again for your
-catalog and restart the app. Your example should now be listed under Resistor.
+1. Make a duplicate of either example.
+2. Open the duplicate and give the class a unique name.
+3. Change the `+catalogBreadcrumbs` path to something unique.
+4. Run `pod install --project-directory=example/` and rebuild the app.
+5. Your example will now be listed under Resistor.
 
 ## Setup guide
 
