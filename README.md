@@ -17,7 +17,10 @@ unit tests involves some non-trivial overhead:
 One solution to this problem is to create what's called a "Catalog" app. A Catalog's purpose is to
 demonstrate the usage of a collection of components in one app. A Catalog application reduces the
 number of distinct Xcode targets your team has to interact with. Your team manages your Catalog's
-Xcode project, adding and updating files as necessary. But what if even that was automated?
+Xcode project, adding and updating files as necessary.
+
+What if — instead of managing an Xcode project — you simply had to create new source files and run
+`pod install`?
 
 Catalog by Convention minimizes the engineering overhead of creating **examples** and **unit tests**
 using a combination of conventions and CocoaPods. Simply run `pod install` and your Catalog will
@@ -36,14 +39,13 @@ Open the project and you'll find two targets: Catalog and UnitTests. Run the Cat
 
 ![Catalog](docs/assets/catalog.png)
 
-Our example project has just one component: Resistor. You can navigate through to this component's
-examples in the application.
+You can navigate through to the single component's examples in the catalog application.
 
 Now try running the unit tests. You'll see the one Resistor test appear in the unit test output.
 
 ![Tests](docs/assets/tests.png)
 
-**Adding new examples**
+**Quick introduction to adding a new example**
 
 Open the following directory:
 
@@ -54,6 +56,19 @@ Open the following directory:
 3. Change the `+catalogBreadcrumbs` path to something unique.
 4. Run `pod install --project-directory=example/` and rebuild the app.
 5. Your example will now be listed under Resistor.
+
+These five steps describe the end-to-end process for adding new examples to the catalog.
+
+**Quick introduction to adding a new test**
+
+Open the following directory:
+
+    open example/components/Resistor/tests/unit/
+
+1. Make a duplicate of either test.
+2. Open the duplicate and give the class a unique name.
+3. Run `pod install --project-directory=example/` and rebuild the app.
+4. Run the unit tests.
 
 ## Setup guide
 
