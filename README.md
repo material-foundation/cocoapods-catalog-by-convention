@@ -75,135 +75,148 @@ Open the following directory:
 This guide will walk you through how to create a Catalog project that uses the CatalogByConvention
 library.
 
-### Step 1: Create a Catalog Xcode project
+### Step 1: Plan out your component conventions
 
-Create a typical "Single view UIKit application" with the Main storyboard deleted. The only code
-you'll have in your Catalog app is your AppDelegate.
+This is the most important step. What matters most here is that you apply the convention
+consistently across each of your components.
 
-In Swift:
-
-    import UIKit
-    import CatalogByConvention
-
-    @UIApplicationMain
-    class AppDelegate: UIResponder, UIApplicationDelegate {
-
-      var window: UIWindow?
-
-      func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-
-        let rootViewController = CBCNodeListViewController(node: CBCCreateNavigationTree())
-        rootViewController.title = "Catalog by Convention"
-
-        let navController = UINavigationController(rootViewController: rootViewController)
-        self.window?.rootViewController = navController
-
-        self.window!.makeKeyAndVisible()
-        return true
-      }
-    }
-
-Note that our root view controller is a CBCNodeListViewController. This view controller expects a
-node argument which we can initialize with `CBCCreateNavigationTree()`.
-
-### Step 2: Plan out your component conventions
-
-One recommendation is provided in the `example/` directory of this project.
+Let's look at the convention followed by the example included in the `example/` directory:
 
     components/
       ComponentNameCamelCased/
         examples/
+          SomeExample.m
         src/
           Resistor.h
+          RESClass.h
+          RESClass.m
         tests/
-          ui/
           unit/
+            SomeUnitTest.m
 
-### Step 3: Create the convention podspecs
+### Step 2: Create the necessary files/folders
 
-Create two `podspec` files that will live alongside your components and catalog directories, like
-so:
+Alongside the `components/` directory we'll create the following:
+
+- A `catalog/` directory.
+- A `CatalogExamples.podspec`
+- A `CatalogUnitTests.podspec`
+- A `Podfile`
+
+The final result will look like so:
 
     catalog/
     components/
     CatalogExamples.podspec
     CatalogUnitTests.podspec
+    Podfile
 
-Place the following within `CatalogExamples.podspec`:
+### Step 3: Create the convention podspecs
+
+Let's look at the contents of `CatalogExamples.podspec` and `CatalogUnitTests.podspec`.
+
+Within `CatalogExamples.podspec`:
 
     Pod::Spec.new do |s|
       s.name         = "CatalogExamples"
       s.version      = "1.0.0"
       s.summary      = "Convention for catalog examples."
-      s.homepage     = "https://github.com/google/catalog-by-convention"
+      s.homepage     = "https://github.com/your/repo"
       s.authors      = "Catalog"
       s.license      = 'Apache 2.0'
-      s.source       = { :git => "https://github.com/google/catalog-by-convention.git", :tag => s.version.to_s }
+      s.source       = { :git => "https://github.com/your/repo.git", :tag => s.version.to_s }
       s.requires_arc = true
-
+      
       # Conventions
       s.source_files = 'components/*/examples/*.{h,m,swift}'
       s.public_header_files = 'components/*/examples/*.h'
       s.resources = ['components/*/examples/resources/*']
     end
 
-And the following within `CatalogUnitTests.podspec`:
+Within `CatalogUnitTests.podspec`:
 
     Pod::Spec.new do |s|
       s.name         = "CatalogUnitTests"
       s.version      = "1.0.0"
-      s.summary      = "Convention specification for the catalog examples."
-      s.homepage     = "https://github.com/google/catalog-by-convention"
+      s.summary      = "Convention for catalog tests."
+      s.homepage     = "https://github.com/your/repo"
       s.authors      = "Catalog"
       s.license      = 'Apache 2.0'
-      s.source       = { :git => "https://github.com/google/catalog-by-convention.git", :tag => s.version.to_s }
+      s.source       = { :git => "https://github.com/your/repo.git", :tag => s.version.to_s }
       s.requires_arc = true
-
-      # The conventions
+      s.framework = 'XCTest'
+      
+      # Conventions
       s.source_files = 'components/*/tests/unit/*.{h,m,swift}'
       s.resources = ['components/*/tests/unit/resources/*']
-      s.framework = 'XCTest'
+      
+      # Unit tests require you to specify your components as dependencies.
+      s.dependency 'Resistor'
     end
 
 ### Step 4: Create a Podfile for your catalog
 
-Create a `Podfile` alongside your Catalog's `xcworkspace`. You can use the following as a template,
-updating the names of targets, paths, and dependencies where applicable.
+Now let's edit the `Podfile`.
 
-    workspace 'Catalog.xcworkspace'
-    project 'Catalog.xcodeproj'
+Feel free to use the following as a template, updating the names of targets, paths, and dependencies
+where applicable.
 
-    target "Catalog" do
-      project 'Catalog.xcodeproj'
-      # Our catalog is written in Swift, so we must import dependencies as frameworks
-      use_frameworks!
-
-      # Runtime library for loading examples
-      pod 'CatalogByConvention', :path => '../../'
-
-      # Conventions
-      pod 'CatalogExamples', :path => '../'
-
-      # Component dependencies
-      pod 'Resistor', :path => '../components/Resistor'
+    abstract_target 'Catalog' do
+      workspace 'Catalog.xcworkspace'
+    	use_frameworks! 
+      
+    	pod 'CatalogByConvention'
+      
+      # Define where the local pods live. This allows your conventions to depend on them.
+      pod 'Resistor', :path => 'components/Resistor'
+      
+    	target "Catalog" do
+    		project 'catalog/Catalog.xcodeproj'
+        pod 'CatalogExamples', :path => './'
+    	end
+      
+    	target "UnitTests" do
+    		project 'catalog/UnitTests.xcodeproj'
+        pod 'CatalogUnitTests', :path => './'
+    	end
     end
 
-    target "UnitTests" do
-      project 'UnitTests.xcodeproj'
-      # Our tests may be written in Swift, so we must import dependencies as frameworks
-      use_frameworks!
+### Step 5: Create the Catalog Xcode project
 
-      # Conventions
-      pod 'CatalogUnitTests', :path => '../'
+Create a new Xcode project. We'll assume you're using the "Single View Application" template.
 
-      # Component dependencies
-      pod 'Resistor', :path => '../components/Resistor'
-    end
+Delete the default ViewController class.
 
-### Step 5: Run pod install
+Update your app delegate to look like the following:
+
+    import UIKit
+    import CatalogByConvention
+    
+    @UIApplicationMain
+    class AppDelegate: UIResponder, UIApplicationDelegate {
+      
+      var window: UIWindow?
+      
+      func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        
+        let rootViewController = CBCNodeListViewController(node: CBCCreateNavigationTree())
+        rootViewController.title = "Catalog by Convention"
+        
+        let navController = UINavigationController(rootViewController: rootViewController)
+        self.window?.rootViewController = navController
+        
+        self.window!.makeKeyAndVisible()
+        return true
+      }
+    }
+
+### Step 6: Run pod install
 
 Run `pod install` for your Catalog. Open your Catalog's workspace.
+
+    pod install
+    open Catalog.xcworkspace
 
 All of your examples, unit tests, and component source code will be found within the Pods project
 in your workspace.
