@@ -1,6 +1,6 @@
 # Catalog by Convention
 
-[![Build Status](https://travis-ci.org/material-foundation/cocoapods-catalog-by-convention.svg?branch=master)](https://travis-ci.org/material-foundation/cocoapods-catalog-by-convention)
+[![Build Status](https://travis-ci.org/material-foundation/cocoapods-catalog-by-convention.svg?branch=develop)](https://travis-ci.org/material-foundation/cocoapods-catalog-by-convention)
 
 Catalog by Convention is a set of runtime tools and conventions designed for the development of a
 collection of Objective-C and Swift "components".
