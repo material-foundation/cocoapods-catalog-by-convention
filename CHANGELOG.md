@@ -1,6 +1,10 @@
-# release-candidate
+# 1.0.1
 
- TODO: Enumerate changes.
+- Add missing header import to src/CBCCatalogExample.h.
+- Add exampleViewControllerName API to CBCNode.
+- Use modern nullability annotations.
+- API docs now available at https://material-foundation.github.io/cocoapods-catalog-by-convention/.
+
 # 1.0.0
 
 - Initial release.
