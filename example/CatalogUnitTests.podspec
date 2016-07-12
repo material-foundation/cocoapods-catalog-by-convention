@@ -12,4 +12,7 @@ Pod::Spec.new do |s|
   s.source_files = 'components/*/tests/unit/*.{h,m,swift}'
   s.resources = ['components/*/tests/unit/resources/*']
   s.framework = 'XCTest'
+
+  # Component dependencies
+  s.dependency 'Resistor'
 end

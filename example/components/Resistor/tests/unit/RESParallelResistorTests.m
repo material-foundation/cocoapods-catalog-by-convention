@@ -22,8 +22,9 @@
 
 @implementation RESParallelResitorTests
 
-- (void)testNoop {
-  XCTAssertTrue(YES);
+- (void)testCreatingResistor {
+  RESParallelResistor *resistor = [RESParallelResistor new];
+  XCTAssertNotNil(resistor);
 }
 
 @end
