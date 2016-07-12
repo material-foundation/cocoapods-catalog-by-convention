@@ -1,9 +1,23 @@
 {
   "load": [
-    "third_party/arc-proselint"
+    "third_party/arc-proselint",
+    "third_party/arc-jazzy-linter",
+    "third_party/arc-xcode-test-engine"
   ],
   "phabricator.uri" : "http://codereview.cc/",
   "arc.land.onto.default" : "develop",
   "arc.feature.start.default": "origin/develop",
-  "git.default-relative-commit" : "origin/develop"
+  "git.default-relative-commit" : "origin/develop",
+  "unit.xcode": {
+    "build": {
+      "workspace": "example/catalog/Catalog.xcworkspace",
+      "scheme": "UnitTests",
+      "configuration": "Debug",
+      "destination": "platform=iOS Simulator,name=iPhone 6S"
+    },
+    "coverage": {
+      "product": "Resistor.framework/Resistor"
+    },
+    "pre-build": "pod install --project-directory=example/catalog/"
+  }
 }

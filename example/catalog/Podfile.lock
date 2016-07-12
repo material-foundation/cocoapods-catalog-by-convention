@@ -12,20 +12,20 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   CatalogByConvention:
-    :path: ../../
+    :path: "../../"
   CatalogExamples:
-    :path: ../
+    :path: "../"
   CatalogUnitTests:
-    :path: ../
+    :path: "../"
   Resistor:
-    :path: ../components/Resistor
+    :path: "../components/Resistor"
 
 SPEC CHECKSUMS:
-  CatalogByConvention: 0137d280781667dd3d856a14cdf507f5ac8eedc0
-  CatalogExamples: 27e215f180dff5c7753195a54819086512fca89c
-  CatalogUnitTests: a6fd65fa28a9ac14d49a66418848cb626d9ae49f
+  CatalogByConvention: 901ac88532d57103432b539ac7d69f0600f37de1
+  CatalogExamples: cafe3e4eae3abc948d96beb626657455c1dfb327
+  CatalogUnitTests: 793bd09d241a27e352d8a807d76b3486da91ccc4
   Resistor: 36a9ae98666be3b4f34d8133fad442fa87fdbce2
 
 PODFILE CHECKSUM: f14a477885bb971999b5fa8afb20a539b2bcabdc
 
-COCOAPODS: 1.0.0
+COCOAPODS: 1.0.1
