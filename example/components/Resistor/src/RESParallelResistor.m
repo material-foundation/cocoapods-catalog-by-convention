@@ -17,4 +17,13 @@
 #import "RESParallelResistor.h"
 
 @implementation RESParallelResistor
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    NSLog(@"Initialized parallel");
+  }
+  return self;
+}
+
 @end

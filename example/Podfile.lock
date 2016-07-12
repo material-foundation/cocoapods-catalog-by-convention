@@ -1,0 +1,33 @@
+PODS:
+  - CatalogByConvention (1.0.0)
+  - CatalogExamples (1.0.0):
+    - Resistor
+  - CatalogUnitTests (1.0.0):
+    - Resistor
+  - Resistor (1.0.0)
+
+DEPENDENCIES:
+  - CatalogByConvention (from `../`)
+  - CatalogExamples (from `./`)
+  - CatalogUnitTests (from `./`)
+  - Resistor (from `components/Resistor`)
+
+EXTERNAL SOURCES:
+  CatalogByConvention:
+    :path: "../"
+  CatalogExamples:
+    :path: "./"
+  CatalogUnitTests:
+    :path: "./"
+  Resistor:
+    :path: components/Resistor
+
+SPEC CHECKSUMS:
+  CatalogByConvention: 901ac88532d57103432b539ac7d69f0600f37de1
+  CatalogExamples: 10ac4ea72250d52cfb71e6f973f12f16b7dc2b95
+  CatalogUnitTests: b7a746f12abb31a905654521ee926ea007ab7275
+  Resistor: 36a9ae98666be3b4f34d8133fad442fa87fdbce2
+
+PODFILE CHECKSUM: bb59c09c71f8777bbe79af5ae920e3d58849ab41
+
+COCOAPODS: 1.0.1

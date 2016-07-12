@@ -10,7 +10,7 @@
   "git.default-relative-commit" : "origin/develop",
   "unit.xcode": {
     "build": {
-      "workspace": "example/catalog/Catalog.xcworkspace",
+      "workspace": "example/Catalog.xcworkspace",
       "scheme": "UnitTests",
       "configuration": "Debug",
       "destination": "platform=iOS Simulator,name=iPhone 6S"
@@ -18,6 +18,6 @@
     "coverage": {
       "product": "Resistor.framework/Resistor"
     },
-    "pre-build": "pod install --project-directory=example/catalog/"
+    "pre-build": "pod install --project-directory=example/"
   }
 }

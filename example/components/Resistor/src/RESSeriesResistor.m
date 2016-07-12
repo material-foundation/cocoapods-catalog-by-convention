@@ -17,4 +17,13 @@
 #import "RESSeriesResistor.h"
 
 @implementation RESSeriesResistor
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    NSLog(@"Initialized series");
+  }
+  return self;
+}
+
 @end

@@ -1,0 +1,21 @@
+abstract_target 'Catalog' do
+	pod 'CatalogByConvention', :path => '../'
+  workspace 'Catalog.xcworkspace'
+	use_frameworks! 
+
+  pod 'Resistor', :path => 'components/Resistor'
+
+	target "Catalog" do
+		project 'catalog/Catalog.xcodeproj'
+
+    # Conventions
+    pod 'CatalogExamples', :path => './'
+	end
+
+	target "UnitTests" do
+		project 'catalog/UnitTests.xcodeproj'
+
+    # Conventions
+    pod 'CatalogUnitTests', :path => './'
+	end
+end

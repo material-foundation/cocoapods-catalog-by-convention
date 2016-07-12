@@ -12,4 +12,7 @@ Pod::Spec.new do |s|
   s.source_files = 'components/*/examples/*.{h,m,swift}'
   s.public_header_files = 'components/*/examples/*.h'
   s.resources = ['components/*/examples/resources/*']
+
+  # Component dependencies
+  s.dependency 'Resistor'
 end
