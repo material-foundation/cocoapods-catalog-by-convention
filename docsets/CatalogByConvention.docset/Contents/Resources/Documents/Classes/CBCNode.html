@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CBCNode Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/objc/Class/CBCNode" class="dashAnchor"></a>
+    <a title="CBCNode Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">CatalogByConvention Docs</a> (87% documented)</p>
+        <p class="header-right"><a href="https://github.com/material-foundation/cocoapods-catalog-by-convention"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">CatalogByConvention Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        CBCNode Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/CBCNode.html">CBCNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CBCNodeListViewController.html">CBCNodeListViewController</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Functions.html#/c:@F@CBCCreateNavigationTree">CBCCreateNavigationTree</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>CBCNode</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="k">@interface</span> <span class="nc">CBCNode</span> <span class="p">:</span> <span class="nc">NSObject</span></code></pre>
+
+                </div>
+              </div>
+            <p>A node describes a single navigable page in the Catalog by Convention.</p>
+
+<p>A node either has children or it is an example.</p>
+
+<ul>
+<li>If a node has children, then the node should be represented by a list of some sort.</li>
+<li>If a node is an example, then the example controller can be instantiated with
+createExampleViewController.</li>
+</ul>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CBCNode(im)init"></a>
+                    <a name="//apple_ref/objc/Method/-init" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CBCNode(im)init">-init</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Nodes cannot be created by clients.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="n">nullable</span> <span class="n">instancetype</span><span class="p">)</span><span class="n">init</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="nf">init</span><span class="p">?()</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/material-foundation/cocoapods-catalog-by-convention/tree/v1.0.0/src/CBCNodeListViewController.h#L59">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CBCNode(py)title"></a>
+                    <a name="//apple_ref/objc/Property/title" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CBCNode(py)title">title</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The title for this node.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">readonly</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">title</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/material-foundation/cocoapods-catalog-by-convention/tree/v1.0.0/src/CBCNodeListViewController.h#L62">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CBCNode(py)nodeDescription"></a>
+                    <a name="//apple_ref/objc/Property/nodeDescription" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CBCNode(py)nodeDescription">nodeDescription</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The description for this node.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">readonly</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">nodeDescription</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/material-foundation/cocoapods-catalog-by-convention/tree/v1.0.0/src/CBCNodeListViewController.h#L65">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CBCNode(py)children"></a>
+                    <a name="//apple_ref/objc/Property/children" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CBCNode(py)children">children</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The children of this node.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">readwrite</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n">NSArray</span><span class="o">&lt;</span><span class="n">CBCNode</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="n">children</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/material-foundation/cocoapods-catalog-by-convention/tree/v1.0.0/src/CBCNodeListViewController.h#L68">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CBCNode(im)isExample"></a>
+                    <a name="//apple_ref/objc/Method/-isExample" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CBCNode(im)isExample">-isExample</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns YES if this is an example node.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="n">isExample</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">isExample</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">AnyObject</span><span class="o">!</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/material-foundation/cocoapods-catalog-by-convention/tree/v1.0.0/src/CBCNodeListViewController.h#L71">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CBCNode(im)isPrimaryDemo"></a>
+                    <a name="//apple_ref/objc/Method/-isPrimaryDemo" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CBCNode(im)isPrimaryDemo">-isPrimaryDemo</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns YES if this the primary demo for this component.</p>
+
+<p>Can only return YES if isExample also returns YES.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="n">isPrimaryDemo</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">isPrimaryDemo</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">AnyObject</span><span class="o">!</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/material-foundation/cocoapods-catalog-by-convention/tree/v1.0.0/src/CBCNodeListViewController.h#L78">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CBCNode(im)exampleViewControllerName"></a>
+                    <a name="//apple_ref/objc/Method/-exampleViewControllerName" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CBCNode(im)exampleViewControllerName">-exampleViewControllerName</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns String representation of exampleViewController class name if it exists</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="n">nullable</span> <span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">exampleViewControllerName</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">exampleViewControllerName</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">AnyObject</span><span class="o">!</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/material-foundation/cocoapods-catalog-by-convention/tree/v1.0.0/src/CBCNodeListViewController.h#L81">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CBCNode(im)createExampleViewController"></a>
+                    <a name="//apple_ref/objc/Method/-createExampleViewController" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CBCNode(im)createExampleViewController">-createExampleViewController</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns an instance of a UIViewController for presentation purposes.</p>
+
+<p>Check that isExample returns YES before invoking.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="n">nonnull</span> <span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="n">createExampleViewController</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">createExampleViewController</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">AnyObject</span><span class="o">!</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/material-foundation/cocoapods-catalog-by-convention/tree/v1.0.0/src/CBCNodeListViewController.h#L88">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CBCNode(im)exampleDescription"></a>
+                    <a name="//apple_ref/objc/Method/-exampleDescription" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CBCNode(im)exampleDescription">-exampleDescription</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a description of the example.</p>
+
+<p>Check that isExample returns YES before invoking.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="n">nonnull</span> <span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">exampleDescription</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">exampleDescription</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">AnyObject</span><span class="o">!</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/material-foundation/cocoapods-catalog-by-convention/tree/v1.0.0/src/CBCNodeListViewController.h#L95">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2016 <a class="link" href="https://github.com/material-foundation/cocoapods-catalog-by-convention" target="_blank" rel="external">Google Inc.</a>. All rights reserved. (Last updated: 2016-07-12)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.6.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

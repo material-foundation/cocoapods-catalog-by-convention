@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CatalogByConvention  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a title="CatalogByConvention  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">CatalogByConvention Docs</a> (87% documented)</p>
+        <p class="header-right"><a href="https://github.com/material-foundation/cocoapods-catalog-by-convention"><img src="img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html">CatalogByConvention Reference</a>
+        <img id="carat" src="img/carat.png" />
+        CatalogByConvention  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/CBCNode.html">CBCNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/CBCNodeListViewController.html">CBCNodeListViewController</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Functions.html#/c:@F@CBCCreateNavigationTree">CBCCreateNavigationTree</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            
+            <a href='#catalog-by-convention' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='catalog-by-convention'>Catalog by Convention</h1>
+
+<p><a href="https://travis-ci.org/material-foundation/cocoapods-catalog-by-convention"><img src="https://travis-ci.org/material-foundation/cocoapods-catalog-by-convention.svg?branch=develop" alt="Build Status"></a></p>
+
+<p>Catalog by Convention is a set of runtime tools and conventions designed for the development of a
+collection of Objective-C and Swift <q>components</q>.</p>
+<a href='#overview' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='overview'>Overview</h2>
+
+<p>If your team works on many components simultaneously then you may find that building examples and
+unit tests involves some non-trivial overhead:</p>
+
+<ul>
+<li>Maintenance of each component&rsquo;s Xcode projects.</li>
+<li>Maintenance of each component&rsquo;s examples and testing target.</li>
+<li>Switching between projects/targets/workspaces.</li>
+</ul>
+
+<p>One solution to this problem is to create what&rsquo;s called a <q>Catalog</q> app. A Catalog&rsquo;s purpose is to
+demonstrate the usage of a collection of components in one app. A Catalog application reduces the
+number of distinct Xcode targets your team has to interact with. Your team manages your Catalog&rsquo;s
+Xcode project, adding and updating files as necessary.</p>
+
+<p>What if — instead of managing an Xcode project — you simply had to create new source files and run
+<code>pod install</code>?</p>
+
+<p>Catalog by Convention minimizes the engineering overhead of creating <strong>examples</strong> and <strong>unit tests</strong>
+using a combination of conventions and CocoaPods. Simply run <code>pod install</code> and your Catalog will
+include all examples and unit tests in two easy to access targets.</p>
+
+<p>The only remaining engineering burden is to actually write the examples and tests.</p>
+<a href='#an-example' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='an-example'>An example</h3>
+
+<p>An example Catalog is located within the <code>example/</code> directory. Run pod install to set it up:</p>
+<pre class="highlight plaintext"><code>pod install --project-directory=example/
+open example/Catalog.xcworkspace
+</code></pre>
+
+<p>Open the project and you&rsquo;ll find two targets: Catalog and UnitTests. Run the Catalog.</p>
+
+<p><img src="docs/assets/catalog.png" alt="Catalog"></p>
+
+<p>You can navigate through to the single component&rsquo;s examples in the catalog application.</p>
+
+<p>Now try running the unit tests. You&rsquo;ll see the one Resistor test appear in the unit test output.</p>
+
+<p><img src="docs/assets/tests.png" alt="Tests"></p>
+
+<p><strong>Quick introduction to adding a new example</strong></p>
+
+<p>Open the following directory:</p>
+<pre class="highlight plaintext"><code>open example/components/Resistor/examples/
+</code></pre>
+
+<ol>
+<li>Make a duplicate of either example.</li>
+<li>Open the duplicate and give the class a unique name.</li>
+<li>Change the <code>+catalogBreadcrumbs</code> path to something unique.</li>
+<li>Run <code>pod install --project-directory=example/</code> and rebuild the app.</li>
+<li>Your example will now be listed under Resistor.</li>
+</ol>
+
+<p>These five steps describe the end-to-end process for adding new examples to the catalog.</p>
+
+<p><strong>Quick introduction to adding a new test</strong></p>
+
+<p>Open the following directory:</p>
+<pre class="highlight plaintext"><code>open example/components/Resistor/tests/unit/
+</code></pre>
+
+<ol>
+<li>Make a duplicate of either test.</li>
+<li>Open the duplicate and give the class a unique name.</li>
+<li>Run <code>pod install --project-directory=example/</code> and rebuild the app.</li>
+<li>Run the unit tests.</li>
+</ol>
+<a href='#setup-guide' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='setup-guide'>Setup guide</h2>
+
+<p>This guide will walk you through how to create a Catalog project that uses the CatalogByConvention
+library.</p>
+<a href='#step-1-plan-out-your-component-conventions' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='step-1-plan-out-your-component-conventions'>Step 1: Plan out your component conventions</h3>
+
+<p>This is the most important step. What matters most here is that you apply the convention
+consistently across each of your components.</p>
+
+<p>Let&rsquo;s look at the convention followed by the example included in the <code>example/</code> directory:</p>
+<pre class="highlight plaintext"><code>components/
+  ComponentNameCamelCased/
+    examples/
+      SomeExample.m
+    src/
+      Resistor.h
+      RESClass.h
+      RESClass.m
+    tests/
+      unit/
+        SomeUnitTest.m
+</code></pre>
+<a href='#step-2-create-the-necessary-files-folders' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='step-2-create-the-necessary-files-folders'>Step 2: Create the necessary files/folders</h3>
+
+<p>Alongside the <code>components/</code> directory we&rsquo;ll create the following:</p>
+
+<ul>
+<li>A <code>catalog/</code> directory.</li>
+<li>A <code>CatalogExamples.podspec</code></li>
+<li>A <code>CatalogUnitTests.podspec</code></li>
+<li>A <code>Podfile</code></li>
+</ul>
+
+<p>The final result will look like so:</p>
+<pre class="highlight plaintext"><code>catalog/
+components/
+CatalogExamples.podspec
+CatalogUnitTests.podspec
+Podfile
+</code></pre>
+<a href='#step-3-create-the-convention-podspecs' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='step-3-create-the-convention-podspecs'>Step 3: Create the convention podspecs</h3>
+
+<p>Let&rsquo;s look at the contents of <code>CatalogExamples.podspec</code> and <code>CatalogUnitTests.podspec</code>.</p>
+
+<p>Within <code>CatalogExamples.podspec</code>:</p>
+<pre class="highlight plaintext"><code>Pod::Spec.new do |s|
+  s.name         = "CatalogExamples"
+  s.version      = "1.0.0"
+  s.summary      = "Convention for catalog examples."
+  s.homepage     = "https://github.com/your/repo"
+  s.authors      = "Catalog"
+  s.license      = 'Apache 2.0'
+  s.source       = { :git =&gt; "https://github.com/your/repo.git", :tag =&gt; s.version.to_s }
+  s.requires_arc = true
+
+  # Conventions
+  s.source_files = 'components/*/examples/*.{h,m,swift}'
+  s.public_header_files = 'components/*/examples/*.h'
+  s.resources = ['components/*/examples/resources/*']
+end
+</code></pre>
+
+<p>Within <code>CatalogUnitTests.podspec</code>:</p>
+<pre class="highlight plaintext"><code>Pod::Spec.new do |s|
+  s.name         = "CatalogUnitTests"
+  s.version      = "1.0.0"
+  s.summary      = "Convention for catalog tests."
+  s.homepage     = "https://github.com/your/repo"
+  s.authors      = "Catalog"
+  s.license      = 'Apache 2.0'
+  s.source       = { :git =&gt; "https://github.com/your/repo.git", :tag =&gt; s.version.to_s }
+  s.requires_arc = true
+  s.framework = 'XCTest'
+
+  # Conventions
+  s.source_files = 'components/*/tests/unit/*.{h,m,swift}'
+  s.resources = ['components/*/tests/unit/resources/*']
+
+  # Unit tests require you to specify your components as dependencies.
+  s.dependency 'Resistor'
+end
+</code></pre>
+<a href='#step-4-create-a-podfile-for-your-catalog' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='step-4-create-a-podfile-for-your-catalog'>Step 4: Create a Podfile for your catalog</h3>
+
+<p>Now let&rsquo;s edit the <code>Podfile</code>.</p>
+
+<p>Feel free to use the following as a template, updating the names of targets, paths, and dependencies
+where applicable.</p>
+<pre class="highlight plaintext"><code>abstract_target 'Catalog' do
+  workspace 'Catalog.xcworkspace'
+    use_frameworks! 
+
+    pod 'CatalogByConvention'
+
+  # Define where the local pods live. This allows your conventions to depend on them.
+  pod 'Resistor', :path =&gt; 'components/Resistor'
+
+    target "Catalog" do
+        project 'catalog/Catalog.xcodeproj'
+    pod 'CatalogExamples', :path =&gt; './'
+    end
+
+    target "UnitTests" do
+        project 'catalog/UnitTests.xcodeproj'
+    pod 'CatalogUnitTests', :path =&gt; './'
+    end
+end
+</code></pre>
+<a href='#step-5-create-the-catalog-xcode-project' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='step-5-create-the-catalog-xcode-project'>Step 5: Create the Catalog Xcode project</h3>
+
+<p>Create a new Xcode project. We&rsquo;ll assume you&rsquo;re using the <q>Single View Application</q> template.</p>
+
+<p>Delete the default ViewController class.</p>
+
+<p>Update your app delegate to look like the following:</p>
+<pre class="highlight plaintext"><code>import UIKit
+import CatalogByConvention
+
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate {
+
+  var window: UIWindow?
+
+  func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -&gt; Bool {
+    self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+
+    let rootViewController = CBCNodeListViewController(node: CBCCreateNavigationTree())
+    rootViewController.title = "Catalog by Convention"
+
+    let navController = UINavigationController(rootViewController: rootViewController)
+    self.window?.rootViewController = navController
+
+    self.window!.makeKeyAndVisible()
+    return true
+  }
+}
+</code></pre>
+<a href='#step-6-run-pod-install' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='step-6-run-pod-install'>Step 6: Run pod install</h3>
+
+<p>Run <code>pod install</code> for your Catalog. Open your Catalog&rsquo;s workspace.</p>
+<pre class="highlight plaintext"><code>pod install
+open Catalog.xcworkspace
+</code></pre>
+
+<p>All of your examples, unit tests, and component source code will be found within the Pods project
+in your workspace.</p>
+
+<p><img src="docs/assets/pods.png" alt="Pods"></p>
+<a href='#step-6-build' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='step-6-build'>Step 6: Build!</h3>
+
+<p>From this point forward you simply need to create new example and unit test source files and they&rsquo;ll
+be picked up on a subsequent pod install.</p>
+<a href='#license' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='license'>License</h2>
+
+<p>Licensed under the Apache 2.0 license. See LICENSE for details.</p>
+
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2016 <a class="link" href="https://github.com/material-foundation/cocoapods-catalog-by-convention" target="_blank" rel="external">Google Inc.</a>. All rights reserved. (Last updated: 2016-07-12)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.6.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
