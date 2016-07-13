@@ -176,14 +176,17 @@ where applicable.
       end
       
       target "UnitTests" do
-        project 'catalog/UnitTests.xcodeproj'
+        project 'catalog/Catalog.xcodeproj'
         pod 'CatalogUnitTests', :path => './'
       end
     end
 
 ### Step 5: Create the Catalog Xcode project
 
-Create a new Xcode project. We'll assume you're using the "Single View Application" template.
+Create a new Xcode project. We'll assume you're using the "Single View Application" template. Enable
+unit tests for the project.
+
+Ensure that your app and unit test target match those defined in your `Podfile`.
 
 Delete the default ViewController class.
 
