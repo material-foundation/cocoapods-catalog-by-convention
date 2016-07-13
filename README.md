@@ -226,10 +226,23 @@ in your workspace.
 
 ![Pods](docs/assets/pods.png)
 
-### Step 6: Build!
+### Step 7: Build!
 
 From this point forward you simply need to create new example and unit test source files and they'll
 be picked up on a subsequent pod install.
+
+### Ongoing steps: Adding examples
+
+For an example view controller to appear in your project your view controller must implement
+`+catalogBreadcrumbs`. For example:
+
+    @implementation ParallelResistorExample (CatalogByConvention)
+    
+    + (NSArray<NSString *> *)catalogBreadcrumbs {
+      return @[ @"Resistor", @"Parallel" ];
+    }
+    
+    @end
 
 ## License
 
