@@ -163,22 +163,22 @@ where applicable.
 
     abstract_target 'Catalog' do
       workspace 'Catalog.xcworkspace'
-    	use_frameworks! 
+      use_frameworks! 
       
-    	pod 'CatalogByConvention'
+      pod 'CatalogByConvention'
       
       # Define where the local pods live. This allows your conventions to depend on them.
       pod 'Resistor', :path => 'components/Resistor'
       
-    	target "Catalog" do
-    		project 'catalog/Catalog.xcodeproj'
+      target "Catalog" do
+        project 'catalog/Catalog.xcodeproj'
         pod 'CatalogExamples', :path => './'
-    	end
+      end
       
-    	target "UnitTests" do
-    		project 'catalog/UnitTests.xcodeproj'
+      target "UnitTests" do
+        project 'catalog/UnitTests.xcodeproj'
         pod 'CatalogUnitTests', :path => './'
-    	end
+      end
     end
 
 ### Step 5: Create the Catalog Xcode project
