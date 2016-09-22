@@ -4,4 +4,4 @@ umbrella_header: src/CatalogByConvention.h
 objc: true
 sdk: iphonesimulator
 github_url: https://github.com/material-foundation/cocoapods-catalog-by-convention
-github_file_prefix: https://github.com/material-foundation/cocoapods-catalog-by-convention/tree/v1.0.1
+github_file_prefix: https://github.com/material-foundation/cocoapods-catalog-by-convention/tree/v2.0.0
