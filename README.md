@@ -163,27 +163,30 @@ where applicable.
 
     abstract_target 'Catalog' do
       workspace 'Catalog.xcworkspace'
-    	use_frameworks! 
+      use_frameworks! 
       
-    	pod 'CatalogByConvention'
+      pod 'CatalogByConvention'
       
       # Define where the local pods live. This allows your conventions to depend on them.
       pod 'Resistor', :path => 'components/Resistor'
       
-    	target "Catalog" do
-    		project 'catalog/Catalog.xcodeproj'
+      target "Catalog" do
+        project 'catalog/Catalog.xcodeproj'
         pod 'CatalogExamples', :path => './'
-    	end
+      end
       
-    	target "UnitTests" do
-    		project 'catalog/UnitTests.xcodeproj'
+      target "UnitTests" do
+        project 'catalog/Catalog.xcodeproj'
         pod 'CatalogUnitTests', :path => './'
-    	end
+      end
     end
 
 ### Step 5: Create the Catalog Xcode project
 
-Create a new Xcode project. We'll assume you're using the "Single View Application" template.
+Create a new Xcode project. We'll assume you're using the "Single View Application" template. Enable
+unit tests for the project.
+
+Ensure that your app and unit test target match those defined in your `Podfile`.
 
 Delete the default ViewController class.
 
@@ -223,10 +226,23 @@ in your workspace.
 
 ![Pods](docs/assets/pods.png)
 
-### Step 6: Build!
+### Step 7: Build!
 
 From this point forward you simply need to create new example and unit test source files and they'll
 be picked up on a subsequent pod install.
+
+### Ongoing steps: Adding examples
+
+For an example view controller to appear in your project your view controller must implement
+`+catalogBreadcrumbs`. For example:
+
+    @implementation ParallelResistorExample (CatalogByConvention)
+    
+    + (NSArray<NSString *> *)catalogBreadcrumbs {
+      return @[ @"Resistor", @"Parallel" ];
+    }
+    
+    @end
 
 ## License
 

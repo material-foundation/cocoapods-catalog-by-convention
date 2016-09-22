@@ -56,7 +56,7 @@ FOUNDATION_EXTERN CBCNode *_Nonnull CBCCreateNavigationTree(void);
 @interface CBCNode : NSObject
 
 /** Nodes cannot be created by clients. */
-- (nullable instancetype)init NS_UNAVAILABLE;
+- (nonnull instancetype)init NS_UNAVAILABLE;
 
 /** The title for this node. */
 @property(nonatomic, copy, nonnull, readonly) NSString *title;
