@@ -17,7 +17,7 @@
 #import "CBCNodeListViewController.h"
 
 #import "CBCCatalogExample.h"
-#import "CBCRuntime.h"
+#import "private/CBCRuntime.h"
 
 @implementation CBCNode {
   NSMutableDictionary *_map;
@@ -53,7 +53,7 @@
   _exampleClass = exampleClass;
 }
 
-- (void)finalize {
+- (void)finalizeNode {
   _children = [[_children sortedArrayUsingSelector:@selector(compare:)] mutableCopy];
 }
 
@@ -137,7 +137,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return [_node.children count];
+  return (NSInteger)[_node.children count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -147,7 +147,7 @@
     cell =
         [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
   }
-  cell.textLabel.text = [_node.children[indexPath.row] title];
+  cell.textLabel.text = [_node.children[(NSUInteger)indexPath.row] title];
   cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
   return cell;
 }
@@ -155,7 +155,7 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  CBCNode *node = _node.children[indexPath.row];
+  CBCNode *node = _node.children[(NSUInteger)indexPath.row];
   UIViewController *viewController = nil;
   if ([node isExample]) {
     viewController = [node createExampleViewController];
@@ -206,7 +206,7 @@ CBCNode *CBCCreateNavigationTree(void) {
     [queue removeObjectAtIndex:0];
     [queue addObjectsFromArray:node.children];
 
-    [node finalize];
+    [node finalizeNode];
   }
 
   return tree;

@@ -48,7 +48,7 @@ BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass) {
 
 NSArray<Class> *CBCGetAllClasses(void) {
   int numberOfClasses = objc_getClassList(NULL, 0);
-  Class *classList = (Class *)malloc(numberOfClasses * sizeof(Class));
+  Class *classList = (Class *)malloc((size_t)numberOfClasses * sizeof(Class));
   objc_getClassList(classList, numberOfClasses);
 
   NSMutableArray<Class> *classes = [NSMutableArray array];
