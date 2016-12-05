@@ -1,3 +1,11 @@
+# 2.0.1
+
+- Fixed some warnings.
+
+## Source changes
+
+* [Merge pull request #6 from randallli/fixWarnings](https://github.com/material-foundation/cocoapods-catalog-by-convention/commit/8136bf10acab15ebfb12de080e919f6540753dd9) (Randall Li)
+
 # 2.0.0
 
 - Upgraded to Swift 3.
