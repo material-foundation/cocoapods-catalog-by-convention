@@ -1,3 +1,7 @@
+# 2.1.0
+
+- Add tvOS as a platform.
+
 # 2.0.1
 
 - Fixed some warnings.
