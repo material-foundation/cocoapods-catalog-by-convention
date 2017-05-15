@@ -1,7 +1,6 @@
-# #develop#
+# 2.1.1
 
- TODO: Enumerate changes.
-
+- Fixed a crashing bug on iOS 10.3.1.
 
 # 2.1.0
 
