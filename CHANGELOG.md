@@ -1,3 +1,7 @@
+# 2.1.1
+
+- Fixed a crashing bug on iOS 10.3.1.
+
 # 2.1.0
 
 - Add tvOS as a platform.
