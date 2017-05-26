@@ -18,15 +18,15 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SeriesResistorExample : UIViewController
+@interface SeriesExample : UIViewController
 @end
 
-@implementation SeriesResistorExample
+@implementation SeriesExample
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    self.title = @"Series resistors";
+    self.title = @"Series";
   }
   return self;
 }
@@ -39,10 +39,10 @@
 
 @end
 
-@implementation SeriesResistorExample (CatalogByConvention)
+@implementation SeriesExample (CatalogByConvention)
 
 + (NSArray<NSString *> *)catalogBreadcrumbs {
-  return @[ @"Resistor", @"Series" ];
+  return @[ @[ @"Resistor", @"Series"], @[ @"Film", @"Series" ], @[@"Botany", @"Series"] ];
 }
 
 @end
