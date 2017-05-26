@@ -41,7 +41,7 @@
 
 @implementation SeriesExample (CatalogByConvention)
 
-+ (NSArray<NSString *> *)catalogBreadcrumbs {
++ (NSArray<NSArray<NSString *> *> *)catalogBreadcrumbs {
   return @[ @[ @"Resistor", @"Series"], @[ @"Film", @"Series" ], @[@"Botany", @"Series"] ];
 }
 
