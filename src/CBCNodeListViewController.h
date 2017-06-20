@@ -95,3 +95,7 @@ FOUNDATION_EXTERN CBCNode *_Nonnull CBCCreateNavigationTree(void);
 - (nonnull NSString *)exampleDescription;
 
 @end
+
+@interface PositionPlaceholder : NSObject 
++ (NSString* _Nonnull)replacePositionPlaceholder:(NSString* _Nonnull)title;
+@end

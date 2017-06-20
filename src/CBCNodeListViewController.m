@@ -95,7 +95,7 @@ void CBCAddNodeFromBreadCrumbs(CBCNode *tree, NSArray<NSString *> *breadCrumbs, 
   if (self) {
     _node = node;
 
-    self.title = _node.title;
+    self.title = [PositionPlaceholder replacePositionPlaceholder: _node.title];
   }
   return self;
 }
@@ -149,7 +149,9 @@ void CBCAddNodeFromBreadCrumbs(CBCNode *tree, NSArray<NSString *> *breadCrumbs, 
     cell =
         [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
   }
-  cell.textLabel.text = [_node.children[(NSUInteger)indexPath.row] title];
+  NSString* title = [_node.children[(NSUInteger)indexPath.row] title];
+  title = [PositionPlaceholder replacePositionPlaceholder: title];
+  cell.textLabel.text = title;
   cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
   return cell;
 }
@@ -223,3 +225,23 @@ void CBCAddNodeFromBreadCrumbs(CBCNode *tree, NSArray<NSString *> *breadCrumbs, 
 
   node.exampleClass = aClass;
 }
+
+@implementation PositionPlaceholder
+
++ (NSString*)replacePositionPlaceholder:(NSString*)title {
+  if([title characterAtIndex:0] != '@') {
+    return title;
+  }
+  
+  NSRegularExpression *regex = [NSRegularExpression
+                                regularExpressionWithPattern:@"^\\@[0-9]+ "
+                                options:NSRegularExpressionCaseInsensitive
+                                error:nil];
+  NSString* newTitle = [regex
+                        stringByReplacingMatchesInString:title
+                        options:0
+                        range:NSMakeRange(0, title.length)
+                        withTemplate:@""];
+  return newTitle;
+}
+@end
