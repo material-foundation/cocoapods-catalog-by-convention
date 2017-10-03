@@ -13,11 +13,11 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   CatalogByConvention:
-    :path: "../"
+    :path: ../
   CatalogExamples:
-    :path: "./"
+    :path: ./
   CatalogUnitTests:
-    :path: "./"
+    :path: ./
   Resistor:
     :path: components/Resistor
 
@@ -29,4 +29,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: bb59c09c71f8777bbe79af5ae920e3d58849ab41
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.3.1
