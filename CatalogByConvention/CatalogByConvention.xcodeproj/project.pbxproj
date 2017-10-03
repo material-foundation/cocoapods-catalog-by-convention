@@ -7,24 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		66B35F561F84269E000B0CB8 /* CatalogByConvention.h in Headers */ = {isa = PBXBuildFile; fileRef = 66B35F4F1F84269E000B0CB8 /* CatalogByConvention.h */; };
-		66B35F571F84269E000B0CB8 /* CBCCatalogExample.h in Headers */ = {isa = PBXBuildFile; fileRef = 66B35F501F84269E000B0CB8 /* CBCCatalogExample.h */; };
-		66B35F581F84269E000B0CB8 /* CBCNodeListViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 66B35F511F84269E000B0CB8 /* CBCNodeListViewController.h */; };
-		66B35F591F84269E000B0CB8 /* CBCNodeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66B35F521F84269E000B0CB8 /* CBCNodeListViewController.m */; };
-		66B35F5A1F84269E000B0CB8 /* CBCRuntime.h in Headers */ = {isa = PBXBuildFile; fileRef = 66B35F541F84269E000B0CB8 /* CBCRuntime.h */; };
-		66B35F5B1F84269E000B0CB8 /* CBCRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = 66B35F551F84269E000B0CB8 /* CBCRuntime.m */; };
 		66B35F5F1F842A4C000B0CB8 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66B35F5E1F842A4C000B0CB8 /* Info.plist */; };
+		66B35F671F843DBC000B0CB8 /* CatalogByConvention.h in Headers */ = {isa = PBXBuildFile; fileRef = 66B35F601F843DBC000B0CB8 /* CatalogByConvention.h */; };
+		66B35F681F843DBC000B0CB8 /* CBCCatalogExample.h in Headers */ = {isa = PBXBuildFile; fileRef = 66B35F611F843DBC000B0CB8 /* CBCCatalogExample.h */; };
+		66B35F691F843DBC000B0CB8 /* CBCNodeListViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 66B35F621F843DBC000B0CB8 /* CBCNodeListViewController.h */; };
+		66B35F6A1F843DBC000B0CB8 /* CBCNodeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66B35F631F843DBC000B0CB8 /* CBCNodeListViewController.m */; };
+		66B35F6B1F843DBC000B0CB8 /* CBCRuntime.h in Headers */ = {isa = PBXBuildFile; fileRef = 66B35F651F843DBC000B0CB8 /* CBCRuntime.h */; };
+		66B35F6C1F843DBC000B0CB8 /* CBCRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = 66B35F661F843DBC000B0CB8 /* CBCRuntime.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		66B35F351F842691000B0CB8 /* CatalogByConvention.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CatalogByConvention.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		66B35F4F1F84269E000B0CB8 /* CatalogByConvention.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CatalogByConvention.h; path = ../../src/CatalogByConvention.h; sourceTree = "<group>"; };
-		66B35F501F84269E000B0CB8 /* CBCCatalogExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBCCatalogExample.h; path = ../../src/CBCCatalogExample.h; sourceTree = "<group>"; };
-		66B35F511F84269E000B0CB8 /* CBCNodeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBCNodeListViewController.h; path = ../../src/CBCNodeListViewController.h; sourceTree = "<group>"; };
-		66B35F521F84269E000B0CB8 /* CBCNodeListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CBCNodeListViewController.m; path = ../../src/CBCNodeListViewController.m; sourceTree = "<group>"; };
-		66B35F541F84269E000B0CB8 /* CBCRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBCRuntime.h; sourceTree = "<group>"; };
-		66B35F551F84269E000B0CB8 /* CBCRuntime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBCRuntime.m; sourceTree = "<group>"; };
 		66B35F5E1F842A4C000B0CB8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		66B35F601F843DBC000B0CB8 /* CatalogByConvention.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CatalogByConvention.h; sourceTree = "<group>"; };
+		66B35F611F843DBC000B0CB8 /* CBCCatalogExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBCCatalogExample.h; sourceTree = "<group>"; };
+		66B35F621F843DBC000B0CB8 /* CBCNodeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBCNodeListViewController.h; sourceTree = "<group>"; };
+		66B35F631F843DBC000B0CB8 /* CBCNodeListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBCNodeListViewController.m; sourceTree = "<group>"; };
+		66B35F651F843DBC000B0CB8 /* CBCRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBCRuntime.h; sourceTree = "<group>"; };
+		66B35F661F843DBC000B0CB8 /* CBCRuntime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBCRuntime.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,24 +58,23 @@
 		66B35F371F842691000B0CB8 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				66B35F4F1F84269E000B0CB8 /* CatalogByConvention.h */,
-				66B35F501F84269E000B0CB8 /* CBCCatalogExample.h */,
-				66B35F511F84269E000B0CB8 /* CBCNodeListViewController.h */,
-				66B35F521F84269E000B0CB8 /* CBCNodeListViewController.m */,
-				66B35F531F84269E000B0CB8 /* private */,
+				66B35F601F843DBC000B0CB8 /* CatalogByConvention.h */,
+				66B35F611F843DBC000B0CB8 /* CBCCatalogExample.h */,
+				66B35F621F843DBC000B0CB8 /* CBCNodeListViewController.h */,
+				66B35F631F843DBC000B0CB8 /* CBCNodeListViewController.m */,
+				66B35F641F843DBC000B0CB8 /* private */,
 			);
 			name = src;
-			path = CatalogByConvention;
+			path = ../src;
 			sourceTree = "<group>";
 		};
-		66B35F531F84269E000B0CB8 /* private */ = {
+		66B35F641F843DBC000B0CB8 /* private */ = {
 			isa = PBXGroup;
 			children = (
-				66B35F541F84269E000B0CB8 /* CBCRuntime.h */,
-				66B35F551F84269E000B0CB8 /* CBCRuntime.m */,
+				66B35F651F843DBC000B0CB8 /* CBCRuntime.h */,
+				66B35F661F843DBC000B0CB8 /* CBCRuntime.m */,
 			);
-			name = private;
-			path = ../../src/private;
+			path = private;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -85,10 +84,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66B35F571F84269E000B0CB8 /* CBCCatalogExample.h in Headers */,
-				66B35F581F84269E000B0CB8 /* CBCNodeListViewController.h in Headers */,
-				66B35F5A1F84269E000B0CB8 /* CBCRuntime.h in Headers */,
-				66B35F561F84269E000B0CB8 /* CatalogByConvention.h in Headers */,
+				66B35F681F843DBC000B0CB8 /* CBCCatalogExample.h in Headers */,
+				66B35F691F843DBC000B0CB8 /* CBCNodeListViewController.h in Headers */,
+				66B35F6B1F843DBC000B0CB8 /* CBCRuntime.h in Headers */,
+				66B35F671F843DBC000B0CB8 /* CatalogByConvention.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,8 +161,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66B35F591F84269E000B0CB8 /* CBCNodeListViewController.m in Sources */,
-				66B35F5B1F84269E000B0CB8 /* CBCRuntime.m in Sources */,
+				66B35F6A1F843DBC000B0CB8 /* CBCNodeListViewController.m in Sources */,
+				66B35F6C1F843DBC000B0CB8 /* CBCRuntime.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
