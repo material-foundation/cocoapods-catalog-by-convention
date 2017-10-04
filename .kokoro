@@ -1,14 +1,30 @@
 #!/bin/bash
 
+# Config
+
+scheme=CatalogByConvention
+project="$scheme/$scheme.xcodeproj"
+target_simulator_filter="iPhone SE"
+
+#
+# Build script for kokoro.
+# Version: v1.0.0
+#
+# With no modifications, this script will clean, build, and run tests for the given configuration
+# on each installation of Xcode available on the machine.
+#
+# You can filter which simulators will be run against by assigning a string to
+# `target_simulator_filter`. For example, target_simulator_filter="iPhone SE" will only run builds
+# against the iPhone SE simulator, while target_simulator_filter="iPhone 6" will run builds
+# against all iPhone 6 simulators.
+#
+# Only Xcode 8 and 9 supported.
+#
+
 # Fail on any error.
 set -e
 # Display commands to stderr.
 set -x
-
-# Config
-
-target=CatalogByConvention
-project="$target/$target.xcodeproj"
 
 # Dependencies
 
@@ -26,7 +42,7 @@ run() {
   set -o pipefail && xcodebuild clean build \
     -project $project \
     -sdk "iphonesimulator" \
-    -scheme "$target" \
+    -scheme "$scheme" \
   | xcpretty
 
   # Outputs destination ID, OS version, and device name as comma-separated "key:value" pairs.
@@ -34,7 +50,7 @@ run() {
     xcodebuild test \
       -project $project \
       -sdk "iphonesimulator" \
-      -scheme "$target" \
+      -scheme "$scheme" \
       -destination 'platform=iOS Simulator' 2>&1 \
     | sed -n -e '/Available destinations/,$p' \
     | sed -e '/^$/,$d' \
@@ -56,7 +72,7 @@ run() {
       set -o pipefail && xcodebuild test \
         -project $project \
         -sdk "iphonesimulator" \
-        -scheme "$target" \
+        -scheme "$scheme" \
         -destination "id=$destination_id" \
       | xcpretty
 
@@ -68,17 +84,22 @@ run() {
   if xcodebuild test \
     -project $project \
     -sdk "iphonesimulator" \
-    -scheme "$target" \
+    -scheme "$scheme" \
     -dry-run \
     -quiet >/dev/null 2>/dev/null; then
-    destinations | grep "iPhone SE" | run_test
+    if [ -z "$target_simulator_filter" ]; then
+      # Run against all simulators
+      destinations | run_test
+    else
+      destinations | grep $target_simulator_filter | run_test
+    fi
   fi
 }
 
 if [ -z "$KOKORO_GITHUB_PULL_REQUEST_NUMBER" ]; then
   run # Run using whatever xcodebuild is already configured locally.
 else
-  # Runs our tests on every available Xcode target
+  # Runs our tests on every available Xcode 8 or 9 installation.
   ls /Applications/ | grep "Xcode" | grep -e "8." -e "9." | while read -r xcode_path; do
     sudo xcode-select --switch /Applications/$xcode_path/Contents/Developer
     xcodebuild -version
