@@ -5,13 +5,56 @@ set -e
 # Display commands to stderr.
 set -x
 
+# Config
+
+target=CatalogByConvention
+project="$target/$target.xcodeproj"
+
+# Dependencies
+
 gem install xcpretty --no-rdoc --no-ri --no-document --quiet
 
 sudo xcode-select --switch /Applications/Xcode_8.2.app/Contents/Developer
 xcodebuild -version
 
+# Move into our cloned repo
+
 cd github/repo
-xcodebuild clean build -project CatalogByConvention/CatalogByConvention.xcodeproj -sdk "iphonesimulator" | xcpretty
+
+# Build phase
+
+set -o pipefail && xcodebuild clean build -project $project -sdk "iphonesimulator" -scheme "$target" | xcpretty
+
+# Test phase
+
+destinations() {
+  xcodebuild clean test -project $project -sdk "iphonesimulator" -scheme "$target" -destination 'platform=iOS Simulator' 2>&1 \
+    | sed -n -e '/Available destinations/,$p' \
+    | sed -e '/^$/,$d' \
+    | grep "id:" \
+    | cut -d',' -f2,3,4 \
+    | cut -d':' -f2- \
+    | cut -d'}' -f1
+}
+
+run_test() {
+  while read -r destination; do
+    destination_id=$(echo $destination | cut -d',' -f1)
+    destination_os=$(echo $destination | cut -d':' -f2 | cut -d',' -f1)
+    destination_name=$(echo $destination | cut -d':' -f3 | cut -d',' -f1)
+
+    echo
+    echo "### Running tests on $destination_name ($destination_os)..."
+    set -o pipefail && xcodebuild test -project $project -sdk "iphonesimulator" -scheme "$target" -destination "id=$destination_id" | xcpretty
+
+    # Avoid a buildup of active simulators.
+    xcrun simctl shutdown $destination_id
+  done
+}
+
+destinations | grep "iPhone SE" | run_test
+
+# Code coverage phase
 
 # Enable this if and when we have unit tests.
 #bash <(curl -s https://codecov.io/bash)
