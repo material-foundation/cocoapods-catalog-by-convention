@@ -1,7 +1,24 @@
-# #develop#
+# 2.2.0
 
- TODO: Enumerate changes.
+This minor release introduces support for Carthage.
 
+## New features
+
+It's now possible to define multiple paths to a single example. Simply return an array of arrays
+of breadcrumbs from the `catalogBreadcrumbs` implementation.
+
+## Source changes
+
+* [added ability to have multiple parallel bread crumbs to get to a view controller.](https://github.com/material-foundation/cocoapods-catalog-by-convention/commit/cc6a0b16dc41cc044d2ca0a98aa2dcbd35a7c2c5) (randallli)
+
+## Non-source changes
+
+* [Disable code coverage reporting. (#16)](https://github.com/material-foundation/cocoapods-catalog-by-convention/commit/098188b6353e96f1ffebe2749816e859ba1e8d72) (featherless)
+* [Add kokoro continuous build script. (#15)](https://github.com/material-foundation/cocoapods-catalog-by-convention/commit/ac9cc4b1c67b74c2c03c1d12c1905dfb47a0a141) (featherless)
+* [Fix the xcodeproj. (#14)](https://github.com/material-foundation/cocoapods-catalog-by-convention/commit/a25b7b00664903e90e9be058e5e7826213b6295b) (featherless)
+* [Add support for Carthage.](https://github.com/material-foundation/cocoapods-catalog-by-convention/commit/30dfc96ae85c5e32040304ba584ad6663c9a931f) (Jeff Verkoeyen)
+* [fixed method signature](https://github.com/material-foundation/cocoapods-catalog-by-convention/commit/9cc0050858eb26dd6bd0c0ecef1f6ffcca6a49e1) (randallli)
+* [Add .swift-version file.](https://github.com/material-foundation/cocoapods-catalog-by-convention/commit/3e38db52bd3d245ade4734394295894e123b1e59) (Jeff Verkoeyen)
 
 # 2.1.1
 
