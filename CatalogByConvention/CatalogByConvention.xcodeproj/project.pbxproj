@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		66A6119E1F8586790085F2EF /* warnings.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 66A6119D1F8586790085F2EF /* warnings.xcconfig */; };
 		66B35F671F843DBC000B0CB8 /* CatalogByConvention.h in Headers */ = {isa = PBXBuildFile; fileRef = 66B35F601F843DBC000B0CB8 /* CatalogByConvention.h */; };
 		66B35F681F843DBC000B0CB8 /* CBCCatalogExample.h in Headers */ = {isa = PBXBuildFile; fileRef = 66B35F611F843DBC000B0CB8 /* CBCCatalogExample.h */; };
 		66B35F691F843DBC000B0CB8 /* CBCNodeListViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 66B35F621F843DBC000B0CB8 /* CBCNodeListViewController.h */; };
@@ -16,7 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		66AD21E01F857A04008FFB9B /* google.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = google.xcconfig; sourceTree = "<group>"; };
+		66A6119D1F8586790085F2EF /* warnings.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = warnings.xcconfig; sourceTree = "<group>"; };
 		66B35F351F842691000B0CB8 /* CatalogByConvention.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CatalogByConvention.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		66B35F5E1F842A4C000B0CB8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		66B35F601F843DBC000B0CB8 /* CatalogByConvention.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CatalogByConvention.h; sourceTree = "<group>"; };
@@ -41,7 +42,7 @@
 		66B35F2B1F842691000B0CB8 = {
 			isa = PBXGroup;
 			children = (
-				66AD21E01F857A04008FFB9B /* google.xcconfig */,
+				66A6119D1F8586790085F2EF /* warnings.xcconfig */,
 				66B35F5E1F842A4C000B0CB8 /* Info.plist */,
 				66B35F371F842691000B0CB8 /* src */,
 				66B35F361F842691000B0CB8 /* Products */,
@@ -151,6 +152,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66A6119E1F8586790085F2EF /* warnings.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,7 +173,7 @@
 /* Begin XCBuildConfiguration section */
 		66B35F471F842691000B0CB8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 66AD21E01F857A04008FFB9B /* google.xcconfig */;
+			baseConfigurationReference = 66A6119D1F8586790085F2EF /* warnings.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -226,7 +228,7 @@
 		};
 		66B35F481F842691000B0CB8 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 66AD21E01F857A04008FFB9B /* google.xcconfig */;
+			baseConfigurationReference = 66A6119D1F8586790085F2EF /* warnings.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
