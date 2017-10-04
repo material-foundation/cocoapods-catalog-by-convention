@@ -23,22 +23,28 @@ fi
 
 # Runs a clean build + tests using xcodebuild.
 run() {
-  # Build phase
+  set -o pipefail && xcodebuild clean build \
+    -project $project \
+    -sdk "iphonesimulator" \
+    -scheme "$target" \
+  | xcpretty
 
-  set -o pipefail && xcodebuild clean build -project $project -sdk "iphonesimulator" -scheme "$target" | xcpretty
-
-  # Test phase
-
+  # Outputs destination ID, OS version, and device name as comma-separated "key:value" pairs.
   destinations() {
-    xcodebuild test -project $project -sdk "iphonesimulator" -scheme "$target" -destination 'platform=iOS Simulator' 2>&1 \
-      | sed -n -e '/Available destinations/,$p' \
-      | sed -e '/^$/,$d' \
-      | grep "id:" \
-      | cut -d',' -f2,3,4 \
-      | cut -d':' -f2- \
-      | cut -d'}' -f1
+    xcodebuild test \
+      -project $project \
+      -sdk "iphonesimulator" \
+      -scheme "$target" \
+      -destination 'platform=iOS Simulator' 2>&1 \
+    | sed -n -e '/Available destinations/,$p' \
+    | sed -e '/^$/,$d' \
+    | grep "id:" \
+    | cut -d',' -f2,3,4 \
+    | cut -d':' -f2- \
+    | cut -d'}' -f1
   }
 
+  # Reads destination ids from stdin and executes tests on the corresponding simulator.
   run_test() {
     while read -r destination; do
       destination_id=$(echo $destination | cut -d',' -f1)
@@ -47,14 +53,24 @@ run() {
 
       echo
       echo "### Running tests on $destination_name ($destination_os)..."
-      set -o pipefail && xcodebuild test -project $project -sdk "iphonesimulator" -scheme "$target" -destination "id=$destination_id" | xcpretty
+      set -o pipefail && xcodebuild test \
+        -project $project \
+        -sdk "iphonesimulator" \
+        -scheme "$target" \
+        -destination "id=$destination_id" \
+      | xcpretty
 
       # Avoid a buildup of active simulators.
       xcrun simctl shutdown $destination_id
     done
   }
 
-  if xcodebuild test -project $project -sdk "iphonesimulator" -scheme "$target" -dry-run -quiet >/dev/null 2>/dev/null; then
+  if xcodebuild test \
+    -project $project \
+    -sdk "iphonesimulator" \
+    -scheme "$target" \
+    -dry-run \
+    -quiet >/dev/null 2>/dev/null; then
     destinations | grep "iPhone SE" | run_test
   fi
 }
