@@ -64,7 +64,7 @@ if [ -z "$KOKORO_GITHUB_PULL_REQUEST_NUMBER" ]; then
   run # Run using whatever xcodebuild is already configured locally.
 else
   # Runs our tests on every available Xcode target
-  ls /Applications/ | grep "Xcode" | while read -r xcode_path; do
+  ls /Applications/ | grep "Xcode" | grep -e "8." -e "9." | while read -r xcode_path; do
     sudo xcode-select --switch /Applications/$xcode_path/Contents/Developer
     xcodebuild -version
 
