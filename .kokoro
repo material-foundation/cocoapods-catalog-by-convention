@@ -18,7 +18,6 @@ else
   gem install xcpretty --no-rdoc --no-ri --no-document --quiet
 
   # Move into our cloned repo
-
   cd github/repo
 fi
 
