@@ -94,6 +94,13 @@ run() {
       destinations | grep $target_simulator_filter | run_test
     fi
   fi
+
+  # Build a device build.
+  set -o pipefail && xcodebuild clean build \
+    -project $project \
+    -sdk "iphoneos" \
+    -scheme "$scheme" \
+  | xcpretty
 }
 
 if [ -z "$KOKORO_GITHUB_PULL_REQUEST_NUMBER" ]; then

@@ -1,0 +1,15 @@
+# This list is derived from
+# http://programmers.stackexchange.com/questions/122608/clang-warning-flags-for-objective-c-development
+# with a few turned off.
+
+GCC_TREAT_WARNINGS_AS_ERRORS = YES
+GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES
+GCC_WARN_SHADOW = YES
+GCC_WARN_STRICT_SELECTOR_MATCH = YES
+GCC_WARN_UNDECLARED_SELECTOR = YES
+CLANG_WARN_UNREACHABLE_CODE = YES
+CLANG_WARN_DOCUMENTATION_COMMENTS = YES
+CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES
+GCC_WARN_ABOUT_MISSING_NEWLINE = YES
+
+WARNING_CFLAGS=-Wall -Wcast-align -Wconversion -Wextra -Wno-error=deprecated -Wno-error=deprecated-implementations -Wno-sign-conversion -Wno-unused-parameter -Woverlength-strings
