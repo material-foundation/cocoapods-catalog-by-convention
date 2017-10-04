@@ -44,6 +44,7 @@ run() {
     -sdk "iphonesimulator" \
     -scheme "$scheme" \
   | xcpretty
+  set +o pipefail
 
   # Outputs destination ID, OS version, and device name as comma-separated "key:value" pairs.
   destinations() {
@@ -75,9 +76,14 @@ run() {
         -scheme "$scheme" \
         -destination "id=$destination_id" \
       | xcpretty
+      set +o pipefail
 
-      # Avoid a buildup of active simulators.
-      xcrun simctl shutdown $destination_id
+      if [ -z "$KOKORO_GITHUB_PULL_REQUEST_NUMBER" ]; then
+        :
+      else
+        # Avoid a buildup of active simulators.
+        xcrun simctl shutdown $destination_id
+      fi
     done
   }
 
@@ -91,7 +97,7 @@ run() {
       # Run against all simulators
       destinations | run_test
     else
-      destinations | grep $target_simulator_filter | run_test
+      destinations | grep "$target_simulator_filter" | run_test
     fi
   fi
 
@@ -101,20 +107,7 @@ run() {
     -sdk "iphoneos" \
     -scheme "$scheme" \
   | xcpretty
-
-  if xcodebuild test \
-    -project $project \
-    -sdk "iphonesimulator" \
-    -scheme "$scheme" \
-    -dry-run \
-    -quiet >/dev/null 2>/dev/null; then
-    set -o pipefail && xcodebuild test \
-      -project $project \
-      -sdk "iphoneos" \
-      -scheme "$scheme" \
-      -destination "id=$destination_id" \
-    | xcpretty
-  fi
+  set +o pipefail
 }
 
 if [ -z "$KOKORO_GITHUB_PULL_REQUEST_NUMBER" ]; then
