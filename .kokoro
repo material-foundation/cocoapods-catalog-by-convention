@@ -13,4 +13,5 @@ xcodebuild -version
 cd github/repo
 xcodebuild clean build -project CatalogByConvention/CatalogByConvention.xcodeproj -sdk "iphonesimulator" | xcpretty
 
-bash <(curl -s https://codecov.io/bash)
+# Enable this if and when we have unit tests.
+#bash <(curl -s https://codecov.io/bash)
