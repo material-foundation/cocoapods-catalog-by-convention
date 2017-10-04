@@ -101,6 +101,20 @@ run() {
     -sdk "iphoneos" \
     -scheme "$scheme" \
   | xcpretty
+
+  if xcodebuild test \
+    -project $project \
+    -sdk "iphonesimulator" \
+    -scheme "$scheme" \
+    -dry-run \
+    -quiet >/dev/null 2>/dev/null; then
+    set -o pipefail && xcodebuild test \
+      -project $project \
+      -sdk "iphoneos" \
+      -scheme "$scheme" \
+      -destination "id=$destination_id" \
+    | xcpretty
+  fi
 }
 
 if [ -z "$KOKORO_GITHUB_PULL_REQUEST_NUMBER" ]; then
