@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Fail on any error.
+set -e
+# Display commands to stderr.
+set -x
+
+gem install xcpretty --no-rdoc --no-ri --no-document --quiet
+
+sudo xcode-select --switch /Applications/Xcode_8.2.app/Contents/Developer
+xcodebuild -version
+
+cd github/repo
+xcodebuild clean build -project CatalogByConvention/CatalogByConvention.xcodeproj -sdk "iphonesimulator" | xcpretty
+
+# Enable this if and when we have unit tests.
+#bash <(curl -s https://codecov.io/bash)

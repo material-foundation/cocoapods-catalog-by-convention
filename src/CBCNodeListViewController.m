@@ -19,6 +19,8 @@
 #import "CBCCatalogExample.h"
 #import "private/CBCRuntime.h"
 
+void CBCAddNodeFromBreadCrumbs(CBCNode *tree, NSArray<NSString *> *breadCrumbs, Class aClass);
+
 @implementation CBCNode {
   NSMutableDictionary *_map;
   NSMutableArray *_children;
@@ -177,26 +179,13 @@ CBCNode *CBCCreateNavigationTree(void) {
 
     NSArray *breadCrumbs = CBCCatalogBreadcrumbsFromClass(aClass);
 
-    // Walk down the navigation tree one breadcrumb at a time, creating nodes along the way.
-
-    CBCNode *node = tree;
-    for (NSUInteger ix = 0; ix < [breadCrumbs count]; ++ix) {
-      NSString *title = breadCrumbs[ix];
-      BOOL isLastCrumb = ix == [breadCrumbs count] - 1;
-
-      // Don't walk the last crumb
-
-      if (node.map[title] && !isLastCrumb) {
-        node = node.map[title];
-        continue;
+    if ([[breadCrumbs firstObject] isKindOfClass:[NSString class]]) {
+      CBCAddNodeFromBreadCrumbs(tree, breadCrumbs, aClass);
+    } else if ([[breadCrumbs firstObject] isKindOfClass:[NSArray class]]) {
+      for (NSArray<NSString *> *parallelBreadCrumb in breadCrumbs) {
+        CBCAddNodeFromBreadCrumbs(tree, parallelBreadCrumb, aClass);
       }
-
-      CBCNode *child = [[CBCNode alloc] initWithTitle:title];
-      [node addChild:child];
-      node = child;
     }
-
-    node.exampleClass = aClass;
   }
 
   // Perform final post-processing on the nodes.
@@ -210,4 +199,27 @@ CBCNode *CBCCreateNavigationTree(void) {
   }
 
   return tree;
+}
+
+void CBCAddNodeFromBreadCrumbs(CBCNode *tree, NSArray<NSString *> *breadCrumbs, Class aClass) {
+  // Walk down the navigation tree one breadcrumb at a time, creating nodes along the way.
+
+  CBCNode *node = tree;
+  for (NSUInteger ix = 0; ix < [breadCrumbs count]; ++ix) {
+    NSString *title = breadCrumbs[ix];
+    BOOL isLastCrumb = ix == [breadCrumbs count] - 1;
+
+    // Don't walk the last crumb
+
+    if (node.map[title] && !isLastCrumb) {
+      node = node.map[title];
+      continue;
+    }
+
+    CBCNode *child = [[CBCNode alloc] initWithTitle:title];
+    [node addChild:child];
+    node = child;
+  }
+
+  node.exampleClass = aClass;
 }
