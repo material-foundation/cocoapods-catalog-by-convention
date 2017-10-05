@@ -3,15 +3,19 @@
 
 licenses(["notice"])  # Apache 2.0
 
+exports_files(["LICENSE"])
+
 objc_library(
     name = "CatalogByConvention",
     srcs = glob([
-      "src/*.m",
-      "src/private/*.h",
-      "src/private/*.m",
+        "src/*.m",
+        "src/private/*.m",
     ]),
-    includes = ["src/"],
-    hdrs = glob(["src/*.h"]),
+    hdrs = glob([
+        "src/*.h",
+        "src/private/*.h",
+    ]),
+    includes = ["src"],
     visibility = ["//visibility:public"],
     copts = [
         "-Wall",  # Standard known-to-be-bugs warnings.
