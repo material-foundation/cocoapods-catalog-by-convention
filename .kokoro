@@ -7,11 +7,6 @@ if [ ! -d .kokoro-ios-runner ]; then
   git clone https://github.com/material-foundation/kokoro-ios-runner.git .kokoro-ios-runner
 fi
 
-if ! hash carthage 2>/dev/null; then
-  brew install carthage
-  brew link carthage
-fi
-
 pushd .kokoro-ios-runner
 git fetch > /dev/null
 git checkout v1.0.0 > /dev/null
