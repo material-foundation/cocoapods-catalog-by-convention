@@ -1,4 +1,6 @@
 docs/
+bazel-*
+.kokoro-ios-runner
 
 # Xcode
 #

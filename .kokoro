@@ -9,9 +9,9 @@ fi
 
 pushd .kokoro-ios-runner
 git fetch > /dev/null
-git checkout v1.0.0 > /dev/null
+git checkout origin/develop > /dev/null
 popd
 
-./.kokoro-ios-runner/build_and_test.sh "CatalogByConvention/CatalogByConvention.xcodeproj" CatalogByConvention "iPhone SE"
+./.kokoro-ios-runner/bazel.sh //:CatalogByConvention
 
 echo "Success!"
