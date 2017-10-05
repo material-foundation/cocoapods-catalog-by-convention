@@ -1,130 +1,22 @@
 #!/bin/bash
 
-# Config
-
-scheme=CatalogByConvention
-project="$scheme/$scheme.xcodeproj"
-target_simulator_filter="iPhone SE"
-
-#
-# Build script for kokoro.
-# Version: v1.0.0
-#
-# With no modifications, this script will clean, build, and run tests for the given configuration
-# on each installation of Xcode available on the machine.
-#
-# You can filter which simulators will be run against by assigning a string to
-# `target_simulator_filter`. For example, target_simulator_filter="iPhone SE" will only run builds
-# against the iPhone SE simulator, while target_simulator_filter="iPhone 6" will run builds
-# against all iPhone 6 simulators.
-#
-# Only Xcode 8 and 9 supported.
-#
-
 # Fail on any error.
 set -e
-# Display commands to stderr.
-set -x
 
-# Dependencies
-
-if [ -z "$KOKORO_GITHUB_PULL_REQUEST_NUMBER" ]; then
-  : # Local run - nothing to do.
-else
-  gem install xcpretty --no-rdoc --no-ri --no-document --quiet
-
-  # Move into our cloned repo
-  cd github/repo
+if [ ! -d .kokoro-ios-runner ]; then
+  git clone https://github.com/material-foundation/kokoro-ios-runner.git .kokoro-ios-runner
 fi
 
-# Runs a clean build + tests using xcodebuild.
-run() {
-  set -o pipefail && xcodebuild clean build \
-    -project $project \
-    -sdk "iphonesimulator" \
-    -scheme "$scheme" \
-  | xcpretty
-  set +o pipefail
-
-  # Outputs destination ID, OS version, and device name as comma-separated "key:value" pairs.
-  destinations() {
-    xcodebuild test \
-      -project $project \
-      -sdk "iphonesimulator" \
-      -scheme "$scheme" \
-      -destination 'platform=iOS Simulator' 2>&1 \
-    | sed -n -e '/Available destinations/,$p' \
-    | sed -e '/^$/,$d' \
-    | grep "id:" \
-    | cut -d',' -f2,3,4 \
-    | cut -d':' -f2- \
-    | cut -d'}' -f1
-  }
-
-  # Reads destination ids from stdin and executes tests on the corresponding simulator.
-  run_test() {
-    while read -r destination; do
-      destination_id=$(echo $destination | cut -d',' -f1)
-      destination_os=$(echo $destination | cut -d':' -f2 | cut -d',' -f1)
-      destination_name=$(echo $destination | cut -d':' -f3 | cut -d',' -f1)
-
-      echo
-      echo "### Running tests on $destination_name ($destination_os)..."
-      set -o pipefail && xcodebuild test \
-        -project $project \
-        -sdk "iphonesimulator" \
-        -scheme "$scheme" \
-        -destination "id=$destination_id" \
-      | xcpretty
-      set +o pipefail
-
-      if [ -z "$KOKORO_GITHUB_PULL_REQUEST_NUMBER" ]; then
-        :
-      else
-        # Avoid a buildup of active simulators.
-        xcrun simctl shutdown $destination_id
-      fi
-    done
-  }
-
-  if xcodebuild test \
-    -project $project \
-    -sdk "iphonesimulator" \
-    -scheme "$scheme" \
-    -dry-run \
-    -quiet >/dev/null 2>/dev/null; then
-    if [ -z "$target_simulator_filter" ]; then
-      # Run against all simulators
-      destinations | run_test
-    else
-      destinations | grep "$target_simulator_filter" | run_test
-    fi
-  fi
-
-  # Build a device build.
-  set -o pipefail && xcodebuild clean build \
-    -project $project \
-    -sdk "iphoneos" \
-    -scheme "$scheme" \
-  | xcpretty
-  set +o pipefail
-}
-
-if [ -z "$KOKORO_GITHUB_PULL_REQUEST_NUMBER" ]; then
-  run # Run using whatever xcodebuild is already configured locally.
-else
-  # Runs our tests on every available Xcode 8 or 9 installation.
-  ls /Applications/ | grep "Xcode" | grep -e "8." -e "9." | while read -r xcode_path; do
-    sudo xcode-select --switch /Applications/$xcode_path/Contents/Developer
-    xcodebuild -version
-
-    run
-  done
+if ! hash carthage 2>/dev/null; then
+  brew install carthage
+  brew link carthage
 fi
 
-# Code coverage phase
+pushd .kokoro-ios-runner
+git fetch > /dev/null
+git checkout v1.0.0 > /dev/null
+popd
 
-# Enable this if and when we have unit tests.
-#bash <(curl -s https://codecov.io/bash)
+./.kokoro-ios-runner/build_and_test.sh "CatalogByConvention/CatalogByConvention.xcodeproj" CatalogByConvention "iPhone SE"
 
 echo "Success!"
