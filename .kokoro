@@ -2,16 +2,16 @@
 
 # Fail on any error.
 set -e
-# Display commands to stderr.
-set -x
 
-gem install xcpretty --no-rdoc --no-ri --no-document --quiet
+if [ ! -d .kokoro-ios-runner ]; then
+  git clone https://github.com/material-foundation/kokoro-ios-runner.git .kokoro-ios-runner
+fi
 
-sudo xcode-select --switch /Applications/Xcode_8.2.app/Contents/Developer
-xcodebuild -version
+pushd .kokoro-ios-runner
+git fetch > /dev/null
+git checkout v2.1.0 > /dev/null
+popd
 
-cd github/repo
-xcodebuild clean build -project CatalogByConvention/CatalogByConvention.xcodeproj -sdk "iphonesimulator" | xcpretty
+./.kokoro-ios-runner/bazel.sh //:CatalogByConvention
 
-# Enable this if and when we have unit tests.
-#bash <(curl -s https://codecov.io/bash)
+echo "Success!"
