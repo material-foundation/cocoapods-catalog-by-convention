@@ -1,9 +1,0 @@
-[submodule "third_party/arc-jazzy-linter"]
-	path = third_party/arc-jazzy-linter
-	url = https://github.com/google/arc-jazzy-linter.git
-[submodule "third_party/arc-proselint"]
-	path = third_party/arc-proselint
-	url = https://github.com/google/arc-proselint.git
-[submodule "third_party/arc-xcode-test-engine"]
-	path = third_party/arc-xcode-test-engine
-	url = https://github.com/google/arc-xcode-test-engine.git
