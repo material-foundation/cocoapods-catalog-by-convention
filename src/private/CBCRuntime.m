@@ -44,6 +44,22 @@ BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass) {
   return isPrimaryDemo;
 }
 
+BOOL CBCCatalogIsPresentableFromClass(Class aClass) {
+  BOOL isPresentable = NO;
+
+  if ([aClass respondsToSelector:@selector(catalogIsPresentable)]) {
+    NSMethodSignature *signature =
+    [aClass methodSignatureForSelector:@selector(catalogIsPresentable)];
+    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+    invocation.selector = @selector(catalogIsPresentable);
+    invocation.target = aClass;
+    [invocation invoke];
+    [invocation getReturnValue:&isPresentable];
+  }
+
+  return isPresentable;
+}
+
 #pragma mark Runtime enumeration
 
 NSArray<Class> *CBCGetAllClasses(void) {

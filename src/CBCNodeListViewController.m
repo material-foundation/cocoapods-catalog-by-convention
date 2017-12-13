@@ -25,6 +25,7 @@ void CBCAddNodeFromBreadCrumbs(CBCNode *tree, NSArray<NSString *> *breadCrumbs, 
   NSMutableDictionary *_map;
   NSMutableArray *_children;
   Class _exampleClass;
+  BOOL _isPresentable;
 }
 
 - (instancetype)initWithTitle:(NSString *)title {
@@ -33,6 +34,7 @@ void CBCAddNodeFromBreadCrumbs(CBCNode *tree, NSArray<NSString *> *breadCrumbs, 
     _title = [title copy];
     _map = [NSMutableDictionary dictionary];
     _children = [NSMutableArray array];
+    _isPresentable = NO;
     CBCFixViewDebuggingIfNeeded();
   }
   return self;
@@ -53,6 +55,10 @@ void CBCAddNodeFromBreadCrumbs(CBCNode *tree, NSArray<NSString *> *breadCrumbs, 
 
 - (void)setExampleClass:(Class)exampleClass {
   _exampleClass = exampleClass;
+}
+
+- (void)setIsPresentable:(Class)exampleClass {
+  _isPresentable = CBCCatalogIsPresentableFromClass(exampleClass);
 }
 
 - (void)finalizeNode {
@@ -81,6 +87,10 @@ void CBCAddNodeFromBreadCrumbs(CBCNode *tree, NSArray<NSString *> *breadCrumbs, 
 
 - (BOOL)isPrimaryDemo {
   return CBCCatalogIsPrimaryDemoFromClass(_exampleClass);
+}
+
+- (BOOL)isPresentable {
+  return CBCCatalogIsPresentableFromClass(_exampleClass) || _isPresentable;
 }
 
 @end
@@ -171,8 +181,44 @@ void CBCAddNodeFromBreadCrumbs(CBCNode *tree, NSArray<NSString *> *breadCrumbs, 
 
 CBCNode *CBCCreateNavigationTree(void) {
   NSArray *allClasses = CBCGetAllClasses();
-  NSArray *classes = CBCClassesRespondingToSelector(allClasses, @selector(catalogBreadcrumbs));
+  NSArray *classes = CBCClassesRespondingToSelector(allClasses,
+                                                    @selector(catalogBreadcrumbs));
+  CBCNode *tree = [[CBCNode alloc] initWithTitle:@"Root"];
+  for (Class aClass in classes) {
+    // Each example view controller defines its own "breadcrumbs".
 
+    NSArray *breadCrumbs = CBCCatalogBreadcrumbsFromClass(aClass);
+
+    if ([[breadCrumbs firstObject] isKindOfClass:[NSString class]]) {
+      CBCAddNodeFromBreadCrumbs(tree, breadCrumbs, aClass);
+    } else if ([[breadCrumbs firstObject] isKindOfClass:[NSArray class]]) {
+      for (NSArray<NSString *> *parallelBreadCrumb in breadCrumbs) {
+        CBCAddNodeFromBreadCrumbs(tree, parallelBreadCrumb, aClass);
+      }
+    }
+  }
+
+  // Perform final post-processing on the nodes.
+  NSMutableArray *queue = [NSMutableArray arrayWithObject:tree];
+  while ([queue count] > 0) {
+    CBCNode *node = [queue firstObject];
+    [queue removeObjectAtIndex:0];
+    [queue addObjectsFromArray:node.children];
+
+    [node finalizeNode];
+  }
+
+  return tree;
+}
+
+CBCNode *CBCCreatePresentableNavigationTree(void) {
+  NSArray *allClasses = CBCGetAllClasses();
+  NSArray *breadcrumbClasses = CBCClassesRespondingToSelector(allClasses,
+                                                              @selector(catalogBreadcrumbs));
+  NSArray *classes = [breadcrumbClasses filteredArrayUsingPredicate:
+                      [NSPredicate predicateWithBlock:^BOOL(id object, NSDictionary *bindings) {
+    return CBCCatalogIsPresentableFromClass(object);
+  }]];
   CBCNode *tree = [[CBCNode alloc] initWithTitle:@"Root"];
   for (Class aClass in classes) {
     // Each example view controller defines its own "breadcrumbs".
@@ -218,6 +264,7 @@ void CBCAddNodeFromBreadCrumbs(CBCNode *tree, NSArray<NSString *> *breadCrumbs, 
 
     CBCNode *child = [[CBCNode alloc] initWithTitle:title];
     [node addChild:child];
+    [node setIsPresentable:aClass];
     node = child;
   }
 

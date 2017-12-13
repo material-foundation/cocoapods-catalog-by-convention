@@ -43,6 +43,7 @@
  the tree.
  */
 FOUNDATION_EXTERN CBCNode *_Nonnull CBCCreateNavigationTree(void);
+FOUNDATION_EXTERN CBCNode *_Nonnull CBCCreatePresentableNavigationTree(void);
 
 /**
  A node describes a single navigable page in the Catalog by Convention.
@@ -76,6 +77,8 @@ FOUNDATION_EXTERN CBCNode *_Nonnull CBCCreateNavigationTree(void);
  Can only return YES if isExample also returns YES.
  */
 - (BOOL)isPrimaryDemo;
+
+- (BOOL)isPresentable;
 
 /** Returns String representation of exampleViewController class name if it exists */
 - (nullable NSString *)exampleViewControllerName;
