@@ -179,7 +179,7 @@ void CBCAddNodeFromBreadCrumbs(CBCNode *tree, NSArray<NSString *> *breadCrumbs, 
 
 @end
 
-CBCNode *CBCCreateTreeWithOnlyPresentable(BOOL onlyPresentable) {
+static CBCNode *CBCCreateTreeWithOnlyPresentable(BOOL onlyPresentable) {
   NSArray *allClasses = CBCGetAllClasses();
   NSArray *breadcrumbClasses = CBCClassesRespondingToSelector(allClasses,
                                                               @selector(catalogBreadcrumbs));

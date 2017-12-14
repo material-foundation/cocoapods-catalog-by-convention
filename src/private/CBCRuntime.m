@@ -28,38 +28,40 @@ NSArray<NSString *> *CBCCatalogBreadcrumbsFromClass(Class aClass) {
 
 #pragma mark Primary demo check
 
-void *CBCCatalogInvokeFromClassAndSelector(Class aClass, SEL selector) {
-  void *retValue = nil;
+void CBCCatalogInvokeFromClassAndSelector(Class aClass, SEL selector, void *retValue) {
   if ([aClass respondsToSelector:selector]) {
     NSMethodSignature *signature =
     [aClass methodSignatureForSelector:selector];
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
-    NSUInteger length = [signature methodReturnLength];
-    retValue = (void *)malloc(length);
     invocation.selector = selector;
     invocation.target = aClass;
     [invocation invoke];
-    [invocation getReturnValue:retValue];
+    [invocation getReturnValue:&retValue];
   }
-  return retValue;
 }
 
 BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass) {
-  BOOL *retValue = (BOOL *)CBCCatalogInvokeFromClassAndSelector(aClass,
-                                                                @selector(catalogIsPrimaryDemo));
-  return retValue != nil ? *retValue : NO;
+  BOOL isPrimary = NO;
+  CBCCatalogInvokeFromClassAndSelector(aClass,
+                                       @selector(catalogIsPrimaryDemo),
+                                       &isPrimary);
+  return isPrimary;
 }
 
 BOOL CBCCatalogIsPresentableFromClass(Class aClass) {
-  BOOL *retValue = (BOOL *)CBCCatalogInvokeFromClassAndSelector(aClass,
-                                                                @selector(catalogIsPresentable));
-  return retValue != nil ? *retValue : NO;
+  BOOL isPresentable = NO;
+  CBCCatalogInvokeFromClassAndSelector(aClass,
+                                       @selector(catalogIsPresentable),
+                                       &isPresentable);
+  return isPresentable;
 }
 
 BOOL CBCCatalogIsDebugLeaf(Class aClass) {
-  BOOL *retValue = (BOOL *)CBCCatalogInvokeFromClassAndSelector(aClass,
-                                                                @selector(catalogIsDebug));
-  return retValue != nil ? *retValue : NO;
+  BOOL isDebugLeaf = NO;
+  CBCCatalogInvokeFromClassAndSelector(aClass,
+                                       @selector(catalogIsDebug),
+                                       &isDebugLeaf);
+  return isDebugLeaf;
 }
 
 #pragma mark Runtime enumeration
