@@ -40,6 +40,12 @@ FOUNDATION_EXTERN NSArray<Class> *CBCGetAllClasses(void);
 FOUNDATION_EXTERN NSArray<Class> *CBCClassesRespondingToSelector(NSArray<Class> *classes,
                                                                  SEL selector);
 
+/**
+ Internal helper method that allows invoking aClass with selector and puts
+ the return value in retValue.
+ */
+void CBCCatalogInvokeFromClassAndSelector(Class aClass, SEL selector, void *retValue);
+
 #pragma mark UIViewController instantiation
 
 /**
