@@ -90,7 +90,7 @@ void CBCAddNodeFromBreadCrumbs(CBCNode *tree, NSArray<NSString *> *breadCrumbs, 
 }
 
 - (BOOL)isPresentable {
-  return CBCCatalogIsPresentableFromClass(_exampleClass) || _isPresentable;
+  return _isPresentable;
 }
 
 @end

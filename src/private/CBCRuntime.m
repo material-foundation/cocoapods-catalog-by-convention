@@ -35,27 +35,25 @@ void *CBCCatalogInvokeFromClassAndSelector(Class aClass, SEL selector) {
     [aClass methodSignatureForSelector:selector];
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
     NSUInteger length = [signature methodReturnLength];
-    void *retValue = (void *)malloc(length);
+    retValue = (void *)malloc(length);
     invocation.selector = selector;
     invocation.target = aClass;
     [invocation invoke];
-    [invocation getReturnValue:&retValue];
+    [invocation getReturnValue:retValue];
   }
   return retValue;
 }
 
 BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass) {
-  BOOL isPrimaryDemo = NO;
-  isPrimaryDemo = (BOOL)CBCCatalogInvokeFromClassAndSelector(aClass,
-                                                             @selector(catalogIsPrimaryDemo));
-  return isPrimaryDemo;
+  BOOL *retValue = (BOOL *)CBCCatalogInvokeFromClassAndSelector(aClass,
+                                                                @selector(catalogIsPrimaryDemo));
+  return retValue != nil ? *retValue : NO;
 }
 
 BOOL CBCCatalogIsPresentableFromClass(Class aClass) {
-  BOOL isPresentable = NO;
-  isPresentable = (BOOL)CBCCatalogInvokeFromClassAndSelector(aClass,
-                                                             @selector(catalogIsPresentable));
-  return isPresentable;
+  BOOL *retValue = (BOOL *)CBCCatalogInvokeFromClassAndSelector(aClass,
+                                                                @selector(catalogIsPresentable));
+  return retValue != nil ? *retValue : NO;
 }
 
 #pragma mark Runtime enumeration
