@@ -30,13 +30,13 @@ NSArray<NSString *> *CBCCatalogBreadcrumbsFromClass(Class aClass) {
 
 void *CBCCatalogInvokeFromClassAndSelector(Class aClass, SEL selector) {
   void *retValue = nil;
-  if ([aClass respondsToSelector:@selector(selector)]) {
+  if ([aClass respondsToSelector:selector]) {
     NSMethodSignature *signature =
-    [aClass methodSignatureForSelector:@selector(selector)];
+    [aClass methodSignatureForSelector:selector];
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
     NSUInteger length = [signature methodReturnLength];
     void *retValue = (void *)malloc(length);
-    invocation.selector = @selector(selector);
+    invocation.selector = selector;
     invocation.target = aClass;
     [invocation invoke];
     [invocation getReturnValue:&retValue];
