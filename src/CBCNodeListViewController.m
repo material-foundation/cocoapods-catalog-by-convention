@@ -179,10 +179,19 @@ void CBCAddNodeFromBreadCrumbs(CBCNode *tree, NSArray<NSString *> *breadCrumbs, 
 
 @end
 
-CBCNode *CBCCreateNavigationTree(void) {
+CBCNode *CBCCreateTreeWithOnlyPresentable(BOOL onlyPresentable) {
   NSArray *allClasses = CBCGetAllClasses();
-  NSArray *classes = CBCClassesRespondingToSelector(allClasses,
-                                                    @selector(catalogBreadcrumbs));
+  NSArray *breadcrumbClasses = CBCClassesRespondingToSelector(allClasses,
+                                                              @selector(catalogBreadcrumbs));
+  NSArray *classes;
+  if (onlyPresentable) {
+    classes = [breadcrumbClasses filteredArrayUsingPredicate:
+               [NSPredicate predicateWithBlock:^BOOL(id object, NSDictionary *bindings) {
+      return CBCCatalogIsPresentableFromClass(object);
+    }]];
+  } else {
+    classes = breadcrumbClasses;
+  }
   CBCNode *tree = [[CBCNode alloc] initWithTitle:@"Root"];
   for (Class aClass in classes) {
     // Each example view controller defines its own "breadcrumbs".
@@ -211,40 +220,12 @@ CBCNode *CBCCreateNavigationTree(void) {
   return tree;
 }
 
+CBCNode *CBCCreateNavigationTree(void) {
+  return CBCCreateTreeWithOnlyPresentable(NO);
+}
+
 CBCNode *CBCCreatePresentableNavigationTree(void) {
-  NSArray *allClasses = CBCGetAllClasses();
-  NSArray *breadcrumbClasses = CBCClassesRespondingToSelector(allClasses,
-                                                              @selector(catalogBreadcrumbs));
-  NSArray *classes = [breadcrumbClasses filteredArrayUsingPredicate:
-                      [NSPredicate predicateWithBlock:^BOOL(id object, NSDictionary *bindings) {
-    return CBCCatalogIsPresentableFromClass(object);
-  }]];
-  CBCNode *tree = [[CBCNode alloc] initWithTitle:@"Root"];
-  for (Class aClass in classes) {
-    // Each example view controller defines its own "breadcrumbs".
-
-    NSArray *breadCrumbs = CBCCatalogBreadcrumbsFromClass(aClass);
-
-    if ([[breadCrumbs firstObject] isKindOfClass:[NSString class]]) {
-      CBCAddNodeFromBreadCrumbs(tree, breadCrumbs, aClass);
-    } else if ([[breadCrumbs firstObject] isKindOfClass:[NSArray class]]) {
-      for (NSArray<NSString *> *parallelBreadCrumb in breadCrumbs) {
-        CBCAddNodeFromBreadCrumbs(tree, parallelBreadCrumb, aClass);
-      }
-    }
-  }
-
-  // Perform final post-processing on the nodes.
-  NSMutableArray *queue = [NSMutableArray arrayWithObject:tree];
-  while ([queue count] > 0) {
-    CBCNode *node = [queue firstObject];
-    [queue removeObjectAtIndex:0];
-    [queue addObjectsFromArray:node.children];
-
-    [node finalizeNode];
-  }
-
-  return tree;
+  return CBCCreateTreeWithOnlyPresentable(YES);
 }
 
 void CBCAddNodeFromBreadCrumbs(CBCNode *tree, NSArray<NSString *> *breadCrumbs, Class aClass) {

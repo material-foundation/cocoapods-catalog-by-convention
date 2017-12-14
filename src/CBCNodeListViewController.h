@@ -43,6 +43,13 @@
  the tree.
  */
 FOUNDATION_EXTERN CBCNode *_Nonnull CBCCreateNavigationTree(void);
+
+/**
+ Returns the root of a CBCNode tree representing only the presentable catalog navigation hierarchy.
+
+ Only classes that implement +catalogIsPresentable and +catalogBreadcrumbs and return at least one breadcrumb will be part of
+ the tree.
+ */
 FOUNDATION_EXTERN CBCNode *_Nonnull CBCCreatePresentableNavigationTree(void);
 
 /**
@@ -78,6 +85,7 @@ FOUNDATION_EXTERN CBCNode *_Nonnull CBCCreatePresentableNavigationTree(void);
  */
 - (BOOL)isPrimaryDemo;
 
+/** Returns YES if this is a presentable example.  */
 - (BOOL)isPresentable;
 
 /** Returns String representation of exampleViewController class name if it exists */

@@ -25,6 +25,7 @@ FOUNDATION_EXTERN NSArray<NSString *> *CBCCatalogBreadcrumbsFromClass(Class aCla
 /** Invokes +catalogIsPrimaryDemo on the class and returns the BOOL value. */
 FOUNDATION_EXTERN BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass);
 
+/** Invokes +catalogIsPresentable on the class and returns the BOOL value. */
 FOUNDATION_EXTERN BOOL CBCCatalogIsPresentableFromClass(Class aClass);
 
 #pragma mark Runtime enumeration

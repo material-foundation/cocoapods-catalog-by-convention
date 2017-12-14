@@ -28,12 +28,14 @@
 /** Return a list of breadcrumbs defining the navigation path taken to reach this example. */
 + (nonnull NSArray<NSString *> *)catalogBreadcrumbs;
 
-+ (nonnull NSArray<NSString *> *)dragonBreadcrumbs;
 /**
  Return a BOOL stating whether this example should be treated as the primary demo of the component.
  */
 + (BOOL)catalogIsPrimaryDemo;
 
+/**
+ Return a BOOL stating whether this example is presentable and should be part of the catalog app.
+ */
 + (BOOL)catalogIsPresentable;
 
 @optional

@@ -28,35 +28,33 @@ NSArray<NSString *> *CBCCatalogBreadcrumbsFromClass(Class aClass) {
 
 #pragma mark Primary demo check
 
-BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass) {
-  BOOL isPrimaryDemo = NO;
-
-  if ([aClass respondsToSelector:@selector(catalogIsPrimaryDemo)]) {
+void *CBCCatalogInvokeFromClassAndSelector(Class aClass, SEL selector) {
+  void *retValue = nil;
+  if ([aClass respondsToSelector:@selector(selector)]) {
     NSMethodSignature *signature =
-        [aClass methodSignatureForSelector:@selector(catalogIsPrimaryDemo)];
+    [aClass methodSignatureForSelector:@selector(selector)];
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
-    invocation.selector = @selector(catalogIsPrimaryDemo);
+    NSUInteger length = [signature methodReturnLength];
+    void *retValue = (void *)malloc(length);
+    invocation.selector = @selector(selector);
     invocation.target = aClass;
     [invocation invoke];
-    [invocation getReturnValue:&isPrimaryDemo];
+    [invocation getReturnValue:&retValue];
   }
+  return retValue;
+}
 
+BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass) {
+  BOOL isPrimaryDemo = NO;
+  isPrimaryDemo = (BOOL)CBCCatalogInvokeFromClassAndSelector(aClass,
+                                                             @selector(catalogIsPrimaryDemo));
   return isPrimaryDemo;
 }
 
 BOOL CBCCatalogIsPresentableFromClass(Class aClass) {
   BOOL isPresentable = NO;
-
-  if ([aClass respondsToSelector:@selector(catalogIsPresentable)]) {
-    NSMethodSignature *signature =
-    [aClass methodSignatureForSelector:@selector(catalogIsPresentable)];
-    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
-    invocation.selector = @selector(catalogIsPresentable);
-    invocation.target = aClass;
-    [invocation invoke];
-    [invocation getReturnValue:&isPresentable];
-  }
-
+  isPresentable = (BOOL)CBCCatalogInvokeFromClassAndSelector(aClass,
+                                                             @selector(catalogIsPresentable));
   return isPresentable;
 }
 
