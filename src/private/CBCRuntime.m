@@ -56,6 +56,12 @@ BOOL CBCCatalogIsPresentableFromClass(Class aClass) {
   return retValue != nil ? *retValue : NO;
 }
 
+BOOL CBCCatalogIsDebugLeaf(Class aClass) {
+  BOOL *retValue = (BOOL *)CBCCatalogInvokeFromClassAndSelector(aClass,
+                                                                @selector(catalogIsDebug));
+  return retValue != nil ? *retValue : NO;
+}
+
 #pragma mark Runtime enumeration
 
 NSArray<Class> *CBCGetAllClasses(void) {

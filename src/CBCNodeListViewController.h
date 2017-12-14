@@ -75,6 +75,9 @@ FOUNDATION_EXTERN CBCNode *_Nonnull CBCCreatePresentableNavigationTree(void);
 /** The children of this node. */
 @property(nonatomic, strong, nonnull) NSArray<CBCNode *> *children;
 
+/** The example you wish to debug as the initial view controller. */
+@property(nonatomic, strong, nullable) CBCNode *debugLeaf;
+
 /** Returns YES if this is an example node. */
 - (BOOL)isExample;
 

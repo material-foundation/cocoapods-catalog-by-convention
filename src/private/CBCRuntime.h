@@ -28,6 +28,9 @@ FOUNDATION_EXTERN BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass);
 /** Invokes +catalogIsPresentable on the class and returns the BOOL value. */
 FOUNDATION_EXTERN BOOL CBCCatalogIsPresentableFromClass(Class aClass);
 
+/** Invokes +catalogIsDebug on the class and returns the BOOL value. */
+FOUNDATION_EXTERN BOOL CBCCatalogIsDebugLeaf(Class aClass);
+
 #pragma mark Runtime enumeration
 
 /** Returns all Objective-C and Swift classes available to the runtime. */

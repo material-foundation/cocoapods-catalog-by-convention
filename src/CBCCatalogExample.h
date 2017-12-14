@@ -38,6 +38,11 @@
  */
 + (BOOL)catalogIsPresentable;
 
+/**
+ Return a BOOL stating whether this example is in debug mode and should appear as the initial view controller.
+ */
++ (BOOL)catalogIsDebug;
+
 @optional
 
 /**

@@ -246,6 +246,9 @@ void CBCAddNodeFromBreadCrumbs(CBCNode *tree, NSArray<NSString *> *breadCrumbs, 
     CBCNode *child = [[CBCNode alloc] initWithTitle:title];
     [node addChild:child];
     [node setIsPresentable:aClass];
+    if (CBCCatalogIsDebugLeaf(aClass)) {
+      tree.debugLeaf = child;
+    }
     node = child;
   }
 
