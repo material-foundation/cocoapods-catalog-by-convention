@@ -36,7 +36,7 @@ void CBCCatalogInvokeFromClassAndSelector(Class aClass, SEL selector, void *retV
     invocation.selector = selector;
     invocation.target = aClass;
     [invocation invoke];
-    [invocation getReturnValue:&retValue];
+    [invocation getReturnValue:retValue];
   }
 }
 
