@@ -1,7 +1,23 @@
-# #develop#
+# 2.3.0
 
- TODO: Enumerate changes.
+This minor release adds two new functionalities that support our new Dragons app.
 
+## New features
+
+It's now possible to call `CBCCreatePresentableNavigationTree` to create a navigation tree that only consists of examples that implement the `catalogIsPresentable` method and return `YES` to it.
+`CBCNode` now has a new property called `debugLeaf` which is also a `CBCNode`. If an example implements the `catalogIsDebug` method and returns `YES`, then that example will become the
+`debugLeaf`. When the `debugLeaf` is set, then in the Dragons app it will become the initial view controller in the navigation. NOTE: If there are multiple examples that return `YES` to
+`catalogIsDebug` then the last class that is parsed while going through the hierarchy is the one to be set as the `debugLeaf`.
+
+## Source changes
+
+* [Additional functionality to CbC to support Dragons (#19)](https://github.com/material-foundation/cocoapods-catalog-by-convention/commit/67c6d97e80c465d5915dc6dff4c6c19f53627bb8) (Yarden Eitan)
+
+## Non-source changes
+
+* [Remove arc support. (#18)](https://github.com/material-foundation/cocoapods-catalog-by-convention/commit/1fcaf777143b7906958b1cccc3a861320c45ce36) (featherless)
+* [Bump the kokoro runner version to v2.1.1.](https://github.com/material-foundation/cocoapods-catalog-by-convention/commit/a49bf18bc839f86879473329a85f7939e0b115c8) (Jeff Verkoeyen)
+* [Replace Carthage support with bazel support (#17)](https://github.com/material-foundation/cocoapods-catalog-by-convention/commit/dc45a1a6ef5ad92325ee2799b76920375141dacc) (featherless)
 
 # 2.2.0
 
