@@ -45,6 +45,14 @@
 FOUNDATION_EXTERN CBCNode *_Nonnull CBCCreateNavigationTree(void);
 
 /**
+ Returns the root of a CBCNode tree representing only the presentable catalog navigation hierarchy.
+
+ Only classes that implement +catalogIsPresentable with a return value of YES,
+ and +catalogBreadcrumbs and return at least one breadcrumb will be part of the tree.
+ */
+FOUNDATION_EXTERN CBCNode *_Nonnull CBCCreatePresentableNavigationTree(void);
+
+/**
  A node describes a single navigable page in the Catalog by Convention.
 
  A node either has children or it is an example.
@@ -67,6 +75,14 @@ FOUNDATION_EXTERN CBCNode *_Nonnull CBCCreateNavigationTree(void);
 /** The children of this node. */
 @property(nonatomic, strong, nonnull) NSArray<CBCNode *> *children;
 
+/**
+ The example you wish to debug as the initial view controller.
+ If there are multiple examples with catalogIsDebug returning YES
+ the debugLeaf will hold the example that has been iterated on last
+ in the hierarchy tree.
+ */
+@property(nonatomic, strong, nullable) CBCNode *debugLeaf;
+
 /** Returns YES if this is an example node. */
 - (BOOL)isExample;
 
@@ -76,6 +92,9 @@ FOUNDATION_EXTERN CBCNode *_Nonnull CBCCreateNavigationTree(void);
  Can only return YES if isExample also returns YES.
  */
 - (BOOL)isPrimaryDemo;
+
+/** Returns YES if this is a presentable example.  */
+- (BOOL)isPresentable;
 
 /** Returns String representation of exampleViewController class name if it exists */
 - (nullable NSString *)exampleViewControllerName;

@@ -25,6 +25,12 @@ FOUNDATION_EXTERN NSArray<NSString *> *CBCCatalogBreadcrumbsFromClass(Class aCla
 /** Invokes +catalogIsPrimaryDemo on the class and returns the BOOL value. */
 FOUNDATION_EXTERN BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass);
 
+/** Invokes +catalogIsPresentable on the class and returns the BOOL value. */
+FOUNDATION_EXTERN BOOL CBCCatalogIsPresentableFromClass(Class aClass);
+
+/** Invokes +catalogIsDebug on the class and returns the BOOL value. */
+FOUNDATION_EXTERN BOOL CBCCatalogIsDebugLeaf(Class aClass);
+
 #pragma mark Runtime enumeration
 
 /** Returns all Objective-C and Swift classes available to the runtime. */
@@ -33,6 +39,12 @@ FOUNDATION_EXTERN NSArray<Class> *CBCGetAllClasses(void);
 /** Returns an array of classes that respond to a given static method selector. */
 FOUNDATION_EXTERN NSArray<Class> *CBCClassesRespondingToSelector(NSArray<Class> *classes,
                                                                  SEL selector);
+
+/**
+ Internal helper method that allows invoking aClass with selector and puts
+ the return value in retValue.
+ */
+void CBCCatalogInvokeFromClassAndSelector(Class aClass, SEL selector, void *retValue);
 
 #pragma mark UIViewController instantiation
 

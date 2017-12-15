@@ -28,20 +28,40 @@ NSArray<NSString *> *CBCCatalogBreadcrumbsFromClass(Class aClass) {
 
 #pragma mark Primary demo check
 
-BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass) {
-  BOOL isPrimaryDemo = NO;
-
-  if ([aClass respondsToSelector:@selector(catalogIsPrimaryDemo)]) {
+void CBCCatalogInvokeFromClassAndSelector(Class aClass, SEL selector, void *retValue) {
+  if ([aClass respondsToSelector:selector]) {
     NSMethodSignature *signature =
-        [aClass methodSignatureForSelector:@selector(catalogIsPrimaryDemo)];
+    [aClass methodSignatureForSelector:selector];
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
-    invocation.selector = @selector(catalogIsPrimaryDemo);
+    invocation.selector = selector;
     invocation.target = aClass;
     [invocation invoke];
-    [invocation getReturnValue:&isPrimaryDemo];
+    [invocation getReturnValue:&retValue];
   }
+}
 
-  return isPrimaryDemo;
+BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass) {
+  BOOL isPrimary = NO;
+  CBCCatalogInvokeFromClassAndSelector(aClass,
+                                       @selector(catalogIsPrimaryDemo),
+                                       &isPrimary);
+  return isPrimary;
+}
+
+BOOL CBCCatalogIsPresentableFromClass(Class aClass) {
+  BOOL isPresentable = NO;
+  CBCCatalogInvokeFromClassAndSelector(aClass,
+                                       @selector(catalogIsPresentable),
+                                       &isPresentable);
+  return isPresentable;
+}
+
+BOOL CBCCatalogIsDebugLeaf(Class aClass) {
+  BOOL isDebugLeaf = NO;
+  CBCCatalogInvokeFromClassAndSelector(aClass,
+                                       @selector(catalogIsDebug),
+                                       &isDebugLeaf);
+  return isDebugLeaf;
 }
 
 #pragma mark Runtime enumeration
