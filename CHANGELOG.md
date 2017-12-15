@@ -1,3 +1,11 @@
+# 2.3.1
+
+ minor bug fix introduced in 2.3.0 that returns wrong boolean values.
+
+ ## Source changes
+
+ * [PR fixes introduced a minor bug, need to update release (#20)](https://github.com/material-foundation/cocoapods-catalog-by-convention/commit/6be4d710a05dbe981728af00700e20268ca548a9) (Yarden Eitan)
+
 # 2.3.0
 
 This minor release adds two new functionalities that support our new Dragons app.
