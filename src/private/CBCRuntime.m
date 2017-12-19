@@ -94,6 +94,9 @@ NSArray<Class> *CBCGetAllClasses(void) {
     if (hasIgnoredPrefix) {
       continue;
     }
+    if (![aClass isSubclassOfClass:[UIViewController class]]) {
+      continue;
+    }
     [classes addObject:aClass];
   }
 
