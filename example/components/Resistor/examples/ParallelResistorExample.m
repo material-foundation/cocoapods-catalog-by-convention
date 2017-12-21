@@ -45,4 +45,8 @@
   return @[ @"Resistor", @"Parallel" ];
 }
 
++ (NSURL *)catalogRelatedInfo {
+  return [[NSURL alloc] initWithString:@"https://en.wikipedia.org/wiki/Resistor"];
+}
+
 @end
