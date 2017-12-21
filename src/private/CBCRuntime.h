@@ -17,19 +17,27 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#pragma mark Breadcrumb retrieval
+#pragma mark Class Invocations
 
 /** Invokes +catalogBreadcrumbs on the class and returns the corresponding array of strings. */
-FOUNDATION_EXTERN NSArray<NSString *> *CBCCatalogBreadcrumbsFromClass(Class aClass);
+//FOUNDATION_EXTERN NSArray<NSString *> *CBCCatalogBreadcrumbsFromClass(Class aClass);
 
 /** Invokes +catalogIsPrimaryDemo on the class and returns the BOOL value. */
-FOUNDATION_EXTERN BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass);
+//FOUNDATION_EXTERN BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass);
 
 /** Invokes +catalogIsPresentable on the class and returns the BOOL value. */
-FOUNDATION_EXTERN BOOL CBCCatalogIsPresentableFromClass(Class aClass);
+//FOUNDATION_EXTERN BOOL CBCCatalogIsPresentableFromClass(Class aClass);
 
 /** Invokes +catalogIsDebug on the class and returns the BOOL value. */
-FOUNDATION_EXTERN BOOL CBCCatalogIsDebugLeaf(Class aClass);
+//FOUNDATION_EXTERN BOOL CBCCatalogIsDebugLeaf(Class aClass);
+
+/** Create a description from the provided class. **/
+//FOUNDATION_EXTERN NSString *CBCDescriptionFromClass(Class aClass);
+
+/** Create a link to related information from the provided class. **/
+//FOUNDATION_EXTERN NSURL *CBCRelatedInfoFromClass(Class aClass);
+
+FOUNDATION_EXTERN NSDictionary *CBCCatalogMetadataFromClass(Class aClass);
 
 #pragma mark Runtime enumeration
 
@@ -55,13 +63,7 @@ void CBCCatalogInvokeFromClassAndSelector(Class aClass, SEL selector, void *retV
  be created with the returned name. The returned view controller will be instantiated by invoking
  -instantiateInitialViewController on the UIStoryboard instance.
  */
-FOUNDATION_EXTERN UIViewController *CBCViewControllerFromClass(Class aClass);
-
-/** Create a description from the provided class. **/
-FOUNDATION_EXTERN NSString *CBCDescriptionFromClass(Class aClass);
-
-/** Create a link to related information from the provided class. **/
-FOUNDATION_EXTERN NSURL *CBCRelatedInfoFromClass(Class aClass);
+FOUNDATION_EXTERN UIViewController *CBCViewControllerFromClass(Class aClass, NSDictionary *metadata);
 
 #pragma mark Fix View Debugging
 

@@ -83,34 +83,36 @@ FOUNDATION_EXTERN CBCNode *_Nonnull CBCCreatePresentableNavigationTree(void);
  */
 @property(nonatomic, strong, nullable) CBCNode *debugLeaf;
 
+@property(nonatomic, strong, nonnull) NSDictionary *metadata;
+
 /** Returns YES if this is an example node. */
-- (BOOL)isExample;
+//- (BOOL)isExample;
 
 /**
  Returns YES if this the primary demo for this component.
 
  Can only return YES if isExample also returns YES.
  */
-- (BOOL)isPrimaryDemo;
+//- (BOOL)isPrimaryDemo;
 
 /** Returns YES if this is a presentable example.  */
-- (BOOL)isPresentable;
+//- (BOOL)isPresentable;
 
 /** Returns String representation of exampleViewController class name if it exists */
-- (nullable NSString *)exampleViewControllerName;
+//- (nullable NSString *)exampleViewControllerName;
 
 /**
  Returns an instance of a UIViewController for presentation purposes.
 
  Check that isExample returns YES before invoking.
  */
-- (nonnull UIViewController *)createExampleViewController;
+//- (nonnull UIViewController *)createExampleViewController;
 
 /**
  Returns a description of the example.
 
  Check that isExample returns YES before invoking.
  */
-- (nonnull NSString *)exampleDescription;
+//- (nonnull NSString *)exampleDescription;
 
 @end

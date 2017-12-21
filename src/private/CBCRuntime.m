@@ -22,46 +22,58 @@
 
 #pragma mark Breadcrumb retrieval
 
-NSArray<NSString *> *CBCCatalogBreadcrumbsFromClass(Class aClass) {
-  return [aClass performSelector:@selector(catalogBreadcrumbs)];
-}
+//NSArray<NSString *> *CBCCatalogBreadcrumbsFromClass(Class aClass) {
+//  return [aClass performSelector:@selector(catalogBreadcrumbs)];
+//}
 
-#pragma mark Primary demo check
+#pragma mark Class Invocations
 
-void CBCCatalogInvokeFromClassAndSelector(Class aClass, SEL selector, void *retValue) {
-  if ([aClass respondsToSelector:selector]) {
-    NSMethodSignature *signature =
-    [aClass methodSignatureForSelector:selector];
-    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
-    invocation.selector = selector;
-    invocation.target = aClass;
-    [invocation invoke];
-    [invocation getReturnValue:retValue];
+//BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass) {
+//  BOOL isPrimary = NO;
+//  if ([aClass respondsToSelector:@selector(catalogIsPrimaryDemo)]) {
+//    isPrimary = [aClass catalogIsPrimaryDemo];
+//  }
+//  return isPrimary;
+//}
+
+//BOOL CBCCatalogIsPresentableFromClass(Class aClass) {
+//  BOOL isPresentable = NO;
+//  if ([aClass respondsToSelector:@selector(catalogIsPresentable)]) {
+//    isPresentable = [aClass catalogIsPresentable];
+//  }
+//  return isPresentable;
+//}
+
+//BOOL CBCCatalogIsDebugLeaf(Class aClass) {
+//  BOOL isDebugLeaf = NO;
+//  if ([aClass respondsToSelector:@selector(catalogIsDebug)]) {
+//    isDebugLeaf = [aClass catalogIsDebug];
+//  }
+//  return isDebugLeaf;
+//}
+
+//NSURL *CBCRelatedInfoFromClass(Class aClass) {
+//  NSURL *catalogRelatedInfo = nil;
+//  if ([aClass respondsToSelector:@selector(catalogRelatedInfo)]) {
+//    catalogRelatedInfo = [aClass catalogRelatedInfo];
+//  }
+//  return catalogRelatedInfo;
+//}
+
+//NSString *CBCDescriptionFromClass(Class aClass) {
+//  NSString *catalogDescription = nil;
+//  if ([aClass respondsToSelector:@selector(catalogDescription)]) {
+//    catalogDescription = [aClass catalogDescription];
+//  }
+//  return catalogDescription;
+//}
+
+NSDictionary *CBCCatalogMetadataFromClass(Class aClass) {
+  NSDictionary *catalogMetadata = [NSDictionary new];
+  if ([aClass respondsToSelector:@selector(catalogMetadata)]) {
+    catalogMetadata = [aClass catalogMetadata];
   }
-}
-
-BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass) {
-  BOOL isPrimary = NO;
-  CBCCatalogInvokeFromClassAndSelector(aClass,
-                                       @selector(catalogIsPrimaryDemo),
-                                       &isPrimary);
-  return isPrimary;
-}
-
-BOOL CBCCatalogIsPresentableFromClass(Class aClass) {
-  BOOL isPresentable = NO;
-  CBCCatalogInvokeFromClassAndSelector(aClass,
-                                       @selector(catalogIsPresentable),
-                                       &isPresentable);
-  return isPresentable;
-}
-
-BOOL CBCCatalogIsDebugLeaf(Class aClass) {
-  BOOL isDebugLeaf = NO;
-  CBCCatalogInvokeFromClassAndSelector(aClass,
-                                       @selector(catalogIsDebug),
-                                       &isDebugLeaf);
-  return isDebugLeaf;
+  return catalogMetadata;
 }
 
 #pragma mark Runtime enumeration
@@ -117,9 +129,9 @@ NSArray<Class> *CBCClassesRespondingToSelector(NSArray<Class> *classes, SEL sele
 
 #pragma mark UIViewController instantiation
 
-UIViewController *CBCViewControllerFromClass(Class aClass) {
-  if ([aClass respondsToSelector:@selector(catalogStoryboardName)]) {
-    NSString *storyboardName = [aClass catalogStoryboardName];
+UIViewController *CBCViewControllerFromClass(Class aClass, NSDictionary *metadata) {
+  if ([metadata objectForKey:@"storyboardName"]) {
+    NSString *storyboardName = [metadata objectForKey:@"storyboardName"];
     NSBundle *bundle = [NSBundle bundleForClass:aClass];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle:bundle];
     NSCAssert(storyboard, @"expecting a storyboard to exist at %@", storyboardName);
@@ -128,22 +140,6 @@ UIViewController *CBCViewControllerFromClass(Class aClass) {
     return vc;
   }
   return [[aClass alloc] init];
-}
-
-NSString *CBCDescriptionFromClass(Class aClass) {
-  if ([aClass respondsToSelector:@selector(catalogDescription)]) {
-    NSString *catalogDescription = [aClass catalogDescription];
-    return catalogDescription;
-  }
-  return nil;
-}
-
-NSURL *CBCRelatedInfoFromClass(Class aClass) {
-  if ([aClass respondsToSelector:@selector(catalogRelatedInfo)]) {
-    NSURL *catalogRelatedInfo = [aClass catalogRelatedInfo];
-    return catalogRelatedInfo;
-  }
-  return nil;
 }
 
 #pragma mark Fix View Debugging
