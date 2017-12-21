@@ -138,6 +138,14 @@ NSString *CBCDescriptionFromClass(Class aClass) {
   return nil;
 }
 
+NSURL *CBCRelatedInfoFromClass(Class aClass) {
+  if ([aClass respondsToSelector:@selector(catalogRelatedInfo)]) {
+    NSURL *catalogRelatedInfo = [aClass catalogRelatedInfo];
+    return catalogRelatedInfo;
+  }
+  return nil;
+}
+
 #pragma mark Fix View Debugging
 
 void CBCFixViewDebuggingIfNeeded(void) {

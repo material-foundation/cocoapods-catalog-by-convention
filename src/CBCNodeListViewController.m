@@ -85,6 +85,11 @@ void CBCAddNodeFromBreadCrumbs(CBCNode *tree, NSArray<NSString *> *breadCrumbs, 
   return CBCDescriptionFromClass(_exampleClass);
 }
 
+- (NSURL *)exampleRelatedInfo {
+  NSAssert(_exampleClass != nil, @"This node has no associated example.");
+  return CBCRelatedInfoFromClass(_exampleClass);
+}
+
 - (BOOL)isPrimaryDemo {
   return CBCCatalogIsPrimaryDemoFromClass(_exampleClass);
 }
