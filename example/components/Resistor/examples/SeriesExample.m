@@ -45,8 +45,4 @@
   return @[ @[ @"Resistor", @"Series"], @[ @"Film", @"Series" ], @[@"Botany", @"Series"] ];
 }
 
-+ (NSURL *)catalogRelatedInfo {
-  return [[NSURL alloc] initWithString:@"https://www.google.com/search?q=series"];
-}
-
 @end
