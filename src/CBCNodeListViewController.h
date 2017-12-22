@@ -113,4 +113,7 @@ FOUNDATION_EXTERN CBCNode *_Nonnull CBCCreatePresentableNavigationTree(void);
  */
 - (nonnull NSString *)exampleDescription;
 
+/** Returns a link to related information for the example. */
+- (nullable NSURL *)exampleRelatedInfo;
+
 @end
