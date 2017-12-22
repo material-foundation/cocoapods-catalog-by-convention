@@ -1,7 +1,10 @@
-# #develop#
+# 2.4.1
 
- TODO: Enumerate changes.
+ Add `exampleRelatedInfo` to the CBCNode header for external invocation.
 
+ ## Source changes
+
+ * [add exampleRelatedInfo to header file (#26)](https://github.com/material-foundation/cocoapods-catalog-by-convention/commit/57edd7f16ea7ec40d62378faacbc95071310bfbc) (Yarden Eitan)
 
 # 2.4.0
 
