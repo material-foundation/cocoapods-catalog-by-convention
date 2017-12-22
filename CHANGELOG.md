@@ -1,3 +1,13 @@
+# 2.4.0
+
+- Now you can add the method `catalogRelatedInfo` that returns an NSURL to your example, if you wish to link to related information and resources.
+- A performance improvement when fetching all viable classes to build the navigation tree.
+
+## Source changes
+
+* [Add "related info" URLs to examples (#24)](https://github.com/material-foundation/cocoapods-catalog-by-convention/commit/ee57bf7bb544b105c5d91aaa2ef348d0f663a690) (Adrian Secord)
+* [[Runtime] Only select UIViewController subclasses (#22)](https://github.com/material-foundation/cocoapods-catalog-by-convention/commit/ce864aabf505978a3933a93bfcf048f5d41bc071) (Robert Moore)
+
 # 2.3.1
 
  minor bug fix introduced in 2.3.0 that returns wrong boolean values.
