@@ -42,7 +42,7 @@ FOUNDATION_EXTERN NSDictionary *CBCCatalogMetadataFromClass(Class aClass);
 #pragma mark Runtime enumeration
 
 /** Returns all Objective-C and Swift classes available to the runtime. */
-FOUNDATION_EXTERN NSArray<Class> *CBCGetAllClasses(void);
+FOUNDATION_EXTERN NSArray<Class> *CBCGetAllCompatibleClasses(void);
 
 /** Returns an array of classes that respond to a given static method selector. */
 FOUNDATION_EXTERN NSArray<Class> *CBCClassesRespondingToSelector(NSArray<Class> *classes,

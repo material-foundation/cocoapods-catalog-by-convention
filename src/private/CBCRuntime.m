@@ -78,7 +78,7 @@ NSDictionary *CBCCatalogMetadataFromClass(Class aClass) {
 
 #pragma mark Runtime enumeration
 
-NSArray<Class> *CBCGetAllClasses(void) {
+NSArray<Class> *CBCGetAllCompatibleClasses(void) {
   int numberOfClasses = objc_getClassList(NULL, 0);
   Class *classList = (Class *)malloc((size_t)numberOfClasses * sizeof(Class));
   objc_getClassList(classList, numberOfClasses);

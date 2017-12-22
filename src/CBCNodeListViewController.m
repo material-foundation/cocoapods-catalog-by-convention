@@ -193,7 +193,7 @@ void CBCAddNodeFromBreadCrumbs(CBCNode *tree, NSArray<NSString *> *breadCrumbs, 
 @end
 
 static CBCNode *CBCCreateTreeWithOnlyPresentable(BOOL onlyPresentable) {
-  NSArray *allClasses = CBCGetAllClasses();
+  NSArray *allClasses = CBCGetAllCompatibleClasses();
   NSArray *filteredClasses = [allClasses filteredArrayUsingPredicate:
                     [NSPredicate predicateWithBlock:^BOOL(id object, NSDictionary *bindings) {
     NSDictionary *metadata = CBCCatalogMetadataFromClass(object);
@@ -207,8 +207,8 @@ static CBCNode *CBCCreateTreeWithOnlyPresentable(BOOL onlyPresentable) {
   CBCNode *tree = [[CBCNode alloc] initWithTitle:@"Root"];
   for (Class aClass in filteredClasses) {
     // Each example view controller defines its own "breadcrumbs".
-
-    NSArray *breadCrumbs = [CBCCatalogMetadataFromClass(aClass) objectForKey:@"breadcrumbs"];
+    NSDictionary *metadata = CBCCatalogMetadataFromClass(aClass);
+    NSArray *breadCrumbs = [metadata objectForKey:@"breadcrumbs"];
     if ([[breadCrumbs firstObject] isKindOfClass:[NSString class]]) {
       CBCAddNodeFromBreadCrumbs(tree, breadCrumbs, aClass);
     } else if ([[breadCrumbs firstObject] isKindOfClass:[NSArray class]]) {
@@ -248,7 +248,6 @@ void CBCAddNodeFromBreadCrumbs(CBCNode *tree, NSArray<NSString *> *breadCrumbs, 
     BOOL isLastCrumb = ix == [breadCrumbs count] - 1;
 
     // Don't walk the last crumb
-
     if (node.map[title] && !isLastCrumb) {
       node = node.map[title];
       continue;
