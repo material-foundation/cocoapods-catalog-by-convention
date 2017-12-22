@@ -94,6 +94,9 @@ NSArray<Class> *CBCGetAllClasses(void) {
     if (hasIgnoredPrefix) {
       continue;
     }
+    if (![aClass isSubclassOfClass:[UIViewController class]]) {
+      continue;
+    }
     [classes addObject:aClass];
   }
 
@@ -131,6 +134,14 @@ NSString *CBCDescriptionFromClass(Class aClass) {
   if ([aClass respondsToSelector:@selector(catalogDescription)]) {
     NSString *catalogDescription = [aClass catalogDescription];
     return catalogDescription;
+  }
+  return nil;
+}
+
+NSURL *CBCRelatedInfoFromClass(Class aClass) {
+  if ([aClass respondsToSelector:@selector(catalogRelatedInfo)]) {
+    NSURL *catalogRelatedInfo = [aClass catalogRelatedInfo];
+    return catalogRelatedInfo;
   }
   return nil;
 }

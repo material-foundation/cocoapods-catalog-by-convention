@@ -60,6 +60,9 @@ FOUNDATION_EXTERN UIViewController *CBCViewControllerFromClass(Class aClass);
 /** Create a description from the provided class. **/
 FOUNDATION_EXTERN NSString *CBCDescriptionFromClass(Class aClass);
 
+/** Create a link to related information from the provided class. **/
+FOUNDATION_EXTERN NSURL *CBCRelatedInfoFromClass(Class aClass);
+
 #pragma mark Fix View Debugging
 
 /**

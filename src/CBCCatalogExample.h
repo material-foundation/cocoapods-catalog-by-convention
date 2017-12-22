@@ -53,4 +53,7 @@
 /** Return a description of the example. */
 - (nonnull NSString *)catalogDescription;
 
+/** Return a link to related information or resources. */
+- (nonnull NSURL *)catalogRelatedInfo;
+
 @end
