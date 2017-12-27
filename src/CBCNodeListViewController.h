@@ -83,6 +83,11 @@ FOUNDATION_EXTERN CBCNode *_Nonnull CBCCreatePresentableNavigationTree(void);
  */
 @property(nonatomic, strong, nullable) CBCNode *debugLeaf;
 
+/**
+ This NSDictionary holds all the metadata related to this CBCNode.
+ If it is an example noe, a primary demo, related info,
+ if presentable in Catalog, etc.
+ */
 @property(nonatomic, strong, nonnull) NSDictionary *metadata;
 
 /** Returns YES if this is an example node. */
@@ -93,10 +98,10 @@ FOUNDATION_EXTERN CBCNode *_Nonnull CBCCreatePresentableNavigationTree(void);
 
  Can only return YES if isExample also returns YES.
  */
-- (BOOL)isPrimaryDemo;
+- (BOOL)isPrimaryDemo __attribute__((deprecated("use metadata[\"primaryDemo\"] instead.")));
 
 /** Returns YES if this is a presentable example.  */
-- (BOOL)isPresentable;
+- (BOOL)isPresentable __attribute__((deprecated("use metadata[\"presentable\"] instead.")));
 
 /** Returns String representation of exampleViewController class name if it exists */
 - (nullable NSString *)exampleViewControllerName;
@@ -113,9 +118,9 @@ FOUNDATION_EXTERN CBCNode *_Nonnull CBCCreatePresentableNavigationTree(void);
 
  Check that isExample returns YES before invoking.
  */
-- (nullable NSString *)exampleDescription;
+- (nullable NSString *)exampleDescription __attribute__((deprecated("use metadata[\"description\"] instead.")));
 
 /** Returns a link to related information for the example. */
-- (nullable NSURL *)exampleRelatedInfo;
+- (nullable NSURL *)exampleRelatedInfo __attribute__((deprecated("use metadata[\"relatedInfo\"] instead.")));
 
 @end

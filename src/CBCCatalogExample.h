@@ -25,37 +25,47 @@
  */
 @protocol CBCCatalogExample <NSObject>
 
-/** Return a list of breadcrumbs defining the navigation path taken to reach this example. */
-+ (nonnull NSArray<NSString *> *)catalogBreadcrumbs;
-
 /**
- Return a BOOL stating whether this example should be treated as the primary demo of the component.
+ Returns a dictionary with metaata information for the example.
  */
-+ (BOOL)catalogIsPrimaryDemo;
-
-/**
- Return a BOOL stating whether this example is presentable and should be part of the catalog app.
- */
-+ (BOOL)catalogIsPresentable;
-
-/**
- Return a BOOL stating whether this example is in debug mode and should appear as the initial view controller.
- */
-+ (BOOL)catalogIsDebug;
-
 + (nonnull NSDictionary<NSString *, NSObject *> *)catalogMetadata;
 
 @optional
 
+/** Return a list of breadcrumbs defining the navigation path taken to reach this example. */
++ (nonnull NSArray<NSString *> *)catalogBreadcrumbs
+  __attribute__((deprecated("use catalogMetadata[\"breadcrumbs\"] instead.")));
+
+/**
+ Return a BOOL stating whether this example should be treated as the primary demo of the component.
+ */
++ (BOOL)catalogIsPrimaryDemo
+  __attribute__((deprecated("use catalogMetadata[\"primaryDemo\"] instead.")));;
+
+/**
+ Return a BOOL stating whether this example is presentable and should be part of the catalog app.
+ */
++ (BOOL)catalogIsPresentable
+  __attribute__((deprecated("use catalogMetadata[\"presentable\"] instead.")));
+
+/**
+ Return a BOOL stating whether this example is in debug mode and should appear as the initial view controller.
+ */
++ (BOOL)catalogIsDebug
+  __attribute__((deprecated("use catalogMetadata[\"debug\"] instead.")));
+
 /**
  Return the name of a UIStoryboard from which the example's view controller should be instantiated.
  */
-- (nonnull NSString *)catalogStoryboardName;
+- (nonnull NSString *)catalogStoryboardName
+  __attribute__((deprecated("use catalogMetadata[\"storyboardName\"] instead.")));
 
 /** Return a description of the example. */
-- (nonnull NSString *)catalogDescription;
+- (nonnull NSString *)catalogDescription
+  __attribute__((deprecated("use catalogMetadata[\"description\"] instead.")));
 
 /** Return a link to related information or resources. */
-- (nonnull NSURL *)catalogRelatedInfo;
+- (nonnull NSURL *)catalogRelatedInfo
+  __attribute__((deprecated("use catalogMetadata[\"relatedInfo\"] instead.")));
 
 @end

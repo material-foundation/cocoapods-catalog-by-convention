@@ -25,18 +25,12 @@ void CBCAddNodeFromBreadCrumbs(CBCNode *tree,
                                NSDictionary *metadata);
 
 @interface CBCNode()
-
 @property(nonatomic, strong, nullable) NSMutableDictionary *map;
 @property(nonatomic, strong, nullable) Class exampleClass;
-//@property(nonatomic, strong, nullable) NSMutableArray *mutableChildren;
-
 @end
 
 @implementation CBCNode {
-//  NSMutableDictionary *_map;
   NSMutableArray *_children;
-//  Class _exampleClass;
-//  BOOL _isPresentable;
 }
 
 - (instancetype)initWithTitle:(NSString *)title {
@@ -45,7 +39,6 @@ void CBCAddNodeFromBreadCrumbs(CBCNode *tree,
     _title = [title copy];
     self.map = [NSMutableDictionary dictionary];
     _children = [NSMutableArray array];
-//    _isPresentable = NO;
     CBCFixViewDebuggingIfNeeded();
   }
   return self;
@@ -59,18 +52,6 @@ void CBCAddNodeFromBreadCrumbs(CBCNode *tree,
   self.map[child.title] = child;
   [_children addObject:child];
 }
-
-//- (NSDictionary *)map {
-//  return _map;
-//}
-
-//- (void)setExampleClass:(Class)exampleClass {
-//  self.exampleClass = exampleClass;
-//}
-//
-//- (void)setIsPresentable:(Class)exampleClass {
-//  _isPresentable = CBCCatalogIsPresentableFromClass(exampleClass);
-//}
 
 - (void)finalizeNode {
   _children = [[_children sortedArrayUsingSelector:@selector(compare:)] copy];
