@@ -69,9 +69,6 @@ FOUNDATION_EXTERN CBCNode *_Nonnull CBCCreatePresentableNavigationTree(void);
 /** The title for this node. */
 @property(nonatomic, copy, nonnull, readonly) NSString *title;
 
-/** The description for this node. */
-@property(nonatomic, copy, nonnull, readonly) NSString *nodeDescription;
-
 /** The children of this node. */
 @property(nonatomic, strong, nonnull) NSArray<CBCNode *> *children;
 
