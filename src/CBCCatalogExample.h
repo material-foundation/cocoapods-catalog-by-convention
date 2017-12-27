@@ -26,17 +26,17 @@
 @protocol CBCCatalogExample <NSObject>
 
 /** Return a list of breadcrumbs defining the navigation path taken to reach this example. */
-//+ (nonnull NSArray<NSString *> *)catalogBreadcrumbs;
++ (nonnull NSArray<NSString *> *)catalogBreadcrumbs;
 
 /**
  Return a BOOL stating whether this example should be treated as the primary demo of the component.
  */
-//+ (BOOL)catalogIsPrimaryDemo;
++ (BOOL)catalogIsPrimaryDemo;
 
 /**
  Return a BOOL stating whether this example is presentable and should be part of the catalog app.
  */
-//+ (BOOL)catalogIsPresentable;
++ (BOOL)catalogIsPresentable;
 
 /**
  Return a BOOL stating whether this example is in debug mode and should appear as the initial view controller.
@@ -50,12 +50,12 @@
 /**
  Return the name of a UIStoryboard from which the example's view controller should be instantiated.
  */
-//- (nonnull NSString *)catalogStoryboardName;
+- (nonnull NSString *)catalogStoryboardName;
 
 /** Return a description of the example. */
-//- (nonnull NSString *)catalogDescription;
+- (nonnull NSString *)catalogDescription;
 
 /** Return a link to related information or resources. */
-//- (nonnull NSURL *)catalogRelatedInfo;
+- (nonnull NSURL *)catalogRelatedInfo;
 
 @end

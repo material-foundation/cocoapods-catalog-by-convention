@@ -22,56 +22,92 @@
 
 #pragma mark Breadcrumb retrieval
 
-//NSArray<NSString *> *CBCCatalogBreadcrumbsFromClass(Class aClass) {
-//  return [aClass performSelector:@selector(catalogBreadcrumbs)];
-//}
+NSArray<NSString *> *CBCCatalogBreadcrumbsFromClass(Class aClass) {
+  return [aClass performSelector:@selector(catalogBreadcrumbs)];
+}
 
 #pragma mark Class Invocations
 
-//BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass) {
-//  BOOL isPrimary = NO;
-//  if ([aClass respondsToSelector:@selector(catalogIsPrimaryDemo)]) {
-//    isPrimary = [aClass catalogIsPrimaryDemo];
-//  }
-//  return isPrimary;
-//}
+BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass) {
+  BOOL isPrimary = NO;
+  if ([aClass respondsToSelector:@selector(catalogIsPrimaryDemo)]) {
+    isPrimary = [aClass catalogIsPrimaryDemo];
+  }
+  return isPrimary;
+}
 
-//BOOL CBCCatalogIsPresentableFromClass(Class aClass) {
-//  BOOL isPresentable = NO;
-//  if ([aClass respondsToSelector:@selector(catalogIsPresentable)]) {
-//    isPresentable = [aClass catalogIsPresentable];
-//  }
-//  return isPresentable;
-//}
+BOOL CBCCatalogIsPresentableFromClass(Class aClass) {
+  BOOL isPresentable = NO;
+  if ([aClass respondsToSelector:@selector(catalogIsPresentable)]) {
+    isPresentable = [aClass catalogIsPresentable];
+  }
+  return isPresentable;
+}
 
-//BOOL CBCCatalogIsDebugLeaf(Class aClass) {
-//  BOOL isDebugLeaf = NO;
-//  if ([aClass respondsToSelector:@selector(catalogIsDebug)]) {
-//    isDebugLeaf = [aClass catalogIsDebug];
-//  }
-//  return isDebugLeaf;
-//}
+BOOL CBCCatalogIsDebugLeaf(Class aClass) {
+  BOOL isDebugLeaf = NO;
+  if ([aClass respondsToSelector:@selector(catalogIsDebug)]) {
+    isDebugLeaf = [aClass catalogIsDebug];
+  }
+  return isDebugLeaf;
+}
 
-//NSURL *CBCRelatedInfoFromClass(Class aClass) {
-//  NSURL *catalogRelatedInfo = nil;
-//  if ([aClass respondsToSelector:@selector(catalogRelatedInfo)]) {
-//    catalogRelatedInfo = [aClass catalogRelatedInfo];
-//  }
-//  return catalogRelatedInfo;
-//}
+NSURL *CBCRelatedInfoFromClass(Class aClass) {
+  NSURL *catalogRelatedInfo = nil;
+  if ([aClass respondsToSelector:@selector(catalogRelatedInfo)]) {
+    catalogRelatedInfo = [aClass catalogRelatedInfo];
+  }
+  return catalogRelatedInfo;
+}
 
-//NSString *CBCDescriptionFromClass(Class aClass) {
-//  NSString *catalogDescription = nil;
-//  if ([aClass respondsToSelector:@selector(catalogDescription)]) {
-//    catalogDescription = [aClass catalogDescription];
-//  }
-//  return catalogDescription;
-//}
+NSString *CBCDescriptionFromClass(Class aClass) {
+  NSString *catalogDescription = nil;
+  if ([aClass respondsToSelector:@selector(catalogDescription)]) {
+    catalogDescription = [aClass catalogDescription];
+  }
+  return catalogDescription;
+}
+
+NSString *CBCStoryboardNameFromClass(Class aClass) {
+  NSString *catalogStoryboardName = nil;
+  if ([aClass respondsToSelector:@selector(catalogStoryboardName)]) {
+    catalogStoryboardName = [aClass catalogStoryboardName];
+  }
+  return catalogStoryboardName;
+}
+
+NSDictionary *CBCConstructMetadataFromMethods(Class aClass) {
+  NSMutableDictionary *catalogMetadata = [NSMutableDictionary new];
+  if ([aClass respondsToSelector:@selector(catalogBreadcrumbs)]) {
+    [catalogMetadata setObject:CBCCatalogBreadcrumbsFromClass(aClass) forKey:@"breadcrumbs"];
+    [catalogMetadata setObject:[NSNumber numberWithBool:CBCCatalogIsPrimaryDemoFromClass(aClass)]
+                        forKey:@"primaryDemo"];
+    [catalogMetadata setObject:[NSNumber numberWithBool:CBCCatalogIsPresentableFromClass(aClass)]
+                        forKey:@"presentable"];
+    [catalogMetadata setObject:[NSNumber numberWithBool:CBCCatalogIsDebugLeaf(aClass)]
+                        forKey:@"debug"];
+    NSURL *relatedInfo;
+    if ((relatedInfo = CBCRelatedInfoFromClass(aClass)) != nil) {
+      [catalogMetadata setObject:CBCRelatedInfoFromClass(aClass) forKey:@"relatedInfo"];
+    }
+    NSString *description;
+    if ((description = CBCDescriptionFromClass(aClass)) != nil) {
+      [catalogMetadata setObject:CBCDescriptionFromClass(aClass) forKey:@"description"];
+    }
+    NSString *storyboardName;
+    if ((storyboardName = CBCStoryboardNameFromClass(aClass)) != nil) {
+      [catalogMetadata setObject:CBCStoryboardNameFromClass(aClass) forKey:@"storyboardName"];
+    }
+  }
+  return catalogMetadata;
+}
 
 NSDictionary *CBCCatalogMetadataFromClass(Class aClass) {
-  NSDictionary *catalogMetadata = [NSDictionary new];
+  NSDictionary *catalogMetadata;
   if ([aClass respondsToSelector:@selector(catalogMetadata)]) {
     catalogMetadata = [aClass catalogMetadata];
+  } else {
+    catalogMetadata = CBCConstructMetadataFromMethods(aClass);
   }
   return catalogMetadata;
 }
