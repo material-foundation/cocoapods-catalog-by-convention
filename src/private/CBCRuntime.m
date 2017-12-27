@@ -28,6 +28,7 @@ NSArray<NSString *> *CBCCatalogBreadcrumbsFromClass(Class aClass) {
 
 #pragma mark Class Invocations
 
+__attribute__((deprecated))
 BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass) {
   BOOL isPrimary = NO;
   if ([aClass respondsToSelector:@selector(catalogIsPrimaryDemo)]) {
@@ -36,6 +37,7 @@ BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass) {
   return isPrimary;
 }
 
+__attribute__((deprecated))
 BOOL CBCCatalogIsPresentableFromClass(Class aClass) {
   BOOL isPresentable = NO;
   if ([aClass respondsToSelector:@selector(catalogIsPresentable)]) {
@@ -44,6 +46,7 @@ BOOL CBCCatalogIsPresentableFromClass(Class aClass) {
   return isPresentable;
 }
 
+__attribute__((deprecated))
 BOOL CBCCatalogIsDebugLeaf(Class aClass) {
   BOOL isDebugLeaf = NO;
   if ([aClass respondsToSelector:@selector(catalogIsDebug)]) {
@@ -52,6 +55,7 @@ BOOL CBCCatalogIsDebugLeaf(Class aClass) {
   return isDebugLeaf;
 }
 
+__attribute__((deprecated))
 NSURL *CBCRelatedInfoFromClass(Class aClass) {
   NSURL *catalogRelatedInfo = nil;
   if ([aClass respondsToSelector:@selector(catalogRelatedInfo)]) {
@@ -60,6 +64,7 @@ NSURL *CBCRelatedInfoFromClass(Class aClass) {
   return catalogRelatedInfo;
 }
 
+__attribute__((deprecated))
 NSString *CBCDescriptionFromClass(Class aClass) {
   NSString *catalogDescription = nil;
   if ([aClass respondsToSelector:@selector(catalogDescription)]) {
@@ -68,6 +73,7 @@ NSString *CBCDescriptionFromClass(Class aClass) {
   return catalogDescription;
 }
 
+__attribute__((deprecated))
 NSString *CBCStoryboardNameFromClass(Class aClass) {
   NSString *catalogStoryboardName = nil;
   if ([aClass respondsToSelector:@selector(catalogStoryboardName)]) {
@@ -76,6 +82,7 @@ NSString *CBCStoryboardNameFromClass(Class aClass) {
   return catalogStoryboardName;
 }
 
+__attribute__((deprecated))
 NSDictionary *CBCConstructMetadataFromMethods(Class aClass) {
   NSMutableDictionary *catalogMetadata = [NSMutableDictionary new];
   if ([aClass respondsToSelector:@selector(catalogBreadcrumbs)]) {

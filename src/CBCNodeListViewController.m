@@ -54,7 +54,7 @@ void CBCAddNodeFromBreadCrumbs(CBCNode *tree,
 }
 
 - (void)finalizeNode {
-  _children = [[_children sortedArrayUsingSelector:@selector(compare:)] copy];
+  _children = [[_children sortedArrayUsingSelector:@selector(compare:)] mutableCopy];
 }
 
 #pragma mark Public
