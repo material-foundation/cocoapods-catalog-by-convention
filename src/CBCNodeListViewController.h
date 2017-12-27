@@ -95,10 +95,10 @@ FOUNDATION_EXTERN CBCNode *_Nonnull CBCCreatePresentableNavigationTree(void);
 
  Can only return YES if isExample also returns YES.
  */
-- (BOOL)isPrimaryDemo __attribute__((deprecated("use metadata[\"primaryDemo\"] instead.")));
+- (BOOL)isPrimaryDemo;
 
 /** Returns YES if this is a presentable example.  */
-- (BOOL)isPresentable __attribute__((deprecated("use metadata[\"presentable\"] instead.")));
+- (BOOL)isPresentable;
 
 /** Returns String representation of exampleViewController class name if it exists */
 - (nullable NSString *)exampleViewControllerName;
@@ -115,9 +115,9 @@ FOUNDATION_EXTERN CBCNode *_Nonnull CBCCreatePresentableNavigationTree(void);
 
  Check that isExample returns YES before invoking.
  */
-- (nullable NSString *)exampleDescription __attribute__((deprecated("use metadata[\"description\"] instead.")));
+- (nullable NSString *)exampleDescription;
 
 /** Returns a link to related information for the example. */
-- (nullable NSURL *)exampleRelatedInfo __attribute__((deprecated("use metadata[\"relatedInfo\"] instead.")));
+- (nullable NSURL *)exampleRelatedInfo;
 
 @end
