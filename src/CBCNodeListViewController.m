@@ -74,16 +74,16 @@ void CBCAddNodeFromBreadCrumbs(CBCNode *tree,
 }
 
 - (NSString *)exampleDescription {
-  NSString *description;
-  if ((description = [self.metadata objectForKey:@"description"]) != nil) {
+  NSString *description = [self.metadata objectForKey:@"description"];
+  if (description != nil && [description isKindOfClass:[NSString class]]) {
     return description;
   }
   return nil;
 }
 
 - (NSURL *)exampleRelatedInfo {
-  NSURL *relatedInfo;
-  if ((relatedInfo = [self.metadata objectForKey:@"relatedInfo"]) != nil) {
+  NSURL *relatedInfo = [self.metadata objectForKey:@"relatedInfo"];
+  if (relatedInfo != nil && [relatedInfo isKindOfClass:[NSURL class]]) {
     return relatedInfo;
   }
   return nil;
@@ -196,7 +196,8 @@ static CBCNode *CBCCreateTreeWithOnlyPresentable(BOOL onlyPresentable) {
   NSArray *filteredClasses = [allClasses filteredArrayUsingPredicate:
                     [NSPredicate predicateWithBlock:^BOOL(id object, NSDictionary *bindings) {
     NSDictionary *metadata = CBCCatalogMetadataFromClass(object);
-    BOOL validObject = [metadata objectForKey:@"breadcrumbs"] != nil;
+    id breadcrumbs = [metadata objectForKey:@"breadcrumbs"];
+    BOOL validObject =  breadcrumbs != nil && [breadcrumbs isKindOfClass:[NSArray class]];
     if (onlyPresentable) {
       validObject &= ([[metadata objectForKey:@"presentable"] boolValue] == YES);
     }
