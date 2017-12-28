@@ -20,12 +20,10 @@
 
 #pragma mark Class Invocations
 
-__attribute__((deprecated))
 static NSArray<NSString *> *CBCCatalogBreadcrumbsFromClass(Class aClass) {
   return [aClass performSelector:@selector(catalogBreadcrumbs)];
 }
 
-__attribute__((deprecated))
 static BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass) {
   BOOL isPrimary = NO;
   if ([aClass respondsToSelector:@selector(catalogIsPrimaryDemo)]) {
@@ -34,7 +32,6 @@ static BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass) {
   return isPrimary;
 }
 
-__attribute__((deprecated))
 static BOOL CBCCatalogIsPresentableFromClass(Class aClass) {
   BOOL isPresentable = NO;
   if ([aClass respondsToSelector:@selector(catalogIsPresentable)]) {
@@ -43,7 +40,6 @@ static BOOL CBCCatalogIsPresentableFromClass(Class aClass) {
   return isPresentable;
 }
 
-__attribute__((deprecated))
 static BOOL CBCCatalogIsDebugLeaf(Class aClass) {
   BOOL isDebugLeaf = NO;
   if ([aClass respondsToSelector:@selector(catalogIsDebug)]) {
@@ -52,7 +48,6 @@ static BOOL CBCCatalogIsDebugLeaf(Class aClass) {
   return isDebugLeaf;
 }
 
-__attribute__((deprecated))
 static NSURL *CBCRelatedInfoFromClass(Class aClass) {
   NSURL *catalogRelatedInfo = nil;
   if ([aClass respondsToSelector:@selector(catalogRelatedInfo)]) {
@@ -61,7 +56,6 @@ static NSURL *CBCRelatedInfoFromClass(Class aClass) {
   return catalogRelatedInfo;
 }
 
-__attribute__((deprecated))
 static NSString *CBCDescriptionFromClass(Class aClass) {
   NSString *catalogDescription = nil;
   if ([aClass respondsToSelector:@selector(catalogDescription)]) {
@@ -70,7 +64,6 @@ static NSString *CBCDescriptionFromClass(Class aClass) {
   return catalogDescription;
 }
 
-__attribute__((deprecated))
 static NSString *CBCStoryboardNameFromClass(Class aClass) {
   NSString *catalogStoryboardName = nil;
   if ([aClass respondsToSelector:@selector(catalogStoryboardName)]) {
@@ -79,7 +72,6 @@ static NSString *CBCStoryboardNameFromClass(Class aClass) {
   return catalogStoryboardName;
 }
 
-__attribute__((deprecated))
 static NSDictionary *CBCConstructMetadataFromMethods(Class aClass) {
   NSMutableDictionary *catalogMetadata = [NSMutableDictionary new];
   if ([aClass respondsToSelector:@selector(catalogBreadcrumbs)]) {
