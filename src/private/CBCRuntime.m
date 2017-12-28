@@ -18,25 +18,15 @@
 #import "CBCCatalogExample.h"
 #import <objc/runtime.h>
 
-NSArray<NSString *> *CBCCatalogBreadcrumbsFromClass(Class aClass);
-BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass);
-BOOL CBCCatalogIsPresentableFromClass(Class aClass);
-BOOL CBCCatalogIsDebugLeaf(Class aClass);
-NSString *CBCDescriptionFromClass(Class aClass);
-NSURL *CBCRelatedInfoFromClass(Class aClass);
-NSDictionary *CBCConstructMetadataFromMethods(Class aClass);
-NSString *CBCStoryboardNameFromClass(Class aClass);
-
-#pragma mark Breadcrumb retrieval
-
-NSArray<NSString *> *CBCCatalogBreadcrumbsFromClass(Class aClass) {
-  return [aClass performSelector:@selector(catalogBreadcrumbs)];
-}
-
 #pragma mark Class Invocations
 
 __attribute__((deprecated))
-BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass) {
+static NSArray<NSString *> *CBCCatalogBreadcrumbsFromClass(Class aClass) {
+  return [aClass performSelector:@selector(catalogBreadcrumbs)];
+}
+
+__attribute__((deprecated))
+static BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass) {
   BOOL isPrimary = NO;
   if ([aClass respondsToSelector:@selector(catalogIsPrimaryDemo)]) {
     isPrimary = [aClass catalogIsPrimaryDemo];
@@ -45,7 +35,7 @@ BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass) {
 }
 
 __attribute__((deprecated))
-BOOL CBCCatalogIsPresentableFromClass(Class aClass) {
+static BOOL CBCCatalogIsPresentableFromClass(Class aClass) {
   BOOL isPresentable = NO;
   if ([aClass respondsToSelector:@selector(catalogIsPresentable)]) {
     isPresentable = [aClass catalogIsPresentable];
@@ -54,7 +44,7 @@ BOOL CBCCatalogIsPresentableFromClass(Class aClass) {
 }
 
 __attribute__((deprecated))
-BOOL CBCCatalogIsDebugLeaf(Class aClass) {
+static BOOL CBCCatalogIsDebugLeaf(Class aClass) {
   BOOL isDebugLeaf = NO;
   if ([aClass respondsToSelector:@selector(catalogIsDebug)]) {
     isDebugLeaf = [aClass catalogIsDebug];
@@ -63,7 +53,7 @@ BOOL CBCCatalogIsDebugLeaf(Class aClass) {
 }
 
 __attribute__((deprecated))
-NSURL *CBCRelatedInfoFromClass(Class aClass) {
+static NSURL *CBCRelatedInfoFromClass(Class aClass) {
   NSURL *catalogRelatedInfo = nil;
   if ([aClass respondsToSelector:@selector(catalogRelatedInfo)]) {
     catalogRelatedInfo = [aClass catalogRelatedInfo];
@@ -72,7 +62,7 @@ NSURL *CBCRelatedInfoFromClass(Class aClass) {
 }
 
 __attribute__((deprecated))
-NSString *CBCDescriptionFromClass(Class aClass) {
+static NSString *CBCDescriptionFromClass(Class aClass) {
   NSString *catalogDescription = nil;
   if ([aClass respondsToSelector:@selector(catalogDescription)]) {
     catalogDescription = [aClass catalogDescription];
@@ -81,7 +71,7 @@ NSString *CBCDescriptionFromClass(Class aClass) {
 }
 
 __attribute__((deprecated))
-NSString *CBCStoryboardNameFromClass(Class aClass) {
+static NSString *CBCStoryboardNameFromClass(Class aClass) {
   NSString *catalogStoryboardName = nil;
   if ([aClass respondsToSelector:@selector(catalogStoryboardName)]) {
     catalogStoryboardName = [aClass catalogStoryboardName];
@@ -90,7 +80,7 @@ NSString *CBCStoryboardNameFromClass(Class aClass) {
 }
 
 __attribute__((deprecated))
-NSDictionary *CBCConstructMetadataFromMethods(Class aClass) {
+static NSDictionary *CBCConstructMetadataFromMethods(Class aClass) {
   NSMutableDictionary *catalogMetadata = [NSMutableDictionary new];
   if ([aClass respondsToSelector:@selector(catalogBreadcrumbs)]) {
     [catalogMetadata setObject:CBCCatalogBreadcrumbsFromClass(aClass) forKey:@"breadcrumbs"];
