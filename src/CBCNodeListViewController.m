@@ -19,11 +19,6 @@
 #import "CBCCatalogExample.h"
 #import "private/CBCRuntime.h"
 
-void CBCAddNodeFromBreadCrumbs(CBCNode *tree,
-                               NSArray<NSString *> *breadCrumbs,
-                               Class aClass,
-                               NSDictionary *metadata);
-
 @interface CBCNode()
 @property(nonatomic, strong, nullable) NSMutableDictionary *map;
 @property(nonatomic, strong, nullable) Class exampleClass;
@@ -191,6 +186,35 @@ void CBCAddNodeFromBreadCrumbs(CBCNode *tree,
 
 @end
 
+static void CBCAddNodeFromBreadCrumbs(CBCNode *tree,
+                                      NSArray<NSString *> *breadCrumbs,
+                                      Class aClass,
+                                      NSDictionary *metadata) {
+  // Walk down the navigation tree one breadcrumb at a time, creating nodes along the way.
+
+  CBCNode *node = tree;
+  for (NSUInteger ix = 0; ix < [breadCrumbs count]; ++ix) {
+    NSString *title = breadCrumbs[ix];
+    BOOL isLastCrumb = ix == [breadCrumbs count] - 1;
+
+    // Don't walk the last crumb
+    if (node.map[title] && !isLastCrumb) {
+      node = node.map[title];
+      continue;
+    }
+
+    CBCNode *child = [[CBCNode alloc] initWithTitle:title];
+    [node addChild:child];
+    child.metadata = metadata;
+    if ([[node.metadata objectForKey:@"debug"] boolValue] == YES) {
+      tree.debugLeaf = child;
+    }
+    node = child;
+  }
+
+  node.exampleClass = aClass;
+}
+
 static CBCNode *CBCCreateTreeWithOnlyPresentable(BOOL onlyPresentable) {
   NSArray *allClasses = CBCGetAllCompatibleClasses();
   NSArray *filteredClasses = [allClasses filteredArrayUsingPredicate:
@@ -237,33 +261,4 @@ CBCNode *CBCCreateNavigationTree(void) {
 
 CBCNode *CBCCreatePresentableNavigationTree(void) {
   return CBCCreateTreeWithOnlyPresentable(YES);
-}
-
-void CBCAddNodeFromBreadCrumbs(CBCNode *tree,
-                               NSArray<NSString *> *breadCrumbs,
-                               Class aClass,
-                               NSDictionary *metadata) {
-  // Walk down the navigation tree one breadcrumb at a time, creating nodes along the way.
-
-  CBCNode *node = tree;
-  for (NSUInteger ix = 0; ix < [breadCrumbs count]; ++ix) {
-    NSString *title = breadCrumbs[ix];
-    BOOL isLastCrumb = ix == [breadCrumbs count] - 1;
-
-    // Don't walk the last crumb
-    if (node.map[title] && !isLastCrumb) {
-      node = node.map[title];
-      continue;
-    }
-
-    CBCNode *child = [[CBCNode alloc] initWithTitle:title];
-    [node addChild:child];
-    child.metadata = metadata;
-    if ([[node.metadata objectForKey:@"debug"] boolValue] == YES) {
-      tree.debugLeaf = child;
-    }
-    node = child;
-  }
-
-  node.exampleClass = aClass;
 }
