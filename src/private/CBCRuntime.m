@@ -15,10 +15,17 @@
  */
 
 #import "CBCRuntime.h"
-
 #import "CBCCatalogExample.h"
-
 #import <objc/runtime.h>
+
+NSArray<NSString *> *CBCCatalogBreadcrumbsFromClass(Class aClass);
+BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass);
+BOOL CBCCatalogIsPresentableFromClass(Class aClass);
+BOOL CBCCatalogIsDebugLeaf(Class aClass);
+NSString *CBCDescriptionFromClass(Class aClass);
+NSURL *CBCRelatedInfoFromClass(Class aClass);
+NSDictionary *CBCConstructMetadataFromMethods(Class aClass);
+NSString *CBCStoryboardNameFromClass(Class aClass);
 
 #pragma mark Breadcrumb retrieval
 
