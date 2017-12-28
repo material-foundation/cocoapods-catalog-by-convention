@@ -17,7 +17,24 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#pragma mark Class Invocations
+#pragma mark Metadata keys
+
+/** This key represents a boolean value if to present the example in the Catalog app or not */
+FOUNDATION_EXTERN NSAttributedStringKey const CBCIsPresentable;
+/** This key represents a strings array of the breadcrumbs showing the hierarchy of the example */
+FOUNDATION_EXTERN NSAttributedStringKey const CBCBreadcrumbs;
+/** This key represents a string for the description for the example */
+FOUNDATION_EXTERN NSAttributedStringKey const CBCDescription;
+/** This key represents a boolean value if the example is for debugging */
+FOUNDATION_EXTERN NSAttributedStringKey const CBCIsDebug;
+/** This key represents a boolean value if the example is the primary demo */
+FOUNDATION_EXTERN NSAttributedStringKey const CBCIsPrimaryDemo;
+/** This key represents an NSURL value providing related info for the example */
+FOUNDATION_EXTERN NSAttributedStringKey const CBCRelatedInfo;
+/** This key represents a string value of the storyboard name for the example */
+FOUNDATION_EXTERN NSAttributedStringKey const CBCStoryboardName;
+
+#pragma mark Class invocations
 
 /** Invokes +catalogMetadata on the class and returns the NSDictionary value */
 FOUNDATION_EXTERN NSDictionary *CBCCatalogMetadataFromClass(Class aClass);

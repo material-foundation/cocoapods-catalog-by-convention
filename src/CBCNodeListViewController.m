@@ -69,7 +69,7 @@
 }
 
 - (NSString *)exampleDescription {
-  NSString *description = [self.metadata objectForKey:@"description"];
+  NSString *description = [self.metadata objectForKey:CBCDescription];
   if (description != nil && [description isKindOfClass:[NSString class]]) {
     return description;
   }
@@ -77,7 +77,7 @@
 }
 
 - (NSURL *)exampleRelatedInfo {
-  NSURL *relatedInfo = [self.metadata objectForKey:@"relatedInfo"];
+  NSURL *relatedInfo = [self.metadata objectForKey:CBCRelatedInfo];
   if (relatedInfo != nil && [relatedInfo isKindOfClass:[NSURL class]]) {
     return relatedInfo;
   }
@@ -86,7 +86,7 @@
 
 - (BOOL)isPrimaryDemo {
   id isPrimaryDemo;
-  if ((isPrimaryDemo = [self.metadata objectForKey:@"primaryDemo"]) != nil) {
+  if ((isPrimaryDemo = [self.metadata objectForKey:CBCIsPrimaryDemo]) != nil) {
     return [isPrimaryDemo boolValue];
   }
   return NO;
@@ -94,7 +94,7 @@
 
 - (BOOL)isPresentable {
   id isPresentable;
-  if ((isPresentable = [self.metadata objectForKey:@"presentable"]) != nil) {
+  if ((isPresentable = [self.metadata objectForKey:CBCIsPresentable]) != nil) {
     return [isPresentable boolValue];
   }
   return NO;
@@ -206,7 +206,7 @@ static void CBCAddNodeFromBreadCrumbs(CBCNode *tree,
     CBCNode *child = [[CBCNode alloc] initWithTitle:title];
     [node addChild:child];
     child.metadata = metadata;
-    if ([[node.metadata objectForKey:@"debug"] boolValue] == YES) {
+    if ([[node.metadata objectForKey:CBCIsDebug] boolValue] == YES) {
       tree.debugLeaf = child;
     }
     node = child;
@@ -220,10 +220,10 @@ static CBCNode *CBCCreateTreeWithOnlyPresentable(BOOL onlyPresentable) {
   NSArray *filteredClasses = [allClasses filteredArrayUsingPredicate:
                     [NSPredicate predicateWithBlock:^BOOL(id object, NSDictionary *bindings) {
     NSDictionary *metadata = CBCCatalogMetadataFromClass(object);
-    id breadcrumbs = [metadata objectForKey:@"breadcrumbs"];
+    id breadcrumbs = [metadata objectForKey:CBCBreadcrumbs];
     BOOL validObject =  breadcrumbs != nil && [breadcrumbs isKindOfClass:[NSArray class]];
     if (onlyPresentable) {
-      validObject &= ([[metadata objectForKey:@"presentable"] boolValue] == YES);
+      validObject &= ([[metadata objectForKey:CBCIsPresentable] boolValue] == YES);
     }
     return validObject;
   }]];
@@ -232,7 +232,7 @@ static CBCNode *CBCCreateTreeWithOnlyPresentable(BOOL onlyPresentable) {
   for (Class aClass in filteredClasses) {
     // Each example view controller defines its own "breadcrumbs".
     NSDictionary *metadata = CBCCatalogMetadataFromClass(aClass);
-    NSArray *breadCrumbs = [metadata objectForKey:@"breadcrumbs"];
+    NSArray *breadCrumbs = [metadata objectForKey:CBCBreadcrumbs];
     if ([[breadCrumbs firstObject] isKindOfClass:[NSString class]]) {
       CBCAddNodeFromBreadCrumbs(tree, breadCrumbs, aClass, metadata);
     } else if ([[breadCrumbs firstObject] isKindOfClass:[NSArray class]]) {
