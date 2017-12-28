@@ -230,7 +230,7 @@ static CBCNode *CBCCreateTreeWithOnlyPresentable(BOOL onlyPresentable) {
 
   CBCNode *tree = [[CBCNode alloc] initWithTitle:@"Root"];
   for (Class aClass in filteredClasses) {
-    // Each example view controller defines its own "breadcrumbs".
+    // Each example view controller defines its own breadcrumbs (metadata[CBCBreadcrumbs]).
     NSDictionary *metadata = CBCCatalogMetadataFromClass(aClass);
     NSArray *breadCrumbs = [metadata objectForKey:CBCBreadcrumbs];
     if ([[breadCrumbs firstObject] isKindOfClass:[NSString class]]) {

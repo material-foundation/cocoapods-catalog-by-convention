@@ -20,13 +20,13 @@
 
 #pragma mark Metadata keys
 
-NSAttributedStringKey const CBCIsPresentable  = @"presentable";
-NSAttributedStringKey const CBCBreadcrumbs    = @"breadcrumbs";
-NSAttributedStringKey const CBCDescription    = @"description";
-NSAttributedStringKey const CBCIsDebug        = @"debug";
-NSAttributedStringKey const CBCIsPrimaryDemo  = @"primaryDemo";
-NSAttributedStringKey const CBCRelatedInfo    = @"relatedInfo";
-NSAttributedStringKey const CBCStoryboardName = @"storyboardName";
+NSString *const CBCIsPresentable  = @"presentable";
+NSString *const CBCBreadcrumbs    = @"breadcrumbs";
+NSString *const CBCDescription    = @"description";
+NSString *const CBCIsDebug        = @"debug";
+NSString *const CBCIsPrimaryDemo  = @"primaryDemo";
+NSString *const CBCRelatedInfo    = @"relatedInfo";
+NSString *const CBCStoryboardName = @"storyboardName";
 
 #pragma mark Class invocations
 
