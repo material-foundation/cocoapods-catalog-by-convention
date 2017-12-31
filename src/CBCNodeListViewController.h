@@ -117,3 +117,7 @@ FOUNDATION_EXTERN CBCNode *_Nonnull CBCCreatePresentableNavigationTree(void);
 - (nullable NSURL *)exampleRelatedInfo;
 
 @end
+
+@interface PositionPlaceholder : NSObject 
++ (NSString* _Nonnull)replacePositionPlaceholder:(NSString* _Nonnull)title;
+@end

@@ -244,6 +244,18 @@ For an example view controller to appear in your project your view controller mu
     
     @end
 
+### Specifying position
+
+Just add @, a number, and space `@<number> `. For example,
+
+    @implementation MenuExample (CatalogByConvention)
+
+    + (NSArray<NSArray<NSString *> *> *)catalogBreadcrumbs {
+      return @[ @[ @"@1 Slide-In Menu"], @[ @"@2 Modal Menu", @"Series" ], @[@"@3 Slide-In Menu (interactive)", @"Series"] ];
+    }
+
+    @end
+
 ## License
 
 Licensed under the Apache 2.0 license. See LICENSE for details.
