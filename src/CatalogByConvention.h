@@ -15,4 +15,3 @@
  */
 
 #import "CBCNodeListViewController.h"
-#import "CBCCatalogExample.h"

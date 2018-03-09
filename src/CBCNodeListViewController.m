@@ -206,7 +206,7 @@ static void CBCAddNodeFromBreadCrumbs(CBCNode *tree,
     CBCNode *child = [[CBCNode alloc] initWithTitle:title];
     [node addChild:child];
     child.metadata = metadata;
-    if ([[node.metadata objectForKey:CBCIsDebug] boolValue] == YES) {
+    if ([[child.metadata objectForKey:CBCIsDebug] boolValue] == YES) {
       tree.debugLeaf = child;
     }
     node = child;

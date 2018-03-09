@@ -20,10 +20,10 @@
 
 #pragma mark Metadata keys
 
-NSString *const CBCIsPresentable  = @"presentable";
 NSString *const CBCBreadcrumbs    = @"breadcrumbs";
-NSString *const CBCDescription    = @"description";
 NSString *const CBCIsDebug        = @"debug";
+NSString *const CBCDescription    = @"description";
+NSString *const CBCIsPresentable  = @"presentable";
 NSString *const CBCIsPrimaryDemo  = @"primaryDemo";
 NSString *const CBCRelatedInfo    = @"relatedInfo";
 NSString *const CBCStoryboardName = @"storyboardName";

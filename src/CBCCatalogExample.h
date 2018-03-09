@@ -16,21 +16,6 @@
 
 #import <Foundation/Foundation.h>
 
-/** This key represents a boolean value if to present the example in the Catalog app or not */
-FOUNDATION_EXTERN NSString *_Nonnull const CBCIsPresentable;
-/** This key represents a strings array of the breadcrumbs showing the hierarchy of the example */
-FOUNDATION_EXTERN NSString *_Nonnull const CBCBreadcrumbs;
-/** This key represents a string for the description for the example */
-FOUNDATION_EXTERN NSString *_Nonnull const CBCDescription;
-/** This key represents a boolean value if the example is for debugging */
-FOUNDATION_EXTERN NSString *_Nonnull const CBCIsDebug;
-/** This key represents a boolean value if the example is the primary demo */
-FOUNDATION_EXTERN NSString *_Nonnull const CBCIsPrimaryDemo;
-/** This key represents an NSURL value providing related info for the example */
-FOUNDATION_EXTERN NSString *_Nonnull const CBCRelatedInfo;
-/** This key represents a string value of the storyboard name for the example */
-FOUNDATION_EXTERN NSString *_Nonnull const CBCStoryboardName;
-
 /**
  The CBCCatalogExample protocol defines methods that examples are expected to implement in order to
  customize their location and behavior in the Catalog by Convention.
