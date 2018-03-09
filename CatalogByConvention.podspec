@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "CatalogByConvention"
-  s.version      = "2.3.1"
+  s.version      = "2.4.1"
   s.authors      = "Google Inc."
   s.summary      = "Tools for building a Catalog by Convention."
   s.homepage     = "https://github.com/material-foundation/cocoapods-catalog-by-convention"
