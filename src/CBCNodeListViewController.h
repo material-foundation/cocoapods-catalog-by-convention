@@ -16,6 +16,21 @@
 
 #import <UIKit/UIKit.h>
 
+/** This key represents a strings array of the breadcrumbs showing the hierarchy of the example */
+FOUNDATION_EXTERN NSString *_Nonnull const CBCBreadcrumbs;
+/** This key represents a boolean value if the example is for debugging */
+FOUNDATION_EXTERN NSString *_Nonnull const CBCIsDebug;
+/** This key represents a string for the description for the example */
+FOUNDATION_EXTERN NSString *_Nonnull const CBCDescription;
+/** This key represents a boolean value if to present the example in the Catalog app or not */
+FOUNDATION_EXTERN NSString *_Nonnull const CBCIsPresentable;
+/** This key represents a boolean value if the example is the primary demo */
+FOUNDATION_EXTERN NSString *_Nonnull const CBCIsPrimaryDemo;
+/** This key represents an NSURL value providing related info for the example */
+FOUNDATION_EXTERN NSString *_Nonnull const CBCRelatedInfo;
+/** This key represents a string value of the storyboard name for the example */
+FOUNDATION_EXTERN NSString *_Nonnull const CBCStoryboardName;
+
 @class CBCNode;
 
 /**
@@ -69,9 +84,6 @@ FOUNDATION_EXTERN CBCNode *_Nonnull CBCCreatePresentableNavigationTree(void);
 /** The title for this node. */
 @property(nonatomic, copy, nonnull, readonly) NSString *title;
 
-/** The description for this node. */
-@property(nonatomic, copy, nonnull, readonly) NSString *nodeDescription;
-
 /** The children of this node. */
 @property(nonatomic, strong, nonnull) NSArray<CBCNode *> *children;
 
@@ -82,6 +94,13 @@ FOUNDATION_EXTERN CBCNode *_Nonnull CBCCreatePresentableNavigationTree(void);
  in the hierarchy tree.
  */
 @property(nonatomic, strong, nullable) CBCNode *debugLeaf;
+
+/**
+ This NSDictionary holds all the metadata related to this CBCNode.
+ If it is an example noe, a primary demo, related info,
+ if presentable in Catalog, etc.
+ */
+@property(nonatomic, strong, nonnull) NSDictionary *metadata;
 
 /** Returns YES if this is an example node. */
 - (BOOL)isExample;
@@ -111,7 +130,7 @@ FOUNDATION_EXTERN CBCNode *_Nonnull CBCCreatePresentableNavigationTree(void);
 
  Check that isExample returns YES before invoking.
  */
-- (nonnull NSString *)exampleDescription;
+- (nullable NSString *)exampleDescription;
 
 /** Returns a link to related information for the example. */
 - (nullable NSURL *)exampleRelatedInfo;

@@ -25,35 +25,47 @@
  */
 @protocol CBCCatalogExample <NSObject>
 
+/**
+ Returns a dictionary with metaata information for the example.
+ */
++ (nonnull NSDictionary<NSString *, NSObject *> *)catalogMetadata;
+
+@optional
+
 /** Return a list of breadcrumbs defining the navigation path taken to reach this example. */
-+ (nonnull NSArray<NSString *> *)catalogBreadcrumbs;
++ (nonnull NSArray<NSString *> *)catalogBreadcrumbs
+  __attribute__((deprecated("use catalogMetadata[CBCBreadcrumbs] instead.")));
 
 /**
  Return a BOOL stating whether this example should be treated as the primary demo of the component.
  */
-+ (BOOL)catalogIsPrimaryDemo;
++ (BOOL)catalogIsPrimaryDemo
+  __attribute__((deprecated("use catalogMetadata[CBCIsPrimaryDemo] instead.")));;
 
 /**
  Return a BOOL stating whether this example is presentable and should be part of the catalog app.
  */
-+ (BOOL)catalogIsPresentable;
++ (BOOL)catalogIsPresentable
+  __attribute__((deprecated("use catalogMetadata[CBCIsPresentable] instead.")));
 
 /**
  Return a BOOL stating whether this example is in debug mode and should appear as the initial view controller.
  */
-+ (BOOL)catalogIsDebug;
-
-@optional
++ (BOOL)catalogIsDebug
+  __attribute__((deprecated("use catalogMetadata[CBCIsDebug] instead.")));
 
 /**
  Return the name of a UIStoryboard from which the example's view controller should be instantiated.
  */
-- (nonnull NSString *)catalogStoryboardName;
+- (nonnull NSString *)catalogStoryboardName
+  __attribute__((deprecated("use catalogMetadata[CBCStoryboardName] instead.")));
 
 /** Return a description of the example. */
-- (nonnull NSString *)catalogDescription;
+- (nonnull NSString *)catalogDescription
+  __attribute__((deprecated("use catalogMetadata[CBCDescription] instead.")));
 
 /** Return a link to related information or resources. */
-- (nonnull NSURL *)catalogRelatedInfo;
+- (nonnull NSURL *)catalogRelatedInfo
+  __attribute__((deprecated("use catalogMetadata[CBCRelatedInfo] instead.")));
 
 @end

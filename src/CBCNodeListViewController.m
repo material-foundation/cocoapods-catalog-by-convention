@@ -19,22 +19,21 @@
 #import "CBCCatalogExample.h"
 #import "private/CBCRuntime.h"
 
-void CBCAddNodeFromBreadCrumbs(CBCNode *tree, NSArray<NSString *> *breadCrumbs, Class aClass);
+@interface CBCNode()
+@property(nonatomic, strong, nullable) NSMutableDictionary *map;
+@property(nonatomic, strong, nullable) Class exampleClass;
+@end
 
 @implementation CBCNode {
-  NSMutableDictionary *_map;
   NSMutableArray *_children;
-  Class _exampleClass;
-  BOOL _isPresentable;
 }
 
 - (instancetype)initWithTitle:(NSString *)title {
   self = [super init];
   if (self) {
     _title = [title copy];
-    _map = [NSMutableDictionary dictionary];
+    self.map = [NSMutableDictionary dictionary];
     _children = [NSMutableArray array];
-    _isPresentable = NO;
     CBCFixViewDebuggingIfNeeded();
   }
   return self;
@@ -45,20 +44,8 @@ void CBCAddNodeFromBreadCrumbs(CBCNode *tree, NSArray<NSString *> *breadCrumbs, 
 }
 
 - (void)addChild:(CBCNode *)child {
-  _map[child.title] = child;
+  self.map[child.title] = child;
   [_children addObject:child];
-}
-
-- (NSDictionary *)map {
-  return _map;
-}
-
-- (void)setExampleClass:(Class)exampleClass {
-  _exampleClass = exampleClass;
-}
-
-- (void)setIsPresentable:(Class)exampleClass {
-  _isPresentable = CBCCatalogIsPresentableFromClass(exampleClass);
 }
 
 - (void)finalizeNode {
@@ -68,34 +55,49 @@ void CBCAddNodeFromBreadCrumbs(CBCNode *tree, NSArray<NSString *> *breadCrumbs, 
 #pragma mark Public
 
 - (BOOL)isExample {
-  return _exampleClass != nil;
+  return self.exampleClass != nil;
 }
 
 - (NSString *)exampleViewControllerName {
+  NSAssert(self.exampleClass != nil, @"This node has no associated example.");
   return NSStringFromClass(_exampleClass);
 }
 
 - (UIViewController *)createExampleViewController {
-  NSAssert(_exampleClass != nil, @"This node has no associated example.");
-  return CBCViewControllerFromClass(_exampleClass);
+  NSAssert(self.exampleClass != nil, @"This node has no associated example.");
+  return CBCViewControllerFromClass(self.exampleClass, self.metadata);
 }
 
 - (NSString *)exampleDescription {
-  NSAssert(_exampleClass != nil, @"This node has no associated example.");
-  return CBCDescriptionFromClass(_exampleClass);
+  NSString *description = [self.metadata objectForKey:CBCDescription];
+  if (description != nil && [description isKindOfClass:[NSString class]]) {
+    return description;
+  }
+  return nil;
 }
 
 - (NSURL *)exampleRelatedInfo {
-  NSAssert(_exampleClass != nil, @"This node has no associated example.");
-  return CBCRelatedInfoFromClass(_exampleClass);
+  NSURL *relatedInfo = [self.metadata objectForKey:CBCRelatedInfo];
+  if (relatedInfo != nil && [relatedInfo isKindOfClass:[NSURL class]]) {
+    return relatedInfo;
+  }
+  return nil;
 }
 
 - (BOOL)isPrimaryDemo {
-  return CBCCatalogIsPrimaryDemoFromClass(_exampleClass);
+  id isPrimaryDemo;
+  if ((isPrimaryDemo = [self.metadata objectForKey:CBCIsPrimaryDemo]) != nil) {
+    return [isPrimaryDemo boolValue];
+  }
+  return NO;
 }
 
 - (BOOL)isPresentable {
-  return _isPresentable;
+  id isPresentable;
+  if ((isPresentable = [self.metadata objectForKey:CBCIsPresentable]) != nil) {
+    return [isPresentable boolValue];
+  }
+  return NO;
 }
 
 @end
@@ -103,14 +105,14 @@ void CBCAddNodeFromBreadCrumbs(CBCNode *tree, NSArray<NSString *> *breadCrumbs, 
 @implementation CBCNodeListViewController
 
 - (instancetype)initWithNode:(CBCNode *)node {
-  NSAssert(!_node.isExample, @"%@ cannot represent example nodes.",
+  NSAssert(!self.node.isExample, @"%@ cannot represent example nodes.",
            NSStringFromClass([self class]));
 
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
     _node = node;
 
-    self.title = _node.title;
+    self.title = self.node.title;
   }
   return self;
 }
@@ -154,7 +156,7 @@ void CBCAddNodeFromBreadCrumbs(CBCNode *tree, NSArray<NSString *> *breadCrumbs, 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return (NSInteger)[_node.children count];
+  return (NSInteger)[self.node.children count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -164,7 +166,7 @@ void CBCAddNodeFromBreadCrumbs(CBCNode *tree, NSArray<NSString *> *breadCrumbs, 
     cell =
         [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
   }
-  cell.textLabel.text = [_node.children[(NSUInteger)indexPath.row] title];
+  cell.textLabel.text = [self.node.children[(NSUInteger)indexPath.row] title];
   cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
   return cell;
 }
@@ -172,7 +174,7 @@ void CBCAddNodeFromBreadCrumbs(CBCNode *tree, NSArray<NSString *> *breadCrumbs, 
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  CBCNode *node = _node.children[(NSUInteger)indexPath.row];
+  CBCNode *node = self.node.children[(NSUInteger)indexPath.row];
   UIViewController *viewController = nil;
   if ([node isExample]) {
     viewController = [node createExampleViewController];
@@ -184,30 +186,61 @@ void CBCAddNodeFromBreadCrumbs(CBCNode *tree, NSArray<NSString *> *breadCrumbs, 
 
 @end
 
-static CBCNode *CBCCreateTreeWithOnlyPresentable(BOOL onlyPresentable) {
-  NSArray *allClasses = CBCGetAllClasses();
-  NSArray *breadcrumbClasses = CBCClassesRespondingToSelector(allClasses,
-                                                              @selector(catalogBreadcrumbs));
-  NSArray *classes;
-  if (onlyPresentable) {
-    classes = [breadcrumbClasses filteredArrayUsingPredicate:
-               [NSPredicate predicateWithBlock:^BOOL(id object, NSDictionary *bindings) {
-      return CBCCatalogIsPresentableFromClass(object);
-    }]];
-  } else {
-    classes = breadcrumbClasses;
+static void CBCAddNodeFromBreadCrumbs(CBCNode *tree,
+                                      NSArray<NSString *> *breadCrumbs,
+                                      Class aClass,
+                                      NSDictionary *metadata) {
+  // Walk down the navigation tree one breadcrumb at a time, creating nodes along the way.
+
+  CBCNode *node = tree;
+  for (NSUInteger ix = 0; ix < [breadCrumbs count]; ++ix) {
+    NSString *title = breadCrumbs[ix];
+    BOOL isLastCrumb = ix == [breadCrumbs count] - 1;
+
+    // Don't walk the last crumb
+    if (node.map[title] && !isLastCrumb) {
+      node = node.map[title];
+      continue;
+    }
+
+    CBCNode *child = [[CBCNode alloc] initWithTitle:title];
+    [node addChild:child];
+    child.metadata = metadata;
+    if ([[child.metadata objectForKey:CBCIsPrimaryDemo] boolValue] == YES) {
+      node.metadata = child.metadata;
+    }
+    if ([[child.metadata objectForKey:CBCIsDebug] boolValue] == YES) {
+      tree.debugLeaf = child;
+    }
+    node = child;
   }
+
+  node.exampleClass = aClass;
+}
+
+static CBCNode *CBCCreateTreeWithOnlyPresentable(BOOL onlyPresentable) {
+  NSArray *allClasses = CBCGetAllCompatibleClasses();
+  NSArray *filteredClasses = [allClasses filteredArrayUsingPredicate:
+                    [NSPredicate predicateWithBlock:^BOOL(id object, NSDictionary *bindings) {
+    NSDictionary *metadata = CBCCatalogMetadataFromClass(object);
+    id breadcrumbs = [metadata objectForKey:CBCBreadcrumbs];
+    BOOL validObject =  breadcrumbs != nil && [breadcrumbs isKindOfClass:[NSArray class]];
+    if (onlyPresentable) {
+      validObject &= ([[metadata objectForKey:CBCIsPresentable] boolValue] == YES);
+    }
+    return validObject;
+  }]];
+
   CBCNode *tree = [[CBCNode alloc] initWithTitle:@"Root"];
-  for (Class aClass in classes) {
-    // Each example view controller defines its own "breadcrumbs".
-
-    NSArray *breadCrumbs = CBCCatalogBreadcrumbsFromClass(aClass);
-
+  for (Class aClass in filteredClasses) {
+    // Each example view controller defines its own breadcrumbs (metadata[CBCBreadcrumbs]).
+    NSDictionary *metadata = CBCCatalogMetadataFromClass(aClass);
+    NSArray *breadCrumbs = [metadata objectForKey:CBCBreadcrumbs];
     if ([[breadCrumbs firstObject] isKindOfClass:[NSString class]]) {
-      CBCAddNodeFromBreadCrumbs(tree, breadCrumbs, aClass);
+      CBCAddNodeFromBreadCrumbs(tree, breadCrumbs, aClass, metadata);
     } else if ([[breadCrumbs firstObject] isKindOfClass:[NSArray class]]) {
       for (NSArray<NSString *> *parallelBreadCrumb in breadCrumbs) {
-        CBCAddNodeFromBreadCrumbs(tree, parallelBreadCrumb, aClass);
+        CBCAddNodeFromBreadCrumbs(tree, parallelBreadCrumb, aClass, metadata);
       }
     }
   }
@@ -231,31 +264,4 @@ CBCNode *CBCCreateNavigationTree(void) {
 
 CBCNode *CBCCreatePresentableNavigationTree(void) {
   return CBCCreateTreeWithOnlyPresentable(YES);
-}
-
-void CBCAddNodeFromBreadCrumbs(CBCNode *tree, NSArray<NSString *> *breadCrumbs, Class aClass) {
-  // Walk down the navigation tree one breadcrumb at a time, creating nodes along the way.
-
-  CBCNode *node = tree;
-  for (NSUInteger ix = 0; ix < [breadCrumbs count]; ++ix) {
-    NSString *title = breadCrumbs[ix];
-    BOOL isLastCrumb = ix == [breadCrumbs count] - 1;
-
-    // Don't walk the last crumb
-
-    if (node.map[title] && !isLastCrumb) {
-      node = node.map[title];
-      continue;
-    }
-
-    CBCNode *child = [[CBCNode alloc] initWithTitle:title];
-    [node addChild:child];
-    [node setIsPresentable:aClass];
-    if (CBCCatalogIsDebugLeaf(aClass)) {
-      tree.debugLeaf = child;
-    }
-    node = child;
-  }
-
-  node.exampleClass = aClass;
 }
