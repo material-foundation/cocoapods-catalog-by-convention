@@ -1,7 +1,92 @@
-# #develop#
+# 2.5.0
 
- TODO: Enumerate changes.
+Thee is now a new `NSDictionary` property in `CBCNode` called metadata. It is meant to store all the information regarding an example
+rather than using separate methods as previously done. With that said, we offer backwards compatibility and still allow the usage of methods to provide example information.
 
+Before:
+```
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Activity Indicator", @"Activity Indicator" ];
+}
+
++ (NSString *)catalogDescription {
+  return @"Activity Indicator is a visual indication of an app loading content. It can display how "
+         @"long an operation will take or visualize an unspecified wait time.";
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return YES;
+}
+
++ (BOOL)catalogIsPresentable {
+  return YES;
+}
+```
+
+After:
+```
++ (NSDictionary *)catalogMetadata {
+  return @{@"breadcrumbs": @[ @"Activity Indicator", @"Activity Indicator" ],
+           @"description": @"Activity Indicator is a visual indication of an app loading content. It can display how "
+           @"long an operation will take or visualize an unspecified wait time.",
+           @"primaryDemo": @YES,
+           @"presentable": @YES};
+}
+```
+
+## Source changes
+
+ * [added a new metadata property that will hold all the key/values for that node. Also code refactoring (#27)](https://github.com/material-foundation/cocoapods-catalog-by-convention/commit/6c44e443e98bb87c955663c45c1245921338de1e) (Yarden Eitan)
+
+## API changes
+
+#### CBCBreadcrumbs
+
+*new* constant: `CBCBreadcrumbs`
+
+#### CBCNode
+
+*new* property: `metadata` in `CBCNode`
+
+*removed* property: `nodeDescription` in `CBCNode`
+
+*modified* method: `-exampleDescription` in `CBCNode`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `func exampleDescription() -> String` |
+| To: | `func exampleDescription() -> String?` |
+
+*modified* method: `-exampleDescription` in `CBCNode`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `- (nonnull NSString *)exampleDescription;` |
+| To: | `- (nullable NSString *)exampleDescription;` |
+
+#### CBCRelatedInfo
+
+*new* constant: `CBCRelatedInfo`
+
+#### CBCIsDebug
+
+*new* constant: `CBCIsDebug`
+
+#### CBCIsPresentable
+
+*new* constant: `CBCIsPresentable`
+
+#### CBCIsPrimaryDemo
+
+*new* constant: `CBCIsPrimaryDemo`
+
+#### CBCDescription
+
+*new* constant: `CBCDescription`
+
+#### CBCStoryboardName
+
+*new* constant: `CBCStoryboardName`
 
 # 2.4.1
 
