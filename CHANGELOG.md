@@ -1,6 +1,6 @@
 # 2.5.0
 
-Thee is now a new `NSDictionary` property in `CBCNode` called metadata. It is meant to store all the information regarding an example
+There is now a new `NSDictionary` property in `CBCNode` called metadata. It is meant to store all the information regarding an example
 rather than using separate methods as previously done. With that said, we offer backwards compatibility and still allow the usage of methods to provide example information.
 
 Before:
