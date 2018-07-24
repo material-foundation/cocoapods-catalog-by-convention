@@ -130,7 +130,7 @@ NSArray<Class> *CBCGetAllCompatibleClasses(void) {
   NSSet *ignoredClasses = [NSSet setWithArray:@[
     @"SwiftObject", @"Object", @"FigIrisAutoTrimmerMotionSampleExport", @"NSLeafProxy"
   ]];
-  NSArray *ignoredPrefixes = @[ @"Swift.", @"_", @"JS", @"WK" ];
+  NSArray *ignoredPrefixes = @[ @"Swift.", @"_", @"JS", @"WK", @"PF" ];
 
   for (int ix = 0; ix < numberOfClasses; ++ix) {
     Class aClass = classList[ix];
