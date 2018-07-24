@@ -1,3 +1,11 @@
+# 2.5.1
+
+Fix a runtime crash that occurred when the PhotoFoundation framework was included in an app.
+
+## Source changes
+
+* [Ignore PhotoFoundation classes in the runtime lookup (#31)](https://github.com/material-foundation/cocoapods-catalog-by-convention/commit/2e8866dcd15ed6a3e755c054510333438802e0a6) (featherless)
+
 # 2.5.0
 
 There is now a new `NSDictionary` property in `CBCNode` called metadata. It is meant to store all the information regarding an example
