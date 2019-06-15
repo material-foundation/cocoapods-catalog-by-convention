@@ -132,6 +132,11 @@ NSArray<Class> *CBCGetAllCompatibleClasses(void) {
   ]];
   NSArray *ignoredPrefixes = @[ @"Swift.", @"_", @"JS", @"WK", @"PF" ];
 
+#if TARGET_OS_UIKITFORMAC
+  ignoredClasses = [ignoredClasses setByAddingObject:@"NSScrollingBehaviorZombie"];
+  ignoredPrefixes = [ignoredPrefixes arrayByAddingObject: @"NSVB_"];
+#endif
+
   for (int ix = 0; ix < numberOfClasses; ++ix) {
     Class aClass = classList[ix];
     NSString *className = NSStringFromClass(aClass);
