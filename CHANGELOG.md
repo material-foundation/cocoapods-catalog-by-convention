@@ -1,3 +1,7 @@
+# 2.5.2
+
+Fix a runtime crash that occurred when built and run under Catalyst (iPad app for Mac).
+
 # 2.5.1
 
 Fix a runtime crash that occurred when the PhotoFoundation framework was included in an app.
