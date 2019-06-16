@@ -1,4 +1,4 @@
-# 2.5.2
+# next
 
 Fix a runtime crash that occurred when built and run under Catalyst (iPad app for Mac).
 
