@@ -171,6 +171,35 @@ NSArray<Class> *CBCClassesRespondingToSelector(NSArray<Class> *classes, SEL sele
   return filteredClasses;
 }
 
+NSArray<NSString *> *CBCTestSelectorNamesOnObject(id object) {
+  NSMutableArray<NSString *> *selectorNames = [NSMutableArray array];
+
+  unsigned int methodCount = 0;
+  Method *methods = class_copyMethodList([object class], &methodCount);
+
+  for (unsigned int i = 0; i < methodCount; i++) {
+    Method method = methods[i];
+
+    NSString *selectorName = [NSString stringWithCString:sel_getName(method_getName(method))
+                                                encoding:NSUTF8StringEncoding];
+    if ([selectorName hasPrefix:@"test"]) {
+      [selectorNames addObject:selectorName];
+    }
+  }
+
+  free(methods);
+
+  return selectorNames;
+}
+
+@implementation NSObject (CatalogByConvention)
+
+- (NSArray<NSString *> *)cbc_testSelectorNames {
+  return CBCTestSelectorNamesOnObject(self);
+}
+
+@end
+
 #pragma mark UIViewController instantiation
 
 UIViewController *CBCViewControllerFromClass(Class aClass, NSDictionary *metadata) {

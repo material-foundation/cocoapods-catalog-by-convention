@@ -31,6 +31,16 @@ FOUNDATION_EXTERN NSArray<Class> *CBCGetAllCompatibleClasses(void);
 FOUNDATION_EXTERN NSArray<Class> *CBCClassesRespondingToSelector(NSArray<Class> *classes,
                                                                  SEL selector);
 
+/** Returns an array of instance method selector names that have a test prefix on the given object's class. */
+FOUNDATION_EXTERN NSArray<NSString *> *CBCTestSelectorNamesOnObject(id object);
+
+@interface NSObject (CatalogByConvention)
+
+/** Returns an array of instance method selector names that have a test prefix on this instance. */
+- (NSArray<NSString *> *)cbc_testSelectorNames;
+
+@end
+
 /**
  Internal helper method that allows invoking aClass with selector and puts
  the return value in retValue.
