@@ -122,6 +122,17 @@ NSDictionary *CBCCatalogMetadataFromClass(Class aClass) {
 
 #pragma mark Runtime enumeration
 
+static BOOL IsSubclassOfClass(Class aClass, Class parentClass) {
+  Class iterator = class_getSuperclass(aClass);
+  while (iterator) {
+    if (iterator == parentClass) {
+      return YES;
+    }
+    iterator = class_getSuperclass(iterator);
+  }
+  return NO;
+}
+
 NSArray<Class> *CBCGetAllCompatibleClasses(void) {
   int numberOfClasses = objc_getClassList(NULL, 0);
   Class *classList = (Class *)malloc((size_t)numberOfClasses * sizeof(Class));
@@ -134,8 +145,15 @@ NSArray<Class> *CBCGetAllCompatibleClasses(void) {
   ]];
   NSArray *ignoredPrefixes = @[ @"Swift.", @"_", @"JS", @"WK", @"PF" ];
 
+  Class viewControllerClass = [UIViewController class];
+
   for (int ix = 0; ix < numberOfClasses; ++ix) {
     Class aClass = classList[ix];
+
+    if (!IsSubclassOfClass(aClass, viewControllerClass)) {
+      continue;
+    }
+
     NSString *className = NSStringFromClass(aClass);
     if ([ignoredClasses containsObject:className]) {
       continue;
@@ -150,9 +168,7 @@ NSArray<Class> *CBCGetAllCompatibleClasses(void) {
     if (hasIgnoredPrefix) {
       continue;
     }
-    if (![aClass isSubclassOfClass:[UIViewController class]]) {
-      continue;
-    }
+
     [classes addObject:aClass];
   }
 
