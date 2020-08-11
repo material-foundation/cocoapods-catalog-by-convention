@@ -143,7 +143,7 @@ NSArray<Class> *CBCGetAllCompatibleClasses(void) {
   NSSet *ignoredClasses = [NSSet setWithArray:@[
     @"SwiftObject", @"Object", @"FigIrisAutoTrimmerMotionSampleExport", @"NSLeafProxy"
   ]];
-  NSArray *ignoredPrefixes = @[ @"Swift.", @"_", @"JS", @"WK", @"PF" ];
+  NSArray *ignoredPrefixes = @[ @"Swift.", @"_", @"JS", @"WK", @"PF", @"NS" ];
 
   Class viewControllerClass = [UIViewController class];
 
