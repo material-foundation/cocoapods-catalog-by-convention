@@ -1,6 +1,6 @@
 # 2.5.2
 
-This minor release includes performance improvements and support for macCatalyst apps.
+This patch release includes performance improvements and support for macCatalyst apps.
 
 # 2.5.1
 
