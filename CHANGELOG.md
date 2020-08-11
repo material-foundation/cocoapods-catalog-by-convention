@@ -1,3 +1,7 @@
+# 2.5.2
+
+This patch release includes performance improvements and support for macCatalyst apps.
+
 # 2.5.1
 
 Fix a runtime crash that occurred when the PhotoFoundation framework was included in an app.
