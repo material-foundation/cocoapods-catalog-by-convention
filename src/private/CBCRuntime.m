@@ -45,7 +45,7 @@ static BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass) {
 }
 
 static BOOL CBCCatalogIsPresentableFromClass(Class aClass) {
-  BOOL isPresentable = NO;
+  BOOL isPresentable = YES;
   if ([aClass respondsToSelector:@selector(catalogIsPresentable)]) {
     isPresentable = [aClass catalogIsPresentable];
   }

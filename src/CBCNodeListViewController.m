@@ -224,8 +224,11 @@ static CBCNode *CBCCreateTreeWithOnlyPresentable(BOOL onlyPresentable) {
     NSDictionary *metadata = CBCCatalogMetadataFromClass(object);
     id breadcrumbs = [metadata objectForKey:CBCBreadcrumbs];
     BOOL validObject =  breadcrumbs != nil && [breadcrumbs isKindOfClass:[NSArray class]];
-    if (onlyPresentable) {
-      validObject &= ([[metadata objectForKey:CBCIsPresentable] boolValue] == YES);
+    NSNumber *isPresentable = [metadata objectForKey:CBCIsPresentable];
+    // If CBCIsPresentable is not explicitly set in a class's metadata,
+    // this class is presentable by default.
+    if (onlyPresentable && isPresentable) {
+      validObject &= isPresentable.boolValue;
     }
     return validObject;
   }]];
