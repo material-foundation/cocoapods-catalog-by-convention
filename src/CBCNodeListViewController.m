@@ -16,7 +16,6 @@
 
 #import "CBCNodeListViewController.h"
 
-#import "CBCCatalogExample.h"
 #import "private/CBCRuntime.h"
 
 @interface CBCNode()
