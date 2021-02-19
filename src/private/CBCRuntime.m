@@ -29,6 +29,7 @@ NSString *const CBCIsPresentable  = @"presentable";
 NSString *const CBCIsPrimaryDemo  = @"primaryDemo";
 NSString *const CBCRelatedInfo    = @"relatedInfo";
 NSString *const CBCStoryboardName = @"storyboardName";
+NSString *const CBCMinimumOSVersion = @"minimumOSVersion";
 
 #pragma mark Class invocations
 
@@ -82,6 +83,14 @@ static NSString *CBCStoryboardNameFromClass(Class aClass) {
     catalogStoryboardName = [aClass catalogStoryboardName];
   }
   return catalogStoryboardName;
+}
+
+BOOL CBCCanRunClassOnCurrentOperatingSystem(Class aClass) {
+  if ([aClass respondsToSelector:@selector(minimumOSVersion)]) {
+    NSOperatingSystemVersion minimumOSVersion = [aClass minimumOSVersion];
+    return [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:minimumOSVersion];
+  }
+  return YES;
 }
 
 static NSDictionary *CBCConstructMetadataFromMethods(Class aClass) {

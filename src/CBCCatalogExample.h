@@ -60,6 +60,13 @@
 - (nonnull NSString *)catalogStoryboardName
   __attribute__((deprecated("use catalogMetadata[CBCStoryboardName] instead.")));
 
+/**
+ Return the minimum OS version that this example supports being ran on.
+
+ If this method is not implemented, then it's assumed that the example can run on any OS version.
+ */
+- (NSOperatingSystemVersion)minimumOSVersion;
+
 /** Return a description of the example. */
 - (nonnull NSString *)catalogDescription
   __attribute__((deprecated("use catalogMetadata[CBCDescription] instead.")));

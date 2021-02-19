@@ -22,6 +22,12 @@
 /** Invokes +catalogMetadata on the class and returns the NSDictionary value */
 FOUNDATION_EXTERN NSDictionary *CBCCatalogMetadataFromClass(Class aClass);
 
+/**
+ Returns NO only if the example implements +minimumOSVersion and returns a version that is less than
+ the current process's operating system version.
+ */
+FOUNDATION_EXTERN BOOL CBCCanRunClassOnCurrentOperatingSystem(Class aClass);
+
 #pragma mark Runtime enumeration
 
 /** Returns all Objective-C and Swift classes available to the runtime. */

@@ -219,19 +219,23 @@ static void CBCAddNodeFromBreadCrumbs(CBCNode *tree,
 
 static CBCNode *CBCCreateTreeWithOnlyPresentable(BOOL onlyPresentable) {
   NSArray *allClasses = CBCGetAllCompatibleClasses();
-  NSArray *filteredClasses = [allClasses filteredArrayUsingPredicate:
-                    [NSPredicate predicateWithBlock:^BOOL(id object, NSDictionary *bindings) {
-    NSDictionary *metadata = CBCCatalogMetadataFromClass(object);
-    id breadcrumbs = [metadata objectForKey:CBCBreadcrumbs];
-    BOOL validObject =  breadcrumbs != nil && [breadcrumbs isKindOfClass:[NSArray class]];
-    NSNumber *isPresentable = [metadata objectForKey:CBCIsPresentable];
-    // If CBCIsPresentable is not explicitly set in a class's metadata,
-    // this class is presentable by default.
-    if (onlyPresentable && isPresentable) {
-      validObject &= isPresentable.boolValue;
-    }
-    return validObject;
-  }]];
+  NSArray *filteredClasses = [allClasses
+      filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id object,
+                                                                        NSDictionary *bindings) {
+        if (!CBCCanRunClassOnCurrentOperatingSystem(object)) {
+          return NO;
+        }
+        NSDictionary *metadata = CBCCatalogMetadataFromClass(object);
+        id breadcrumbs = [metadata objectForKey:CBCBreadcrumbs];
+        BOOL validObject = breadcrumbs != nil && [breadcrumbs isKindOfClass:[NSArray class]];
+        NSNumber *isPresentable = [metadata objectForKey:CBCIsPresentable];
+        // If CBCIsPresentable is not explicitly set in a class's metadata,
+        // this class is presentable by default.
+        if (onlyPresentable && isPresentable) {
+          validObject &= isPresentable.boolValue;
+        }
+        return validObject;
+      }]];
 
   CBCNode *tree = [[CBCNode alloc] initWithTitle:@"Root"];
   for (Class aClass in filteredClasses) {
