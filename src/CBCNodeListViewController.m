@@ -119,8 +119,15 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.tableView =
-      [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+  UITableViewStyle style = UITableViewStyleGrouped;
+#if !TARGET_OS_TV
+  if (@available(iOS 13.0, *)) {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+      style = UITableViewStyleInsetGrouped;
+    }
+  }
+#endif
+  self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:style];
   self.tableView.autoresizingMask =
       (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   self.tableView.delegate = self;
