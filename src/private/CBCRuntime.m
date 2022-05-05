@@ -30,6 +30,7 @@ NSString *const CBCIsPrimaryDemo  = @"primaryDemo";
 NSString *const CBCRelatedInfo    = @"relatedInfo";
 NSString *const CBCStoryboardName = @"storyboardName";
 NSString *const CBCMinimumOSVersion = @"minimumOSVersion";
+NSString *const CBCDeprecatedOSVersion = @"deprecatedOSVersion";
 
 #pragma mark Class invocations
 
@@ -86,11 +87,22 @@ static NSString *CBCStoryboardNameFromClass(Class aClass) {
 }
 
 BOOL CBCCanRunClassOnCurrentOperatingSystem(Class aClass) {
+  BOOL osVersionAtLeastMinimum = YES;
+  BOOL osVersionLessThanDeprecated = YES;
   if ([aClass respondsToSelector:@selector(minimumOSVersion)]) {
     NSOperatingSystemVersion minimumOSVersion = [aClass minimumOSVersion];
-    return [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:minimumOSVersion];
+
+    osVersionAtLeastMinimum =
+        [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:minimumOSVersion];
   }
-  return YES;
+
+  if ([aClass respondsToSelector:@selector(deprecatedOSVersion)]) {
+    NSOperatingSystemVersion deprecatedOSVersion = [aClass deprecatedOSVersion];
+    osVersionLessThanDeprecated =
+        ![[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:deprecatedOSVersion];
+  }
+
+  return osVersionAtLeastMinimum && osVersionLessThanDeprecated;
 }
 
 static NSDictionary *CBCConstructMetadataFromMethods(Class aClass) {

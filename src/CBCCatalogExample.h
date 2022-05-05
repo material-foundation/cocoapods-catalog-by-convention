@@ -63,9 +63,18 @@
 /**
  Return the minimum OS version that this example supports being ran on.
 
- If this method is not implemented, then it's assumed that the example can run on any OS version.
+ If this method is not implemented, then it's assumed that the example can run on any OS version
+ lower than the `deprecatedOSVersion`, if specified.
  */
 - (NSOperatingSystemVersion)minimumOSVersion;
+
+/**
+ Return the OS version that this example is deprecated at.
+
+ If this method is not implemented, then it's assumed that the example can run on any OS version
+ larger than or equal to the `minimumOSVersion`, if specified.
+ */
+- (NSOperatingSystemVersion)deprecatedOSVersion;
 
 /** Return a description of the example. */
 - (nonnull NSString *)catalogDescription
