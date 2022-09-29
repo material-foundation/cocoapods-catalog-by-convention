@@ -121,6 +121,7 @@
 
   UITableViewStyle style = UITableViewStyleGrouped;
 #if !TARGET_OS_TV
+  style = UITableViewStyleInsetGrouped;
   if (@available(iOS 13.0, *)) {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
       style = UITableViewStyleInsetGrouped;
