@@ -22,6 +22,8 @@ FOUNDATION_EXTERN NSString *_Nonnull const CBCBreadcrumbs;
 FOUNDATION_EXTERN NSString *_Nonnull const CBCIsDebug;
 /** This key represents a string for the description for the example */
 FOUNDATION_EXTERN NSString *_Nonnull const CBCDescription;
+/** This key represents a string for the example's group. */
+FOUNDATION_EXTERN NSString *_Nonnull const CBCGroup;
 /** This key represents a boolean value if to present the example in the Catalog app or not */
 FOUNDATION_EXTERN NSString *_Nonnull const CBCIsPresentable;
 /** This key represents a boolean value if the example is the primary demo */
@@ -48,6 +50,9 @@ FOUNDATION_EXTERN NSString *_Nonnull const CBCStoryboardName;
 
 /** The node that this view controller must represent. */
 @property(nonatomic, strong, nonnull, readonly) CBCNode *node;
+
+/** The preferred mechanism for fetching a node for a given index path. Supports grouping. */
+- (nonnull CBCNode *)nodeForIndexPath:(nonnull NSIndexPath *)indexPath;
 
 @end
 

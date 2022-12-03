@@ -101,6 +101,11 @@
 
 @end
 
+@interface CBCNodeListViewController ()
+@property(nonatomic) NSArray<NSString *> *groups;
+@property(nonatomic) NSDictionary<NSString *, NSArray<CBCNode *> *> *groupedNodes;
+@end
+
 @implementation CBCNodeListViewController
 
 - (instancetype)initWithNode:(CBCNode *)node {
@@ -110,6 +115,28 @@
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
     _node = node;
+
+    NSMutableSet<NSString *> *groups = [NSMutableSet set];
+    NSMutableDictionary<NSString *, NSMutableArray<CBCNode *> *> *groupedNodes =
+        [NSMutableDictionary dictionary];
+    for (CBCNode *child in _node.children) {
+      NSString *group = child.metadata[CBCGroup];
+      if (group == nil) {
+        group = @"";  // Ungrouped items get placed in a default group.
+      }
+      [groups addObject:group];
+
+      NSMutableArray *nodes = groupedNodes[group];
+      if (nodes == nil) {
+        nodes = [NSMutableArray array];
+        groupedNodes[group] = nodes;
+      }
+      [nodes addObject:child];
+    }
+    _groups =
+        [groups sortedArrayUsingDescriptors:@[ [NSSortDescriptor sortDescriptorWithKey:@"self"
+                                                                             ascending:YES] ]];
+    _groupedNodes = groupedNodes;
 
     self.title = self.node.title;
   }
@@ -162,8 +189,17 @@
 
 #pragma mark - UITableViewDataSource
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+  return [_groups count];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+  return _groups[section];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return (NSInteger)[self.node.children count];
+  NSString *group = _groups[section];
+  return (NSInteger)[self.groupedNodes[group] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -173,7 +209,8 @@
     cell =
         [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
   }
-  cell.textLabel.text = [self.node.children[(NSUInteger)indexPath.row] title];
+  CBCNode *node = [self nodeForIndexPath:indexPath];
+  cell.textLabel.text = node.title;
   cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
   return cell;
 }
@@ -181,7 +218,7 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  CBCNode *node = self.node.children[(NSUInteger)indexPath.row];
+  CBCNode *node = [self nodeForIndexPath:indexPath];
   UIViewController *viewController = nil;
   if ([node isExample]) {
     viewController = [node createExampleViewController];
@@ -189,6 +226,13 @@
     viewController = [[[self class] alloc] initWithNode:node];
   }
   [self.navigationController pushViewController:viewController animated:YES];
+}
+
+#pragma mark - Model
+
+- (CBCNode *)nodeForIndexPath:(NSIndexPath *)indexPath {
+  NSString *group = _groups[indexPath.section];
+  return self.groupedNodes[group][(NSUInteger)indexPath.row];
 }
 
 @end
@@ -212,15 +256,14 @@ static void CBCAddNodeFromBreadCrumbs(CBCNode *tree,
 
     CBCNode *child = [[CBCNode alloc] initWithTitle:title];
     [node addChild:child];
-    child.metadata = metadata;
-    if ([[child.metadata objectForKey:CBCIsPrimaryDemo] boolValue] == YES) {
-      node.metadata = child.metadata;
-    }
     if ([[child.metadata objectForKey:CBCIsDebug] boolValue] == YES) {
       tree.debugLeaf = child;
     }
     node = child;
   }
+
+  // Metadata gets assigned to the leaf node in the tree.
+  node.metadata = metadata;
 
   node.exampleClass = aClass;
 }
