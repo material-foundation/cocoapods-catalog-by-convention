@@ -22,8 +22,6 @@ FOUNDATION_EXTERN NSString *_Nonnull const CBCBreadcrumbs;
 FOUNDATION_EXTERN NSString *_Nonnull const CBCIsDebug;
 /** This key represents a string for the description for the example */
 FOUNDATION_EXTERN NSString *_Nonnull const CBCDescription;
-/** This key represents a string for the example's group. */
-FOUNDATION_EXTERN NSString *_Nonnull const CBCGroup;
 /** This key represents a boolean value if to present the example in the Catalog app or not */
 FOUNDATION_EXTERN NSString *_Nonnull const CBCIsPresentable;
 /** This key represents a boolean value if the example is the primary demo */
@@ -106,6 +104,9 @@ FOUNDATION_EXTERN CBCNode *_Nonnull CBCCreatePresentableNavigationTree(void);
  if presentable in Catalog, etc.
  */
 @property(nonatomic, strong, nonnull) NSDictionary *metadata;
+
+/** The group of this node. */
+@property(nonatomic, strong, nullable) NSString *group;
 
 /** Returns YES if this is an example node. */
 - (BOOL)isExample;

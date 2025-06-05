@@ -120,10 +120,12 @@
     NSMutableDictionary<NSString *, NSMutableArray<CBCNode *> *> *groupedNodes =
         [NSMutableDictionary dictionary];
     for (CBCNode *child in _node.children) {
-      NSString *group = child.metadata[CBCGroup];
+      NSString *group = child.group;
       if (group == nil) {
         group = @"";  // Ungrouped items get placed in a default group.
       }
+      // Convert to lowercase to ensure case-insensitive grouping since group titles will always be
+      // capitalized in the UI.
       [groups addObject:group];
 
       NSMutableArray *nodes = groupedNodes[group];
@@ -133,9 +135,11 @@
       }
       [nodes addObject:child];
     }
-    _groups =
-        [groups sortedArrayUsingDescriptors:@[ [NSSortDescriptor sortDescriptorWithKey:@"self"
-                                                                             ascending:YES] ]];
+    _groups = [groups sortedArrayUsingDescriptors:@[
+      [NSSortDescriptor sortDescriptorWithKey:@"self"
+                                    ascending:YES
+                                     selector:@selector(localizedCaseInsensitiveCompare:)]
+    ]];
     _groupedNodes = groupedNodes;
 
     self.title = self.node.title;
@@ -245,18 +249,33 @@ static void CBCAddNodeFromBreadCrumbs(CBCNode *tree,
 
   CBCNode *node = tree;
   for (NSUInteger ix = 0; ix < [breadCrumbs count]; ++ix) {
-    NSString *title = breadCrumbs[ix];
+    NSString *title;
+    NSString *group;
+    id breadCrumb = breadCrumbs[ix];
+    if ([breadCrumb isKindOfClass:[NSArray class]]) {
+      NSArray<NSString *> *breadCrumbArray = breadCrumb;
+      if (breadCrumbArray.count > 1) {
+        group = breadCrumbArray[0];
+        title = breadCrumbArray[1];
+      } else {
+        title = breadCrumbArray[0];
+      }
+    } else {
+      title = breadCrumb;
+    }
     BOOL isLastCrumb = ix == [breadCrumbs count] - 1;
 
     // Don't walk the last crumb
     if (node.map[title] && !isLastCrumb) {
       node = node.map[title];
+      node.group = group;
       continue;
     }
 
     CBCNode *child = [[CBCNode alloc] initWithTitle:title];
     [node addChild:child];
     node = child;
+    node.group = group;
   }
 
   // Metadata gets assigned to the leaf node in the tree.

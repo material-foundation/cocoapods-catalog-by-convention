@@ -25,7 +25,6 @@
 NSString *const CBCBreadcrumbs    = @"breadcrumbs";
 NSString *const CBCIsDebug        = @"debug";
 NSString *const CBCDescription    = @"description";
-NSString *const CBCGroup = @"group";
 NSString *const CBCIsPresentable  = @"presentable";
 NSString *const CBCIsPrimaryDemo  = @"primaryDemo";
 NSString *const CBCRelatedInfo    = @"relatedInfo";
