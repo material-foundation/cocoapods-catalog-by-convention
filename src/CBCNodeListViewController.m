@@ -312,13 +312,7 @@ static CBCNode *CBCCreateTreeWithOnlyPresentable(BOOL onlyPresentable) {
     // Each example view controller defines its own breadcrumbs (metadata[CBCBreadcrumbs]).
     NSDictionary *metadata = CBCCatalogMetadataFromClass(aClass);
     NSArray *breadCrumbs = [metadata objectForKey:CBCBreadcrumbs];
-    if ([[breadCrumbs firstObject] isKindOfClass:[NSString class]]) {
-      CBCAddNodeFromBreadCrumbs(tree, breadCrumbs, aClass, metadata);
-    } else if ([[breadCrumbs firstObject] isKindOfClass:[NSArray class]]) {
-      for (NSArray<NSString *> *parallelBreadCrumb in breadCrumbs) {
-        CBCAddNodeFromBreadCrumbs(tree, parallelBreadCrumb, aClass, metadata);
-      }
-    }
+    CBCAddNodeFromBreadCrumbs(tree, breadCrumbs, aClass, metadata);
   }
 
   // Perform final post-processing on the nodes.
