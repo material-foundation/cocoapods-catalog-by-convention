@@ -102,7 +102,7 @@
 
 @end
 
-static NSArray<CBCNode *> *CBCGetSearchResultsFromNode(CBCNode *node, NSSet<NSString *> *filters) {
+static NSArray<CBCNode *> *CBCGetSearchResultsFromNode(CBCNode *node, NSSet<NSString *> *filters, NSString *searchText) {
   NSMutableArray<CBCNode *> *searchResults = [NSMutableArray array];
 
   // Breadth-first search through the navigation tree starting at the given node.
@@ -120,23 +120,33 @@ static NSArray<CBCNode *> *CBCGetSearchResultsFromNode(CBCNode *node, NSSet<NSSt
       NSMutableSet<NSString *> *keywordKeys = [current.keyWords mutableCopy];
       [keywordKeys intersectSet:filters];
       // If the keywords do not contain all of the filters, do not add the node.
-      if (keywordKeys.count == filters.count) {
-        [searchResults addObject:current];
+      if (keywordKeys.count != filters.count) {
+        continue;
       }
     }
+    if (searchText.length > 0) {
+      for (NSString *keyword in current.keyWords) {
+        if ([keyword containsString:searchText.lowercaseString]) {
+          [searchResults addObject:current];
+          break;
+        }
+      }
+    } else {
+      // Add the node if there is no search text and it passes the filter check.
+      [searchResults addObject:current];
+    }
   }
-
   return searchResults;
 }
 
 static NSDictionary<NSString *, NSArray<CBCNode *> *> *CBCGetSearchResultGroupedNodes(
-    NSDictionary<NSString *, NSArray<CBCNode *> *> *groupedNodes, NSSet<NSString *> *filters) {
+    NSDictionary<NSString *, NSArray<CBCNode *> *> *groupedNodes, NSSet<NSString *> *filters, NSString *searchText) {
   NSMutableDictionary<NSString *, NSMutableArray<CBCNode *> *> *searchResultGroupedNodes =
       [NSMutableDictionary dictionary];
   for (NSString *group in groupedNodes) {
     NSMutableArray<CBCNode *> *searchResults = [NSMutableArray array];
     for (CBCNode *node in groupedNodes[group]) {
-      [searchResults addObjectsFromArray:CBCGetSearchResultsFromNode(node, filters)];
+      [searchResults addObjectsFromArray:CBCGetSearchResultsFromNode(node, filters, searchText)];
     }
     if (searchResults.count > 0) {
       searchResultGroupedNodes[group] = searchResults;
@@ -150,6 +160,7 @@ static NSDictionary<NSString *, NSArray<CBCNode *> *> *CBCGetSearchResultGrouped
 @property(nonatomic) NSDictionary<NSString *, NSArray<CBCNode *> *> *groupedNodes;
 @property(nonatomic) NSDictionary<NSString *, NSArray<CBCNode *> *> *searchResultGroupedNodes;
 @property(nonatomic) NSMutableSet<NSString *> *filters;
+@property(nonatomic, copy, nullable) NSString *searchText;
 @end
 
 @implementation CBCNodeListViewController
@@ -302,7 +313,7 @@ static NSDictionary<NSString *, NSArray<CBCNode *> *> *CBCGetSearchResultGrouped
   return self.groupedNodes[group][(NSUInteger)indexPath.row];
 }
 
-#pragma mark - Filter
+#pragma mark - Filter and Search
 
 - (void)updateFilters:(NSString *)filter enabled:(BOOL)enabled {
   if (enabled) {
@@ -313,10 +324,16 @@ static NSDictionary<NSString *, NSArray<CBCNode *> *> *CBCGetSearchResultGrouped
   [self search];
 }
 
+- (void)findSearchText:(NSString *)searchText {
+  self.searchText = searchText;
+  [self search];
+}
+
 - (void)search {
-  self.searchEnabled = self.filters.count > 0;
+  self.searchEnabled = self.searchText.length > 0 || self.filters.count > 0;
   if (self.searchEnabled) {
-    self.searchResultGroupedNodes = CBCGetSearchResultGroupedNodes(self.groupedNodes, self.filters);
+    self.searchResultGroupedNodes =
+        CBCGetSearchResultGroupedNodes(self.groupedNodes, self.filters, self.searchText);
   }
   [self.tableView reloadData];
   [self.tableView layoutIfNeeded];

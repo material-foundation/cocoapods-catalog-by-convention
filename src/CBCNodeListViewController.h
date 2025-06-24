@@ -58,6 +58,8 @@ FOUNDATION_EXTERN NSString *_Nonnull const CBCKeywords;
 
 - (void)updateFilters:(nonnull NSString *)filter enabled:(BOOL)enabled;
 
+- (void)findSearchText:(nonnull NSString *)searchtext;
+
 @end
 
 /**
