@@ -31,6 +31,7 @@ NSString *const CBCRelatedInfo    = @"relatedInfo";
 NSString *const CBCStoryboardName = @"storyboardName";
 NSString *const CBCMinimumOSVersion = @"minimumOSVersion";
 NSString *const CBCDeprecatedOSVersion = @"deprecatedOSVersion";
+NSString *const CBCKeywords = @"keywords";
 
 #pragma mark Class invocations
 

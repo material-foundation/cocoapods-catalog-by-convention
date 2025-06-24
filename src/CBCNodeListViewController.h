@@ -30,6 +30,8 @@ FOUNDATION_EXTERN NSString *_Nonnull const CBCIsPrimaryDemo;
 FOUNDATION_EXTERN NSString *_Nonnull const CBCRelatedInfo;
 /** This key represents a string value of the storyboard name for the example */
 FOUNDATION_EXTERN NSString *_Nonnull const CBCStoryboardName;
+/** This key represents an NSArray of strings for the keywords for the example */
+FOUNDATION_EXTERN NSString *_Nonnull const CBCKeywords;
 
 @class CBCNode;
 
@@ -51,6 +53,10 @@ FOUNDATION_EXTERN NSString *_Nonnull const CBCStoryboardName;
 
 /** The preferred mechanism for fetching a node for a given index path. Supports grouping. */
 - (nonnull CBCNode *)nodeForIndexPath:(nonnull NSIndexPath *)indexPath;
+
+@property(nonatomic) BOOL searchEnabled;
+
+- (void)updateFilters:(nonnull NSString *)filter enabled:(BOOL)enabled;
 
 @end
 

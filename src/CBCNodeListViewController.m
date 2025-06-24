@@ -21,6 +21,7 @@
 @interface CBCNode()
 @property(nonatomic, strong, nullable) NSMutableDictionary *map;
 @property(nonatomic, strong, nullable) Class exampleClass;
+@property(nonatomic, copy, nullable) NSSet<NSString *> *keyWords;
 @end
 
 @implementation CBCNode {
@@ -101,9 +102,54 @@
 
 @end
 
+static NSArray<CBCNode *> *CBCGetSearchResultsFromNode(CBCNode *node, NSSet<NSString *> *filters) {
+  NSMutableArray<CBCNode *> *searchResults = [NSMutableArray array];
+
+  // Breadth-first search through the navigation tree starting at the given node.
+  NSMutableArray<CBCNode *> *queue = [NSMutableArray arrayWithObject:node];
+  while ([queue count] > 0) {
+    CBCNode *current = [queue firstObject];
+    [queue removeObjectAtIndex:0];
+    if (current.children.count > 0) {
+      [queue addObjectsFromArray:current.children];
+      continue;
+    }
+
+    // If the node is an example, conduct the filtering.
+    if (filters.count > 0) {
+      NSMutableSet<NSString *> *keywordKeys = [current.keyWords mutableCopy];
+      [keywordKeys intersectSet:filters];
+      // If the keywords do not contain all of the filters, do not add the node.
+      if (keywordKeys.count == filters.count) {
+        [searchResults addObject:current];
+      }
+    }
+  }
+
+  return searchResults;
+}
+
+static NSDictionary<NSString *, NSArray<CBCNode *> *> *CBCGetSearchResultGroupedNodes(
+    NSDictionary<NSString *, NSArray<CBCNode *> *> *groupedNodes, NSSet<NSString *> *filters) {
+  NSMutableDictionary<NSString *, NSMutableArray<CBCNode *> *> *searchResultGroupedNodes =
+      [NSMutableDictionary dictionary];
+  for (NSString *group in groupedNodes) {
+    NSMutableArray<CBCNode *> *searchResults = [NSMutableArray array];
+    for (CBCNode *node in groupedNodes[group]) {
+      [searchResults addObjectsFromArray:CBCGetSearchResultsFromNode(node, filters)];
+    }
+    if (searchResults.count > 0) {
+      searchResultGroupedNodes[group] = searchResults;
+    }
+  }
+  return searchResultGroupedNodes;
+}
+
 @interface CBCNodeListViewController ()
 @property(nonatomic) NSArray<NSString *> *groups;
 @property(nonatomic) NSDictionary<NSString *, NSArray<CBCNode *> *> *groupedNodes;
+@property(nonatomic) NSDictionary<NSString *, NSArray<CBCNode *> *> *searchResultGroupedNodes;
+@property(nonatomic) NSMutableSet<NSString *> *filters;
 @end
 
 @implementation CBCNodeListViewController
@@ -141,6 +187,9 @@
                                      selector:@selector(localizedCaseInsensitiveCompare:)]
     ]];
     _groupedNodes = groupedNodes;
+    _filters = [NSMutableSet set];
+    _searchEnabled = NO;
+    _searchResultGroupedNodes = [NSMutableDictionary dictionary];
 
     self.title = self.node.title;
   }
@@ -194,15 +243,25 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+  if (_searchEnabled) {
+    return [_searchResultGroupedNodes count];
+  }
   return [_groups count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+  if (_searchEnabled) {
+    return [_searchResultGroupedNodes.allKeys objectAtIndex:section];
+  }
   return _groups[section];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
   NSString *group = _groups[section];
+  if (_searchEnabled) {
+    group = [_searchResultGroupedNodes.allKeys objectAtIndex:section];
+    return (NSInteger)[_searchResultGroupedNodes[group] count];
+  }
   return (NSInteger)[self.groupedNodes[group] count];
 }
 
@@ -236,7 +295,31 @@
 
 - (CBCNode *)nodeForIndexPath:(NSIndexPath *)indexPath {
   NSString *group = _groups[indexPath.section];
+  if (_searchEnabled) {
+    group = [_searchResultGroupedNodes.allKeys objectAtIndex:indexPath.section];
+    return [_searchResultGroupedNodes[group] objectAtIndex:indexPath.row];
+  }
   return self.groupedNodes[group][(NSUInteger)indexPath.row];
+}
+
+#pragma mark - Filter
+
+- (void)updateFilters:(NSString *)filter enabled:(BOOL)enabled {
+  if (enabled) {
+    [self.filters addObject:filter.lowercaseString];
+  } else {
+    [self.filters removeObject:filter.lowercaseString];
+  }
+  [self search];
+}
+
+- (void)search {
+  self.searchEnabled = self.filters.count > 0;
+  if (self.searchEnabled) {
+    self.searchResultGroupedNodes = CBCGetSearchResultGroupedNodes(self.groupedNodes, self.filters);
+  }
+  [self.tableView reloadData];
+  [self.tableView layoutIfNeeded];
 }
 
 @end
@@ -280,6 +363,22 @@ static void CBCAddNodeFromBreadCrumbs(CBCNode *tree,
 
   // Metadata gets assigned to the leaf node in the tree.
   node.metadata = metadata;
+
+  // Gather keywords from the breadcrumbs and keywords metadata for search.
+  NSMutableSet<NSString *> *keywords = [NSMutableSet set];
+  for (id crumb in metadata[CBCBreadcrumbs]) {
+    if ([crumb isKindOfClass:[NSArray class]]) {
+      for (NSString *word in crumb) {
+        [keywords addObject:word.lowercaseString];
+      }
+    } else {
+      [keywords addObject:[crumb lowercaseString]];
+    }
+  }
+  for (NSString *keyword in metadata[CBCKeywords]) {
+    [keywords addObject:keyword.lowercaseString];
+  }
+  node.keyWords = [keywords copy];
 
   if ([[metadata objectForKey:CBCIsDebug] boolValue]) {
     tree.debugLeaf = node;
